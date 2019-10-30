@@ -352,20 +352,25 @@
       
         
           
-            <h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。<!-- arima、谱分析还是alphabet相关方法，都存在类似的假设，--><br>我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩就可以确定整个模型），这些模型往往较为简单，但是十分实用。</p>
-<h3 id="1-1-基本统计量"><a href="#1-1-基本统计量" class="headerlink" title="1.1 基本统计量"></a>1.1 基本统计量</h3><h4 id="均值、方差、协方差"><a href="#均值、方差、协方差" class="headerlink" title="均值、方差、协方差"></a>均值、方差、协方差</h4><p>基础统计量在实际单变量时间序列分析中非常有用，它们不仅可以对时间序列的周期性、平稳性等方面进行分析，甚至还可以辅助确定一些时间序列模型的参数。</p>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+<h2 id="一、Background"><a href="#一、Background" class="headerlink" title="一、Background"></a>一、Background</h2><p>在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。<!-- arima、谱分析还是alphabet相关方法，都存在类似的假设，--><br>我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩就可以确定整个模型），这些模型往往较为简单，但是十分实用。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="1-1基本统计量"><a href="#1-1基本统计量" class="headerlink" title="1.1基本统计量"></a>1.1基本统计量</h4><h5 id="均值、方差、协方差"><a href="#均值、方差、协方差" class="headerlink" title="均值、方差、协方差"></a>均值、方差、协方差</h5><p>基础统计量在实际单变量时间序列分析中非常有用，它们不仅可以对时间序列的周期性、平稳性等方面进行分析，甚至还可以辅助确定一些时间序列模型的参数。</p>
 <h5 id="均值"><a href="#均值" class="headerlink" title="均值"></a>均值</h5><p>对随机过程 \(Y_t\) ，均值定义如下：</p>
 <script type="math/tex; mode=display">\mu _t = E(Y _t), t = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><h5 id="自协方差"><a href="#自协方差" class="headerlink" title="自协方差"></a>自协方差</h5><script type="math/tex; mode=display">\gamma _{t,s} = Cov(Y _t, Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><p>其中 \(Cov(Y _t, Y _s) = E[(Y _t - \mu _t)(Y _s - \mu _s)] = E(Y _tY _s) - \mu _t\mu _s\)（根据均值定义消去均值乘积）。</p>
 <h5 id="自相关函数"><a href="#自相关函数" class="headerlink" title="自相关函数"></a>自相关函数</h5><script type="math/tex; mode=display">\rho _{t,s} = Corr(Y _t,Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><script type="math/tex; mode=display">Corr(Y _t,Y _s) = \frac{Cov(Y _t, Y _s)}{\sqrt{Var(Y _t)Var(Y _s)}} = \frac{\gamma _{t,s}}{\sqrt{\gamma _{t,t}\gamma _{s,s}}}</script><!--
 ##### 时间间隔下的自相关函数
 对与时间间隔k，-->
-<h4 id="1-2-平稳性"><a href="#1-2-平稳性" class="headerlink" title="1.2 平稳性"></a>1.2 平稳性</h4><p>对于一切时间间隔k，如果在时间点 \(t_1 , t_2, t_3, \cdots , t_n\)下均有，\(Y_{t_1}, Y_{t_2}, Y_{t_3}, \cdots , Y_{t_n}\)与\(Y_{t_1 -k}, Y_{t_2 -k}, Y_{t_3 -k}, \cdots , Y_{t_n -k}\)的联合分布相同，则过程\(\{Y_{t}\}\)称为<strong>严平稳的</strong>。<br>而若序列是平稳性的，则：<br>当 n=1 时，\(Y_{t}\) 与\(Y_{t-k}\) 的分布相同，所以Y序列的每一点具有相同的分布，因此序列均值与方差恒为常数。<br>进而任意时间点t来说，由于序列的每一点均值方差均相同，所以我们可以化简自相关函数，即</p>
+<h4 id="1-2-平稳性"><a href="#1-2-平稳性" class="headerlink" title="1.2 平稳性"></a>1.2 平稳性</h4><p>对于一切时间间隔k，如果在时间点 \(t_1 , t_2, t_3, \cdots , t_n\)下均有，\(Y_{t_1}, Y_{t_2}, Y_{t_3}, \cdots , Y_{t_n}\)与\(Y_{t_1 -k}, Y_{t_2 -k}, Y_{t_3 -k}, \cdots , Y_{t_n -k}\) 的联合分布相同，则过程\(\{Y_{t}\}\)称为<strong>严平稳的</strong>。<br>而若序列是平稳性的，则：<br>当 n=1 时，\(Y_{t}\) 与\(Y_{t-k}\) 的分布相同，所以Y序列的每一点具有相同的分布，因此序列均值与方差恒为常数。<br>进而任意时间点t来说，由于序列的每一点均值方差均相同，所以我们可以化简自相关函数，即</p>
 <script type="math/tex; mode=display">\rho _{k} = Corr(Y _t,Y _{t-k}),   \gamma _{k} = Cov(Y _t, Y _{t-k})</script><p>严平稳性是一个非常强的假设，因此我们引出了弱（二阶矩）平稳性：  </p>
 <ol>
 <li>均值函数在所有时间上恒为常数。   </li>
-<li>对于所有时间点t和时间间隔k，有\(\gamma_{t,t-k}=\gamma_{0,k}\)。<br>在实际应用中，\(\gamma_{k}\)是一个非常有用的工具，它可以帮助我们判断时间序列的周期性，在某些时间序列模型中，我们使用\(\gamma_{k}\)来帮我们判断模型参数</li>
+<li>对于所有时间点t和时间间隔k，有\(\gamma_{t,t-k}=\gamma_{0,k}\)。<br>在实际应用中，\(\gamma_{k}\)是一个非常有用的工具，它可以帮助我们判断时间序列的周期性，在某些时间序列模型中，我们使用\(\gamma_{k}\)来帮我们判断模型参数，这些应用即使在非平稳的状态下也有一定借鉴意义。</li>
 </ol>
-
+<h3 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h3><p>在进行单变量时间序列分析时，我们往往需要对时间序列模型作出一些假设。最常见的假设为线性叠加模型，即模型中各个组成部分是以线性叠加的方式组合到一起的。对于能预测的单变量模型来说，我们往往认为其具有平稳周期性，和非平稳部分。而非平稳部又可以分为趋势部分与局部异常部分。</p>
+<h4 id="周期性"><a href="#周期性" class="headerlink" title="周期性"></a>周期性</h4><p>在单变量时间序列模型中，我们往往假设模型是具有周期性的，在对用户数据建模时，这一点往往是成立的（比如：分析用户PV、UV等，往往具有明显的7天周期与一年周期，在这不同周期中，用户数据整体波动出现明显相似的变化）。<br>对于这一部分的建模，有很多方式，如：简单季节性模型根据周期性的经验估计直接建立模型，ARIMA中利用假设过去周期性的时间节点对当前时间点存在残留影响来建立模型，谱分析对时间序列进行傅立叶变换从而拟合周期部分等等。<br>不论是使用什么方式，在进行周期性估计时，我们往往不考虑序列的整体趋势，也就是说我们认为周期性部分是平稳的（往往只需要弱平稳即可）。</p>
+<h4 id="非平稳部分"><a href="#非平稳部分" class="headerlink" title="非平稳部分"></a>非平稳部分</h4><h5 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h5><h5 id="干预点"><a href="#干预点" class="headerlink" title="干预点"></a>干预点</h5><h5 id="异常点"><a href="#异常点" class="headerlink" title="异常点"></a>异常点</h5>
           
         
       
