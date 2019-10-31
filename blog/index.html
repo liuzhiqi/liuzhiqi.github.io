@@ -370,7 +370,20 @@
 </ol>
 <h3 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h3><p>在进行单变量时间序列分析时，我们往往需要对时间序列模型作出一些假设。最常见的假设为线性叠加模型，即模型中各个组成部分是以线性叠加的方式组合到一起的。对于能预测的单变量模型来说，我们往往认为其具有平稳周期性，和非平稳部分。而非平稳部又可以分为趋势部分与局部异常部分。</p>
 <h4 id="周期性"><a href="#周期性" class="headerlink" title="周期性"></a>周期性</h4><p>在单变量时间序列模型中，我们往往假设模型是具有周期性的，在对用户数据建模时，这一点往往是成立的（比如：分析用户PV、UV等，往往具有明显的7天周期与一年周期，在这不同周期中，用户数据整体波动出现明显相似的变化）。<br>对于这一部分的建模，有很多方式，如：简单季节性模型根据周期性的经验估计直接建立模型，ARIMA中利用假设过去周期性的时间节点对当前时间点存在残留影响来建立模型，谱分析对时间序列进行傅立叶变换从而拟合周期部分等等。<br>不论是使用什么方式，在进行周期性估计时，我们往往不考虑序列的整体趋势，也就是说我们认为周期性部分是平稳的（往往只需要弱平稳即可）。</p>
-<h4 id="非平稳部分"><a href="#非平稳部分" class="headerlink" title="非平稳部分"></a>非平稳部分</h4><h5 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h5><h5 id="干预点"><a href="#干预点" class="headerlink" title="干预点"></a>干预点</h5><h5 id="异常点"><a href="#异常点" class="headerlink" title="异常点"></a>异常点</h5>
+<h4 id="非平稳部分"><a href="#非平稳部分" class="headerlink" title="非平稳部分"></a>非平稳部分</h4><h5 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h5><h5 id="干预"><a href="#干预" class="headerlink" title="干预"></a>干预</h5><p>干预分析（Intervention Analysis）是指在时间序列中，因为在某一时刻发生了自然产生或人为施加的影响，导致整体序列产生了一定时间内均值或趋势发生了相应的变化，例如：外部广告投放导致一定时间内某应用UV突然增长，一段时间后稳定用户有一个明显的数量提升、商家在某一天投放广告导致商品购买量提升，广告停止投放，几天内购买量下降，但仍高于投放前，直至平稳、双十一大促，大促时购买量激增，但大促后用户消费明显疲软，一段时间后恢复正常等。这几个不同的例子，对应的干预类型有所不同，大致类型可分为：阶梯形</p>
+<p>产生干预时，我们的干预部分用\(S_t ^{(T)}\)表示，其中T为干预产生的时间点。则我们可以定义脉冲函数即：</p>
+<script type="math/tex; mode=display">P _t ^{(T)}=S _t ^{(T)}-S _{t-1} ^{(T)}</script><h6 id="阶梯函数"><a href="#阶梯函数" class="headerlink" title="阶梯函数"></a>阶梯函数</h6><script type="math/tex; mode=display">
+S _t=\begin{cases}
+1,\quad x\geq T \\\\
+0,\quad x<T
+\end{cases}</script><p>对应的脉冲函数\(P_t ^{(T)}\)，当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。<br>此时我们干预对时间序列均值的叠加部分\(m_t\)为：</p>
+<script type="math/tex; mode=display">m _t = \omega S _t ^{(T)} \tag{1.1}</script><p>也就是说在T时刻激增并保持不变。这是一种非常理想的方式，但实际应用中，全部影响作用其实会持续很长一段时间最终趋于稳定。我们可以对\(m_t\)建立一个AR(1)模型（后续会对其进行介绍）：</p>
+<script type="math/tex; mode=display">
+m _t=\begin{cases}
+\omega\frac{1-\delta ^{t-T}}{1-\delta},\quad x\geq T \\\\
+0,\quad other
+\end{cases}</script><p>其中0&lt;\(\delta\)&lt;1。此时<br>均值增量在会在一段时间内激增最终收敛到\(\frac{\delta}{1-\delta}\)，其中达到极限的一半所用时间\(log(0.5)/log(\delta)\)被称为干预的半衰期</p>
+
           
         
       
