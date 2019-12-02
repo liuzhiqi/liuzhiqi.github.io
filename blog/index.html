@@ -399,7 +399,10 @@ m _t=\begin{cases}
 \frac{-\theta _k + \theta _1 \theta _{k+1} + \theta _2 \theta _{k+2} + \theta _{q-k} \theta _{q}}{1+\theta _1 ^2+\theta _2 ^2 + \cdots + \theta _q ^2},\quad k=1,2,\cdot,q \\\\ 
 0,\quad k>q
 \end{cases}</script><h3 id="AR"><a href="#AR" class="headerlink" title="AR"></a>AR</h3><p>对于时间序列\(\{Y _t\}\)若满足方程：</p>
-<script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _1 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t \tag{2.2}</script><p>则，我们称其为p阶自回归过程。从方程我们可以看出，自回归过程是用自身序列做回归变量。对于t时刻的\(Y _t\)来说其值等于过去p个时间点与当前时间点噪声\(e _t\)的加权叠加，其中\(e _t\)要求与t时刻前的Y独立。从等式2.2我们可以看出，通过将右侧Y展开，我们可以还原出等式2.1的形式。<br>对于MA模型来说，我们较容易保证其平稳，而对于AR模型，平稳显然需要满足条件。</p>
+<script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t</script><p>则，我们称其为p阶自回归过程。从方程我们可以看出，自回归过程是用自身序列做回归变量。对于t时刻的\(Y _t\)来说其值等于过去p个时间点与当前时间点噪声\(e _t\)的加权叠加，其中\(e _t\)要求与t时刻前的Y独立。从等式2.2我们可以看出，通过将右侧Y展开，我们可以还原出等式2.1的形式，但参数的表达可能十分复杂，同时该序列项数可能趋于无穷大。<br>对于MA模型来说，我们较容易保证其平稳，而对于AR模型，平稳显然需要满足条件。令，</p>
+<script type="math/tex; mode=display">\phi(x)=1 - \phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><script type="math/tex; mode=display">0=1-\phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><p>为AR模型的特征多项式和特征方程。若特征方程存在平稳解，当且仅当AR特征方程每一个根的绝对值都大于1。因此有如下必要不充分的条件：</p>
+<script type="math/tex; mode=display">\phi _1 + \phi _2 + \cdots + \phi _p < 1</script><script type="math/tex; mode=display">| \phi _p |< 1</script><p>假定序列平稳且均值为0。则，我们可以在AR模型方程两边同时乘以\(Y _{t-k}\)并求期望，再除以\(\gamma _0\)可以获得以下重要递推关系：</p>
+<script type="math/tex; mode=display">\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}</script><p>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho _k\)。</p>
 <h3 id="差分模型"><a href="#差分模型" class="headerlink" title="差分模型"></a>差分模型</h3><h2 id="谱分析"><a href="#谱分析" class="headerlink" title="谱分析"></a>谱分析</h2><h2 id="综合方法：Prophet"><a href="#综合方法：Prophet" class="headerlink" title="综合方法：Prophet"></a>综合方法：Prophet</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
           
         
