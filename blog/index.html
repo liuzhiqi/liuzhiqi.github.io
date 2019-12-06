@@ -402,7 +402,8 @@ m _t=\begin{cases}
 <script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t</script><p>则，我们称其为p阶自回归过程。从方程我们可以看出，自回归过程是用自身序列做回归变量。对于t时刻的\(Y _t\)来说其值等于过去p个时间点与当前时间点噪声\(e _t\)的加权叠加，其中\(e _t\)要求与t时刻前的Y独立。从等式2.2我们可以看出，通过将右侧Y展开，我们可以还原出等式2.1的形式，但参数的表达可能十分复杂，同时该序列项数可能趋于无穷大。<br>对于MA模型来说，我们较容易保证其平稳，而对于AR模型，平稳显然需要满足条件。令，</p>
 <script type="math/tex; mode=display">\phi(x)=1 - \phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><script type="math/tex; mode=display">0=1-\phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><p>为AR模型的特征多项式和特征方程。若特征方程存在平稳解，当且仅当AR特征方程每一个根的绝对值都大于1。因此有如下必要不充分的条件：</p>
 <script type="math/tex; mode=display">\phi _1 + \phi _2 + \cdots + \phi _p < 1</script><script type="math/tex; mode=display">| \phi _p |< 1</script><p>假定序列平稳且均值为0。则，我们可以在AR模型方程两边同时乘以\(Y _{t-k}\)并求期望，再除以\(\gamma _0\)可以获得以下重要递推关系：</p>
-<script type="math/tex; mode=display">\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}</script><p>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho _k\)。</p>
+<script type="math/tex; mode=display">\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}</script><p>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho <em>k\)。<br>对于AR模型而言，若序列平稳，通过对自回归进行逐层展开，我们可以将其还原为式2.1形式。<br>而对于MA模型，我们可以通过\(Y </em>{t-k}\) 迭代消去序列中的第k项(e _{t-k}\),从而将MA模型转化为AR模型。若原时间序列是无穷的，那么我们最终可能转化为一个无穷阶的AR模型。这种MA可逆的转化是有条件的，需要MA特征方程：</p>
+<script type="math/tex; mode=display">0=1-\theta _1 x - \theta _2 x^2 - \cdots - \theta _p x ^ p</script><p>的根的模大于1（类似AR模型平稳性条件）。</p>
 <h3 id="ARMA-p-q-模型"><a href="#ARMA-p-q-模型" class="headerlink" title="ARMA(p,q)模型"></a>ARMA(p,q)模型</h3><p>若序列心中一部分是自回归，一部分是滑动平均的，那么我们可以得到一个相当普遍的时间序列模型。如下：</p>
 <script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>对于该模型而言，MA部分我们可以保证解的平稳，因此对于模型整体平稳性，我们只需要保证AR部分过程平稳，即保证模型中AR特征方程根的模大于1。<br>此时模型可以由下式决定：</p>
 <script type="math/tex; mode=display">
@@ -414,8 +415,26 @@ m _t=\begin{cases}
 \cdots\\\\
 \psi _j = -\theta _j + \phi _p\theta _{j-p} + \phi _{p-1}\theta _{j-p+1} + \cdots + \phi _1\theta _{j-1} \\\\
 \end{array}
-\right.</script><p>这里我们将模型中AR部分展开得到公式2.1的形式。</p>
-<h3 id="差分模型"><a href="#差分模型" class="headerlink" title="差分模型"></a>差分模型</h3><h2 id="谱分析"><a href="#谱分析" class="headerlink" title="谱分析"></a>谱分析</h2><h2 id="综合方法：Prophet"><a href="#综合方法：Prophet" class="headerlink" title="综合方法：Prophet"></a>综合方法：Prophet</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
+\right.</script><p>这里我们将模型中AR部分展开得到公式2.1的形式，其中参数\(\psi\)为2.1中系数。<br>对于ARMA模型，我们通常要求AR和MA分别满足平稳和可逆两个条件（上文提到，各自特征方程根模大于一）</p>
+<h3 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h3><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y<em>t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y </em>{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
+<p><img src="/home/picture/不同阶差分.png" alt="avatar"></p>
+<p>如果一个时间序列 \(\{Y _t\}\)的d次差分 \(W _t = \Delta ^d Y _t\)是一个平稳的ARMA(p,q)过程，则称\(\{Y _t\}\)为自回归滑动平均求和模型ARIMA(p,d,q)。通常取d=1或最多2。<br>考虑ARIMA(p,1,q)，令\(W _t = \Delta ^d Y _t\)，我们有：</p>
+<script type="math/tex; mode=display">W _t=\phi _1 W _{t-1} + \phi _2 W _{t-2} + \cdots + \phi _n W _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>通过将W用Y替换并合并，可得：</p>
+<script type="math/tex; mode=display">Y _t=(1 + \phi _1)W _{t-1} + (\phi _2 -\phi _1)W _{t-2} + \cdots +  (\phi _{t-p} -\phi _{t-p-1}) W _{t-p} - \phi _p W _{t-p-1} \\\\+ e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>我们称上述形式为模型的差分方程形式。我们分析其AR特征方程：</p>
+<script type="math/tex; mode=display">1-(1+\phi _1)x-(\phi _2 - \phi _1)x ^2-\cdots-(\phi _{t-p} -\phi _{t-p-1})x ^p + \phi _p x ^{p+1}=(1-\phi _1 -\phi _2x ^2-/cdots-\phi _px ^p)(1-x)</script><p>此时 x=1是一个根，因此这个过程非平稳，但其余的根是平稳过程\( \Delta ^d Y _t\)的特征多项式的根。这也说明了为什么当原序列非平稳，我们使用一阶差分来得到平稳序列的原因。</p>
+<p>差分是实现平稳较好的方式，出了差分外，我们还可以根据序列特征对序列进行其他的变换。例如：如果发现序列散度随着时间增加，可以尝试使用对数方法对序列进行变换等。</p>
+<h3 id="季节性ARIMA"><a href="#季节性ARIMA" class="headerlink" title="季节性ARIMA"></a>季节性ARIMA</h3><p>对于普通的ARIMA模型，我们考虑的是当前相近的时间节点对现在的影响，然而实际上数据的周期可能会更长。例如：对于用户数据而言，往往存在以周和年为周期的pattern。对于这种较长跨度的周期性影响，ARIMA模型不能进行很好的表达，这时我们可以引入季节性ARIMA模型。<br><strong>简单的季节性ARIMA模型</strong>我们可以通过经验知识，选出相应周期，考虑序列影响时，只考虑倍数于周期的相应时间节点。例如以s（s大于P和Q）为周期，则我们的AR(P)和MA(Q)以及差分I(D)模型如下：</p>
+<script type="math/tex; mode=display">
+Y _t = Y _t - \Phi _1Y _{t-s}  - \Phi _2Y _{t-2s} - \cdots - \Phi _PY _{t-Ps}</script><script type="math/tex; mode=display">
+Y _t = e _t - \Theta _1e _{t-s}  - \Theta _2e _{t-2s} - \cdots - \Theta _Qe _{t-Qs}</script><script type="math/tex; mode=display">
+\Delta _s Y _t = Y _t + Y _{t-s}</script><p>可以看到AR、MA、以及差分，我们都只考虑不同周期s上相同位置的时间节点（只考虑最近P和Q个周期内的时刻）。注意这里我们使用参数：\(P,Q,\Phi,\Theta\)均为大写以表示季节模型。<br>简单季节性ARIMA加入引入一个周期s，整体模型可以看作是对时间序列间隔s时刻，从而抽出s个子序列，并使用普通ARIMA模型进行拟合。然而这种方法只考虑了一个固定周期的影响，实际上真实序列相近时刻可能也会对当前时刻造成影响（基本的ARIMA模型的假设），因此我们需要同时考虑季节性影响和临近影响。因此引入了人<strong>乘法季节ARIMA模型</strong>。<br>乘法季节ARIMA模型结合了季节和非季节ARIMA，利用类似卷积的思路，将二者结合。例如：我们考虑结合\(MA(1)\) 与 \(MA(1) _s\)两个模型，得到如下特征多项式：</p>
+<script type="math/tex; mode=display">
+(1 -\theta x)(1-\Theta x ^{12}) = 1 - \theta x - \Theta x ^{12} - \theta\Theta x^{13}</script><p>通过特征多项式我们可以写出相应的时间序列表达式：</p>
+<script type="math/tex; mode=display">
+Y _t = e _t - \theta e _{t-1} - \Theta e _{t-12} - \theta\Theta e _{t-13}</script><p>因此我们定义周期为s的乘法季节\(ARMA(p,q)\times(P,Q) _s\)模型，通过分别求AR特征多项式\(\phi\Phi(x)\)和MA特征多项式\(\theta(x)\Theta(x)\)得到相应AR与MA模型序列通过相加合并两个子模型。<br>对于差分模型而言我们可以定义混合差分操作：</p>
+<script type="math/tex; mode=display">
+W _t = \Delta ^d \Delta _s ^D Y _t</script><h3 id="模型识别"><a href="#模型识别" class="headerlink" title="模型识别"></a>模型识别</h3><h4 id="ARMA"><a href="#ARMA" class="headerlink" title="ARMA"></a>ARMA</h4><p>数据缺失<a href="http://rpubs.com/englianhu/handle-missing-value" target="_blank" rel="noopener">http://rpubs.com/englianhu/handle-missing-value</a></p>
+<h3 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h3><h2 id="谱分析"><a href="#谱分析" class="headerlink" title="谱分析"></a>谱分析</h2><h2 id="综合方法：Prophet"><a href="#综合方法：Prophet" class="headerlink" title="综合方法：Prophet"></a>综合方法：Prophet</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
           
         
       
