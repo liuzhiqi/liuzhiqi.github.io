@@ -430,7 +430,37 @@ Y _t = e _t - \Theta _1e _{t-s}  - \Theta _2e _{t-2s} - \cdots - \Theta _Qe _{t-
 <script type="math/tex; mode=display">
 Y _t = e _t - \theta e _{t-1} - \Theta e _{t-12} - \theta\Theta e _{t-13}</script><p>因此我们定义周期为s的乘法季节\(ARMA(p,q)\times(P,Q) _s\)模型，通过分别求AR特征多项式\(\phi\Phi(x)\)和MA特征多项式\(\theta(x)\Theta(x)\)得到相应AR与MA模型序列通过相加合并两个子模型。<br>对于差分模型而言我们可以定义混合差分操作：</p>
 <script type="math/tex; mode=display">
-W _t = \Delta ^d \Delta _s ^D Y _t</script><h3 id="模型识别"><a href="#模型识别" class="headerlink" title="模型识别"></a>模型识别</h3><h4 id="ARMA"><a href="#ARMA" class="headerlink" title="ARMA"></a>ARMA</h4><p>数据缺失<a href="http://rpubs.com/englianhu/handle-missing-value" target="_blank" rel="noopener">http://rpubs.com/englianhu/handle-missing-value</a></p>
+W _t = \Delta ^d \Delta _s ^D Y _t</script><p>因此我们可以得到新的季节ARIMA模型：\(ARMA(p,d,q)\times(P,D,Q) _s\)</p>
+<h3 id="模型识别"><a href="#模型识别" class="headerlink" title="模型识别"></a>模型识别</h3><h4 id="k阶滞后自相关函数（ACF）"><a href="#k阶滞后自相关函数（ACF）" class="headerlink" title="k阶滞后自相关函数（ACF）"></a>k阶滞后自相关函数（ACF）</h4><p>回顾第一节，我们有k阶滞后的自相关函数:</p>
+<script type="math/tex; mode=display">
+\rho _{k} = Corr(Y _t,Y _{t-k}) = \frac{Cov(Y _t, Y _{t-k})}{\sqrt{Var(Y _t)Var(Y _{t-k})}} = \frac{\gamma _{k}}{\gamma _{0}}</script><script type="math/tex; mode=display">
+\gamma _{k} = Cov(Y _t, Y _{t-k}) = \frac{\sum _{t=k+1} ^{n} {(Y _t - \overline{Y})(Y _{t-k} - \overline{Y})} }{\sum _{t=1} ^n {(Y _t - \overline{Y}) ^2}}  k=1,2,\cdots</script><p>对于MA(q)模型而言当k&gt;q时，\(\rho _k = 0\)，这里r为\(\rho \)的估计量。因此对于MA模型而言我们可以使用K阶之后自相关函数确定起q的取值。</p>
+<h4 id="k阶滞后偏自相关函数（PACF）"><a href="#k阶滞后偏自相关函数（PACF）" class="headerlink" title="k阶滞后偏自相关函数（PACF）"></a>k阶滞后偏自相关函数（PACF）</h4><p>对于AR模型而言，由于模型往往可以展开成无穷阶MA模型，因此k阶滞后自相关函数不适用。从另一方面考虑，若我们希望计算\(Y <em>{t-k} \)对\(Y _t \)的影响程度从而判断模型是否含有第k阶，直接计算\(Y </em>{t-k} \)与\(Y <em>t \)的相关性是不合理的，这是因为对于\(Y _t \)而言其自身还包含了<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项。因此我们考虑消除\(Y <em>t \)中的<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)影响后，再计算消除影响后的\(Y <em>t \)与\(Y </em>{t-k} \)的相关系数，我们称这个系数为<strong>k阶滞后偏自相关系数</strong>。<br>由于AR模型为回归方法，为了达到消除影响的目的，因此我们可以考虑先对序列进行拟合，然后为了计算得到样本的k阶滞后偏自相关函数。对\(Y <em>t \)我们使用\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项进行预测： </p>
+<script type="math/tex; mode=display">
+Y _t=</script><p>对\(\beta \)我们可以使用均方误差最小化，利用最小二乘法估计。<br>对于\(Y _{t-k} \)，我们可以利用t-k之后的k-1个项来进行向前预测，由序列平稳可得（？？？）：</p>
+<script type="math/tex; mode=display">
+Y _k=\beta _1 Y _{t-K+1} + \beta _2 Y _{t-K+2} + \cdots + \beta _{k-1} Y _{t-1}</script><p>因此我们定义<strong>K阶偏子相关系数</strong>为预测误差之间的相关系数：</p>
+<script type="math/tex; mode=display">
+\phi _{kk}=Corr(Y _t - \beta _1 Y _{t-1} - \beta _2 Y _{t-2} - \cdots - \beta _{k-1} Y _{t-k+1},  \\\\
+Y _{t-k} - \beta _1 Y _{t-K+1} - \beta _2 Y _{t-K+2} - \cdots - \beta _{k-1} Y _{t-1}  )</script><p>对于若序列服从AR(p)模型，显然当预测的模型为p项时，对模型的预测将最准确，此时k阶之后偏子相关系数有：</p>
+<script type="math/tex; mode=display">
+\phi _{kk} = 0, k>p</script><p>而对于MA模型来说，其偏自相关函数从不为0，但随着滞后的增加，会指数级快速衰减到0。这一点与AR(1)过程的子相关函数类似。<br>对于K阶偏自相关系数，我们可以用最小二乘法分别求不同阶的预测模型，然后再求其相关系数。同时我们也可以使用Yule-Walker方程来进行求解。<br>具有自相关函数\(\rho _k\)的任意平稳过程，对于k阶滞后，我们有：</p>
+<script type="math/tex; mode=display">
+\rho _j = \phi _{k1} \rho _{j-1} +\phi _{k2} \rho _{j-2} +\phi _{k3} \rho _{j-3} + \cdots+\phi _{kk} \rho _{j-k} , j=1,2,\cdots,k</script><p>我们可以先算出各阶\(\rho\)然后带入方程组从而求解出\(\phi <em>{k1},\phi </em>{k2},\cdots,\phi <em>{kk} \)，这里我们只需要最后一项。对于不同阶k，反复求解方程组从而得到\(\phi </em>{kk}\)，我们有\(\phi _{kk}\)递归方程：</p>
+<script type="math/tex; mode=display">
+\phi _{kk} = \frac{\phi _{k} - \sum _{j=1} ^{k-1}{\phi _{k-1,j}\rho _{k-j}}}{1 - \sum _{j=1} ^{k-1}{\phi _{k-1,j} \rho _{j}}}</script><p>对于大于p时样本偏自相关函数近似服从均值为0，方差为1/n的正态分布. 因此，当 k&gt;p 时，我们可以用\(\pm 2/\sqrt{n}\)作为\(\hat \phi _{kk}\)的临界极值来检验AR(p)模型的正确0假设。</p>
+<h3 id="非平稳性"><a href="#非平稳性" class="headerlink" title="非平稳性"></a>非平稳性</h3><p>在实际使用ARIMA模型时，我们往往仅使用1～2阶差分，过度的差分，会导致差分后的序列产生不必要的相关性，从而使模型变得复杂，最终导致过拟合。同时过度差分还可能导致差分后序列模型不可逆。<br>在对差分阶数进行判断时，ACF仍然是一个非常好用的工具。如果ACF的图像呈现明显近似线性的衰减，说明非平稳性影响了序列的自相关性。此时序列需要进行差分。更具体的方法还有Dickey-Fuller单位根检验（检验AR方程是否存在单位根）等。</p>
+<h4 id="ARIMA模型的判别"><a href="#ARIMA模型的判别" class="headerlink" title="ARIMA模型的判别"></a>ARIMA模型的判别</h4><p>对于ARMA模型来说，由于ACF和PACF都只能针对AR或MA其中一个模型进行判别，若二者混合，不能很好判别。因此我们引入了一些扩展的方法来识别。</p>
+<h5 id="EACF（扩展自相关法）："><a href="#EACF（扩展自相关法）：" class="headerlink" title="EACF（扩展自相关法）："></a>EACF（扩展自相关法）：</h5><p>如果AR模型是已知的，则可以从ARMA模型中去掉自回归部分从而得到一个纯MA过程。</p>
+<h5 id="AIC（Akaike’s-Information-Criterion-赤池信息准则）："><a href="#AIC（Akaike’s-Information-Criterion-赤池信息准则）：" class="headerlink" title="AIC（Akaike’s Information Criterion,赤池信息准则）："></a>AIC（Akaike’s Information Criterion,赤池信息准则）：</h5><p>AIC要求模型最小化：</p>
+<script type="math/tex; mode=display">
+AIC = -2\log {(D(p,q _\theta))+2k}</script><p>如果模型包含常数项或者截距项，则k=p+q+1，否则k=p+q。<br>AIC是估计模型与真实模型等平均KL偏离度的估计量。另\(p(y <em>1,y _2,\cdots,y _n)\)是\(Y _1,Y _2,\cdots,Y _n\)的真实pdf，\(q </em>\theta(y _1,y _2,\cdots,y _n)\) 是参数为 \(\theta\)的模型相应的pdf。则q和p的KL偏离由下面公式定义：</p>
+<script type="math/tex; mode=display">
+D(p,q _\theta) = \int _{-\infty} ^{\infty} \int _{-\infty} ^{\infty} \cdots\int _{-\infty} ^{\infty}{p(y _1,y _2,\cdots,y _n) \log{[\frac{p(y _1,y _2,\cdots,y _n)}{q _\theta(y _1,y _2,\cdots,y _n)}]}}dy _1dy _2\cdots dy _n</script><p>AIC估计了\(E(D(p,q _\hat \theta))\)，这里\(\hat \theta\)是参数\(\theta\)的极大似然估计。但是AIC是有偏估计量，若参数数量和数据容量的比率较大，则偏差会很大。因此引入\(AIC _c\)方法对AIC进行修正：</p>
+<script type="math/tex; mode=display">
+AIC _c = AIC + \frac{2(k+1)(k+2)}{n-k-2}</script><p>其中n是样本容量，k是出去噪声方差后的总参数量，当k/n&gt;0.1时，\(AIC _c\)表现优于其他模型选择准则（包括AIC、BIC）</p>
+<h5 id="BIC（Bayesian-Information-Criterion-贝叶斯信息准则）："><a href="#BIC（Bayesian-Information-Criterion-贝叶斯信息准则）：" class="headerlink" title="BIC（Bayesian Information Criterion,贝叶斯信息准则）："></a>BIC（Bayesian Information Criterion,贝叶斯信息准则）：</h5><script type="math/tex; mode=display">
+BIC =  -2\log {(D(p,q _\theta))+k\log{(n)}}</script><p>数据缺失<a href="http://rpubs.com/englianhu/handle-missing-value" target="_blank" rel="noopener">http://rpubs.com/englianhu/handle-missing-value</a></p>
 <h3 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h3><h2 id="谱分析"><a href="#谱分析" class="headerlink" title="谱分析"></a>谱分析</h2><h2 id="综合方法：Prophet"><a href="#综合方法：Prophet" class="headerlink" title="综合方法：Prophet"></a>综合方法：Prophet</h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
           
         
