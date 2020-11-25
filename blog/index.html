@@ -254,6 +254,737 @@
   
   
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/01/27/Untitled/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiqi Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiqi Liu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/01/27/Untitled/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-27T21:12:39+08:00">
+                2020-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<h2 id="输出单元"><a href="#输出单元" class="headerlink" title="输出单元"></a>输出单元</h2><p>任何用作输出的神经单元都可以用作隐藏单元。</p>
+<h3 id="线性输出单元"><a href="#线性输出单元" class="headerlink" title="线性输出单元"></a>线性输出单元</h3><script type="math/tex; mode=display">\hat y = W ^T h +b</script><p>线性输出层通常用来产生<strong>条件高斯分布的均值</strong></p>
+<script type="math/tex; mode=display">p(y|x)=\mathcal{N}(y;\hat y,I)</script><p>最大化其对数似然等价于最小化均方误差。</p>
+<h3 id="sigmoid单元"><a href="#sigmoid单元" class="headerlink" title="sigmoid单元"></a>sigmoid单元</h3><p>用于预测二值变量y的值，通常我们只需要一个概率P(y=1|x)即可。通常通过阈值来限制使之成为有效的概率函数：</p>
+<script type="math/tex; mode=display">
+P(y=1|x) = max\\{0, min\\{1,h(x,\theta)\\} \\}</script><p>此时最大似然方法是：y在x条件下的Bernouli分布。<br>但该方法存在一个问题，在h(x)大于1和小于0的区间，单元输出对其参数的梯度为0。因此，常常使用替代函数，例如：logistic sigmoid。</p>
+<script type="math/tex; mode=display">\sigma(h(x,\theta))=\frac{1}{1+exp(-h(x,\theta))}</script><h3 id="softmax单元"><a href="#softmax单元" class="headerlink" title="softmax单元"></a>softmax单元</h3><p>n个可能取值的离散变量的分布。常用作分类器的输出。<br>对于在x给定的前提下，每一个可能的y的取值的概率为\(P(y=y _i|x)\)，为了得到该取值，我们定义一个\(\hat P(y=y _i|x)= exp(h _i)\)（其中我们往往令\(h _i = h _i(x,\theta) = [\mathbf W ^T \mathbf h ^{(-1)} + \mathbf b] _i\)，即softmax的输入层上一层为线性单元）。这里我们通过指数，将\((- \infty,\infty) \)的h值放缩到<br>\((0,\infty) \)。为了让最终的条件概率满足概率形式即，p在[0 , 1]之间，概率和为1，我们有：</p>
+<script type="math/tex; mode=display">
+P(y=y _i|x) = softmax(h) _i = \frac{exp(h _i)}{\sum _j {exp(h _j)}}</script><p>此时最大化似然对数，我们有</p>
+<script type="math/tex; mode=display">
+logP(y=y _i|x) = log (softmax(h)) _i = h _i - log{\sum _j {exp(h _j)}}</script><p>此时可以看作近似最大化第j项h，抑制其他的h，负的对数似然Softmax，总是强烈惩罚活跃的不正确选项。<br>注意，这里我们使用了对数似然函数，主要是因为log可以抵消掉指数，从而避免梯度消失。其他的没有log抵消的损失函数，例如平方误差，softmax的表现会变得非常差。<br>另外对所有的softmax输入加入一个常数，softmax值不变(约掉) : softmax(h) = softmax(h+c)，因此考虑：</p>
+<script type="math/tex; mode=display">
+softmax(h) = softmax(h - max _i h _i)</script><p>从而应对输入h存在极大正值的情况，从而减小数值误差（h _i极大，分类正确，饱和到1，相反其他极大包和到0）。</p>
+<h3 id="其他输出类型"><a href="#其他输出类型" class="headerlink" title="其他输出类型"></a>其他输出类型</h3><p>？？？梯度下降求高斯混合模型？？？<br>梯度下降<br>EM算法<br>Gibbs采样<br>分别实现</p>
+<h2 id="未分类问题"><a href="#未分类问题" class="headerlink" title="未分类问题"></a>未分类问题</h2><p>如何优化带L1正则的损失函数</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/01/17/深度学习笔记与扩展 /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiqi Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiqi Liu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/01/17/深度学习笔记与扩展 /" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-17T22:48:48+08:00">
+                2020-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+<p>深度学习笔记与扩展</p>
+<h1 id="DNN"><a href="#DNN" class="headerlink" title="DNN"></a>DNN</h1><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
+<li>对于前馈神经网络，权重值初始化为小的随机数是很重要的，偏置可以初始化为0或小的正值</li>
+</ol>
+<h2 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h2><p>大多数情况下，参数模型定义了判定模型\(P(y|x;\theta)\)，并使用极大似然原理求解参数，这意味着我们使用交叉熵作为代价函数。  </p>
+<script type="math/tex; mode=display">
+J(\theta) = - \mathbb{E} _{\hat P _{data}(x,y)}logP(y|x;\theta)</script><p>对于离散型输出变量，大多数模型以一种特殊的形式来参数化，即他们不能表示概率0和1，但可以无限接近。<br>对于实值输出函数，如果模型可以控制输出分布密度，那么J可能对正确的训练集输出赋予极高的密度，这将导致交叉熵趋于负无穷，正则化被用来提供修正这一问题。<br>此外，我们可以不预测\(P(y|x;\theta)\)的完整分布，而是预测给定x下y的某些统计量，用专门的损失函数训练这些估计量的预测器。这里我们主要使用<strong>？？？泛函分析与变分法？？？</strong></p>
+<h2 id="输出单元"><a href="#输出单元" class="headerlink" title="输出单元"></a>输出单元</h2><p>任何用作输出的神经单元都可以用作隐藏单元。</p>
+<h3 id="线性输出单元"><a href="#线性输出单元" class="headerlink" title="线性输出单元"></a>线性输出单元</h3><script type="math/tex; mode=display">\hat y = W ^T h +b</script><p>线性输出层通常用来产生<strong>条件高斯分布的均值</strong></p>
+<script type="math/tex; mode=display">p(y|x)=\mathcal{N}(y;\hat y,I)</script><p>最大化其对数似然等价于最小化均方误差。</p>
+<h3 id="sigmoid单元"><a href="#sigmoid单元" class="headerlink" title="sigmoid单元"></a>sigmoid单元</h3><p>用于预测二值变量y的值，通常我们只需要一个概率P(y=1|x)即可。通常通过阈值来限制使之成为有效的概率函数：</p>
+<script type="math/tex; mode=display">
+P(y=1|x) = max\\{0, min\\{1,h(x,\theta)\\} \\}</script><p>此时最大似然方法是：y在x条件下的Bernouli分布。<br>但该方法存在一个问题，在h(x)大于1和小于0的区间，单元输出对其参数的梯度为0。因此，常常使用替代函数，例如：logistic sigmoid。</p>
+<script type="math/tex; mode=display">\sigma(h(x,\theta))=\frac{1}{1+exp(-h(x,\theta))}</script><h3 id="softmax单元"><a href="#softmax单元" class="headerlink" title="softmax单元"></a>softmax单元</h3><p>n个可能取值的离散变量的分布。常用作分类器的输出。<br>对于在x给定的前提下，每一个可能的y的取值的概率为\(P(y=y _i|x)\)，为了得到该取值，我们定义一个\(\hat P(y=y _i|x)= exp(h _i)\)（其中我们往往令\(h _i = h _i(x,\theta) = [\mathbf W ^T \mathbf h ^{(-1)} + \mathbf b] _i\)，即softmax的输入层上一层为线性单元）。这里我们通过指数，将\((- \infty,\infty) \)的h值放缩到<br>\((0,\infty) \)。为了让最终的条件概率满足概率形式即，p在[0 , 1]之间，概率和为1，我们有：</p>
+<script type="math/tex; mode=display">
+P(y=y _i|x) = softmax(h) _i = \frac{exp(h _i)}{\sum _j {exp(h _j)}}</script><p>此时最大化似然对数，我们有</p>
+<script type="math/tex; mode=display">
+logP(y=y _i|x) = log (softmax(h)) _i = h _i - log{\sum _j {exp(h _j)}}</script><p>此时可以看作近似最大化第j项h，抑制其他的h，负的对数似然Softmax，总是强烈惩罚活跃的不正确选项。<br>注意，这里我们使用了对数似然函数，主要是因为log可以抵消掉指数，从而避免梯度消失。其他的没有log抵消的损失函数，例如平方误差，softmax的表现会变得非常差。<br>另外对所有的softmax输入加入一个常数，softmax值不变(约掉) : softmax(h) = softmax(h+c)，因此考虑：</p>
+<script type="math/tex; mode=display">
+softmax(h) = softmax(h - max _i h _i)</script><p>从而应对输入h存在极大正值的情况，从而减小数值误差（h _i极大，分类正确，饱和到1，相反其他极大包和到0）。</p>
+<h3 id="其他输出单元"><a href="#其他输出单元" class="headerlink" title="其他输出单元"></a>其他输出单元</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/01/17/复习List/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiqi Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiqi Liu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/01/17/复习List/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-17T21:31:21+08:00">
+                2020-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>Tensor Flow</li>
+<li>深度学习</li>
+<li>分布式机器学习及扩展</li>
+<li>百面机器学习</li>
+<li></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/01/14/DistributedMachineLearning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiqi Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiqi Liu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/01/14/DistributedMachineLearning/" itemprop="url">分布式机器学习读书笔记与扩充</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-14T22:37:52+08:00">
+                2020-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="集成学习："><a href="#集成学习：" class="headerlink" title="集成学习："></a>集成学习：</h1><h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><h2 id="间隔定理"><a href="#间隔定理" class="headerlink" title="间隔定理"></a>间隔定理</h2><h2 id="GDBT"><a href="#GDBT" class="headerlink" title="GDBT"></a>GDBT</h2><p><a href="https://www.cnblogs.com/jiangxinyang/p/9248154.html" target="_blank" rel="noopener">https://www.cnblogs.com/jiangxinyang/p/9248154.html</a></p>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><h2 id="逼近定理"><a href="#逼近定理" class="headerlink" title="逼近定理"></a>逼近定理</h2><h3 id="逼近定理-1"><a href="#逼近定理-1" class="headerlink" title="逼近定理"></a>逼近定理</h3><h3 id="深度定理"><a href="#深度定理" class="headerlink" title="深度定理"></a>深度定理</h3><p>[30]On the Depth of Deep Neural Networks A Theoretical View<br><a href="https://arxiv.org/abs/1506.05232" target="_blank" rel="noopener">https://arxiv.org/abs/1506.05232</a></p>
+<h2 id="损失函数严重非凸"><a href="#损失函数严重非凸" class="headerlink" title="损失函数严重非凸"></a>损失函数严重非凸</h2><h3 id="多次随机初始化"><a href="#多次随机初始化" class="headerlink" title="多次随机初始化"></a>多次随机初始化</h3><h3 id="模拟退火技术"><a href="#模拟退火技术" class="headerlink" title="模拟退火技术"></a>模拟退火技术</h3><h3 id="神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值"><a href="#神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值" class="headerlink" title="神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值"></a>神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值</h3><p>[31] Deep learning Without Poor Local Minima<br><a href="https://arxiv.org/abs/1605.07110" target="_blank" rel="noopener">https://arxiv.org/abs/1605.07110</a></p>
+<h2 id="过拟合问题"><a href="#过拟合问题" class="headerlink" title="过拟合问题"></a>过拟合问题</h2><p>神经网络表达能力太强，容易过拟合</p>
+<h3 id="DropOut"><a href="#DropOut" class="headerlink" title="DropOut"></a>DropOut</h3><p>在2012年，Alex、Hinton在其论文《ImageNet Classification with Deep Convolutional Neural Networks》中用到了Dropout算法，用于防止过拟合。并且，这篇论文提到的AlexNet网络模型引爆了神经网络应用热潮，并赢得了2012年图像识别大赛冠军，使得CNN成为图像分类上的核心算法模型。<br>随后，又有一些关于Dropout的文章《Dropout:A Simple Way to Prevent Neural Networks from Overfitting》、《Improving Neural Networks with Dropout》、《Dropout as data augmentation》。</p>
+<h3 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h3><p><a href="https://zhuanlan.zhihu.com/p/41679153" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41679153</a></p>
+<h3 id="批量归一化"><a href="#批量归一化" class="headerlink" title="批量归一化"></a>批量归一化</h3><p><a href="https://zhuanlan.zhihu.com/p/34879333" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34879333</a><br>34|2015| Batch Normalization- Accelerating Deep Network Training b y Reducing Internal Covariate Shift</p>
+<h3 id="权值衰减"><a href="#权值衰减" class="headerlink" title="权值衰减"></a>权值衰减</h3><p><a href="https://zhuanlan.zhihu.com/p/33006526" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33006526</a><br><a href="https://zhuanlan.zhihu.com/p/51490163" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/51490163</a><br><a href="https://cloud.tencent.com/developer/article/1374163" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1374163</a></p>
+<p>35|1992| A simple weight decay can improve generalization </p>
+<h3 id="提前终止"><a href="#提前终止" class="headerlink" title="提前终止"></a>提前终止</h3><p>36|1998 Automatic Early Stopping Using Cross Validation : quantifying the criteria</p>
+<h2 id="梯度消减1"><a href="#梯度消减1" class="headerlink" title="梯度消减1"></a>梯度消减1</h2><p>神经网络过深 预测误差难以顺利传递 RNN一套走一遍<br>p26，梯度消减，Paper - 37  Learning Long-Term Dependencies with Gradient Descent is Difficult <a href="https://www.jianshu.com/p/46367f985c64" target="_blank" rel="noopener">https://www.jianshu.com/p/46367f985c64</a><br>p26，门限法，Paper - 38 </p>
+<h2 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h2><h3 id="池化算子"><a href="#池化算子" class="headerlink" title="池化算子"></a>池化算子</h3><p>p27，池化算子，Paper -39 Network In Network </p>
+<h3 id="梯度消减2"><a href="#梯度消减2" class="headerlink" title="梯度消减2"></a>梯度消减2</h3><h5 id="残差学习"><a href="#残差学习" class="headerlink" title="残差学习"></a>残差学习</h5><p>p28<br>40 Deep Residual Learning for Image Recognition<br>41 Identity Mappings in Deep Residual Networks</p>
+<h5 id="高密度网络"><a href="#高密度网络" class="headerlink" title="高密度网络"></a>高密度网络</h5><p>p28，高密度网络，Paper - 42 Densely Connected Convolutional Networks</p>
+<h2 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h2><p>LSTM CRU</p>
+<h2 id="attention"><a href="#attention" class="headerlink" title="attention"></a>attention</h2><p>attention 三篇</p>
+<h1 id="常用优化方法："><a href="#常用优化方法：" class="headerlink" title="常用优化方法："></a>常用优化方法：</h1><p>p32，基础优化方法优劣 对比，Paper -45-52</p>
+<p>p33，随机采样控制方差，Paper 54 Accelerating Stochastic Gradient Descent using Predictive Variance Reduction<br>p33，下方神经网络优化算法 整理整合<br>p35，误差估计 VC维 拉的马赫平均q</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2019/12/06/temp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiqi Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiqi Liu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/12/06/temp/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-06T10:03:41+08:00">
+                2019-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<h1 id="综合方法"><a href="#综合方法" class="headerlink" title="综合方法"></a>综合方法</h1><h2 id="Prophet"><a href="#Prophet" class="headerlink" title="Prophet"></a>Prophet</h2><p>prophet是facebook开源的python预测库，该库的api设计与sklearn很像，也是分为fit方法和predict方法。prophet将时间序列分解为三个不同的成分：趋势成分，周期性成分与特殊点（如节假日），并采用加法模型，将三个成分相结合：</p>
+<script type="math/tex; mode=display">
+y(t)=g(t)+s(t)+h(t)+\epsilon_t</script><p>其中g(t)为趋势函数，代表序列中非周期性的改变，s(t)为周期性成分，h(t)为节假日等特殊点。\(\epsilon _t\) 为随机成分，我们一般令其为正态分布。<br>我们知道对于ARIMA模型而言我们可以利用差分方法来拟合趋势，而利用这种加性模型，对于趋势我们可以更加自由的进行拟合。</p>
+<h3 id="趋势拟合"><a href="#趋势拟合" class="headerlink" title="趋势拟合"></a>趋势拟合</h3><p>prophet主要使用了两种趋势拟合模型，增长模型与线性模型</p>
+<h4 id="增长模型"><a href="#增长模型" class="headerlink" title="增长模型"></a>增长模型</h4><p>增长模型常被用于生态系统模型中（被广为熟知的增长s曲线）如下：</p>
+<script type="math/tex; mode=display">
+g(t)=\frac{C}{1+exp(-k(t-m))}</script><p><img src="./time_series1/prophet_growth_curve.png" alt="avatar"></p>
+<p>然而在实际使用过程中，这种完美的曲线是不存在的，以用户数据为例：当新功能发布，用户增长率（k）与曲线容量（C）可能发生变化，而实际情况中，这种变化是经常发生的。因此，我们需要对模型进行适应。<br>对于曲线容量（C）而言，我们可以使用一个随时间变化的动态容量C(t)。<br>而对变化率（k）来说，我们可以假定，变化率是在某些时刻发生突然变化的（这也符合我们上述例子中的实际情况）。我们将这些变化的点用序列\(\boldsymbol{S}=\{s _j\}\)表示，\(\boldsymbol{\delta}=\{\delta _j\}\)表示第\(s _j\)时间点上的变化率增量，令k为基础增长率，令向量\(\boldsymbol{a}(t)=\{0,1\} ^{|S|}\)，有</p>
+<script type="math/tex; mode=display">
+a _j (t)=\begin{cases}
+1,\quad t \geq s _j \\\\
+0,\quad other
+\end{cases}</script><p>则对增长率，我们有\(k + a _j(t)^T\delta\)，而当增长率发生变化的时候，我们的偏移参数m也需要发生变化，举发生一次变化的图像为例：<br><img src="./time_series1/prophet_growth_curve2.png" alt="avatar"></p>
+<p>f曲线是变化前曲线，在s点处，增长率发生变化，变化后曲线为f‘。则我们有：</p>
+<script type="math/tex; mode=display">
+f(t)=\frac{C}{1+exp(-k(t-m))}</script><script type="math/tex; mode=display">
+f(t)=\frac{C}{1+exp(-(k+\delta)(t-(m + \gamma)))}</script><p>其中\(\delta,\gamma\)分别为k和m的增量，又由于曲线在t=s点相交，我们有f(s)=f’(s)。通过整理等式我们可得：</p>
+<script type="math/tex; mode=display">
+\gamma=\frac{\delta(s-m)}{k+\delta}</script><p>推广到多点的情况，则我们的得到：</p>
+<script type="math/tex; mode=display">
+\gamma _j=\frac{(s _j -m -\sum _{l<j}\gamma _l)\delta _j}{k+\sum _{l \leq j}\gamma _l}</script><p>令\(\boldsymbol{\gamma}=\{\gamma _j\}\)，则，我们得到最终模型：</p>
+<script type="math/tex; mode=display">
+g(t)=\frac{C(t)}{1+exp(-(k+\boldsymbol{a}(t)^T\delta)(t-(m+\boldsymbol{a}(t)^t\boldsymbol{\\gamma})))}</script><!--
+<p>—&gt;</p>
+<h4 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h4><p>对于线性模型，我们同样可以使用类似的分段方法。我们有：</p>
+<script type="math/tex; mode=display">
+g(t)=(k+\boldsymbol{a}(t)^T\delta)(t-(m+\boldsymbol{a}(t)^t\boldsymbol{\\gamma}))</script><h4 id="自动选择分段点"><a href="#自动选择分段点" class="headerlink" title="自动选择分段点"></a>自动选择分段点</h4><p>分段点可以通过分析师来根据经验进行指定，也可以通过计算，自动选取。<br>这里假设所有的\(\delta _ i \sim Laplace(0,\gamma)\)，其密度函数与图像如下：</p>
+<script type="math/tex; mode=display">
+Laplace(x|\mu,\gamma)=\frac{1}{2\gamma}exp(|x-\mu|/\gamma)</script><p><img src="./time_series1/prophet_growth_curve3.png" alt="avatar"></p>
+<p>在 Prophet 算法中，是需要给出变点的放置范围（changepoint_range）、个数（n_changepoint）、以及增长的变化率（changepoint_prior_scale）。<br>在默认情况下，changepoint_range = 0.8，即变点的选择是基于时间序列的前 80% 的历史数据；n_changepoint=25，即变点数量为25个，默认情况下通过等分的方法找到 25 个变点；changepoint_prior_scale = 0.25，即\(\delta _i \sim Laplace(0,0.25)\)。</p>
+<h5 id="对未来的预估"><a href="#对未来的预估" class="headerlink" title="对未来的预估"></a>对未来的预估</h5><p>从历史上长度为 T 的数据中，我们选择出 S 个变点，它们所对应的增长率的变化量是 \(\delta _ i \sim Laplace(0,\gamma)\) 。在预测时，对于参数\(\gamma\) 我们需要用历史数据进行估计,用估计值\(\lambda \) 替换模型训练时的\(\gamma\)。估计时，我们使用极大似然，即:  </p>
+<script type="math/tex; mode=display">
+\lambda = \frac{1}{S} \sum _{j=1} ^{S} {|\delta _j|}</script><p>未来的变点预测，我们使用如下方法进行生成：</p>
+<script type="math/tex; mode=display">
+\forall j > T,  \begin{cases}
+\delta_j = 0 ,\quad when \ probability \ in \ (T - S) / T \\\\
+\delta _i \sim Laplace(0, \lambda),\quad when \ probability \ in \ S / T 
+\end{cases}</script><h3 id="周期性趋势"><a href="#周期性趋势" class="headerlink" title="周期性趋势"></a>周期性趋势</h3><p>Prophet 对周期性趋势的拟合主要考虑了傅立叶序列的形式逼近周期函数：</p>
+<script type="math/tex; mode=display">
+s(t) =  \sum _{n=1} ^n {a _n cos(\frac{2 \pi nt}{P})}+ {b _n sin(\frac{2 \pi nt}{P})}</script><p>更多的detail可以参考谱分析相关部分，对于一般的日度预防，我们往往可以选择最长周期为一年，即P=365。相关具体取值可以通过数据或经验设置。</p>
+<h3 id="假日与事件"><a href="#假日与事件" class="headerlink" title="假日与事件"></a>假日与事件</h3><p>实际数据中，真实数据往往在一些可以预料的特殊节点上有其特殊的变化，例如节假日等。在hdays.py中，收集了各个国家的特殊假日。除了假日之外，用户还可以根据经验或数据来设置必要的特殊节点。<br>假设我们有L个假日点，\(D <em> i \)表示假日前后一段时间，\(k </em> i \)表示假日的影响程度，则：</p>
+<script type="math/tex; mode=display">
+h(t) =  Z(t)\boldsymbol k = \sum _ {i=1} ^ L k _i * 1 _ { t \in D _i}</script><p>其中 </p>
+<script type="math/tex; mode=display">
+Z(t) =  (1 _ { t \in D _1} , \dots ,1 _ { t \in D _L}), \boldsymbol k = (k _1,\dots,k _L) ^T</script><p>其中我们有一个先验，\(k _ i \sim Normal(0,v ^2)\)，v = holidays_prior_scale，默认值为10，当v越大，表示假日对模型影响越大。</p>
+<p>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1  </p>
+<p>1<br>1  \</p>
+-->
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
   <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
   
   
@@ -354,58 +1085,56 @@
           
             <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-
-
-<h2 id="一、Background"><a href="#一、Background" class="headerlink" title="一、Background"></a>一、Background</h2><p>在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。<!-- arima、谱分析还是alphabet相关方法，都存在类似的假设，--><br>我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩就可以确定整个模型），这些模型往往较为简单，但是十分实用。</p>
-<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="1-1基本统计量"><a href="#1-1基本统计量" class="headerlink" title="1.1基本统计量"></a>1.1基本统计量</h4><h5 id="均值、方差、协方差"><a href="#均值、方差、协方差" class="headerlink" title="均值、方差、协方差"></a>均值、方差、协方差</h5><p>基础统计量在实际单变量时间序列分析中非常有用，它们不仅可以对时间序列的周期性、平稳性等方面进行分析，甚至还可以辅助确定一些时间序列模型的参数。</p>
-<h5 id="均值"><a href="#均值" class="headerlink" title="均值"></a>均值</h5><p>对随机过程 \(Y_t\) ，均值定义如下：</p>
-<script type="math/tex; mode=display">\mu _t = E(Y _t), t = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><h5 id="自协方差"><a href="#自协方差" class="headerlink" title="自协方差"></a>自协方差</h5><script type="math/tex; mode=display">\gamma _{t,s} = Cov(Y _t, Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><p>其中 \(Cov(Y _t, Y _s) = E[(Y _t - \mu _t)(Y _s - \mu _s)] = E(Y _tY _s) - \mu _t\mu _s\)（根据均值定义消去均值乘积）。</p>
-<h5 id="自相关函数"><a href="#自相关函数" class="headerlink" title="自相关函数"></a>自相关函数</h5><script type="math/tex; mode=display">\rho _{t,s} = Corr(Y _t,Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><script type="math/tex; mode=display">Corr(Y _t,Y _s) = \frac{Cov(Y _t, Y _s)}{\sqrt{Var(Y _t)Var(Y _s)}} = \frac{\gamma _{t,s}}{\sqrt{\gamma _{t,t}\gamma _{s,s}}}</script><!--
+<h1 id="一、Background"><a href="#一、Background" class="headerlink" title="一、Background"></a>一、Background</h1><p>在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。<!-- arima、谱分析还是alphabet相关方法，都存在类似的假设，--><br>我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩就可以确定整个模型），这些模型往往较为简单，但是十分实用。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-1基本统计量"><a href="#1-1基本统计量" class="headerlink" title="1.1基本统计量"></a>1.1基本统计量</h3><h4 id="均值、方差、协方差"><a href="#均值、方差、协方差" class="headerlink" title="均值、方差、协方差"></a>均值、方差、协方差</h4><p>基础统计量在实际单变量时间序列分析中非常有用，它们不仅可以对时间序列的周期性、平稳性等方面进行分析，甚至还可以辅助确定一些时间序列模型的参数。</p>
+<h4 id="均值"><a href="#均值" class="headerlink" title="均值"></a>均值</h4><p>对随机过程 \(Y_t\) ，均值定义如下：</p>
+<script type="math/tex; mode=display">\mu _t = E(Y _t), t = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><h4 id="自协方差"><a href="#自协方差" class="headerlink" title="自协方差"></a>自协方差</h4><script type="math/tex; mode=display">\gamma _{t,s} = Cov(Y _t, Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><p>其中 \(Cov(Y _t, Y _s) = E[(Y _t - \mu _t)(Y _s - \mu _s)] = E(Y _tY _s) - \mu _t\mu _s\)（根据均值定义消去均值乘积）。</p>
+<h4 id="自相关函数"><a href="#自相关函数" class="headerlink" title="自相关函数"></a>自相关函数</h4><script type="math/tex; mode=display">\rho _{t,s} = Corr(Y _t,Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots</script><script type="math/tex; mode=display">Corr(Y _t,Y _s) = \frac{Cov(Y _t, Y _s)}{\sqrt{Var(Y _t)Var(Y _s)}} = \frac{\gamma _{t,s}}{\sqrt{\gamma _{t,t}\gamma _{s,s}}}</script><!--
 ##### 时间间隔下的自相关函数
 对与时间间隔k，-->
-<h4 id="1-2-平稳性"><a href="#1-2-平稳性" class="headerlink" title="1.2 平稳性"></a>1.2 平稳性</h4><p>对于一切时间间隔k，如果在时间点 \(t_1 , t_2, t_3, \cdots , t_n\)下均有，\(Y_{t_1}, Y_{t_2}, Y_{t_3}, \cdots , Y_{t_n}\)与\(Y_{t_1 -k}, Y_{t_2 -k}, Y_{t_3 -k}, \cdots , Y_{t_n -k}\) 的联合分布相同，则过程\(\{Y_{t}\}\)称为<strong>严平稳的</strong>。<br>而若序列是平稳性的，则：<br>当 n=1 时，\(Y_{t}\) 与\(Y_{t-k}\) 的分布相同，所以Y序列的每一点具有相同的分布，因此序列均值与方差恒为常数。<br>进而任意时间点t来说，由于序列的每一点均值方差均相同，所以我们可以化简自相关函数，即</p>
+<h3 id="1-2-平稳性"><a href="#1-2-平稳性" class="headerlink" title="1.2 平稳性"></a>1.2 平稳性</h3><p>对于一切时间间隔k，如果在时间点 \(t_1 , t_2, t_3, \cdots , t_n\)下均有，\(Y_{t_1}, Y_{t_2}, Y_{t_3}, \cdots , Y_{t_n}\)与\(Y_{t_1 -k}, Y_{t_2 -k}, Y_{t_3 -k}, \cdots , Y_{t_n -k}\) 的联合分布相同，则过程\(\{Y_{t}\}\)称为<strong>严平稳的</strong>。<br>而若序列是平稳性的，则：<br>当 n=1 时，\(Y_{t}\) 与\(Y_{t-k}\) 的分布相同，所以Y序列的每一点具有相同的分布，因此序列均值与方差恒为常数。<br>进而任意时间点t来说，由于序列的每一点均值方差均相同，所以我们可以化简自相关函数，即</p>
 <script type="math/tex; mode=display">\rho _{k} = Corr(Y _t,Y _{t-k}),   \gamma _{k} = Cov(Y _t, Y _{t-k})</script><p>严平稳性是一个非常强的假设，因此我们引出了弱（二阶矩）平稳性：  </p>
 <ol>
 <li>均值函数在所有时间上恒为常数。   </li>
 <li>对于所有时间点t和时间间隔k，有\(\gamma_{t,t-k}=\gamma_{0,k}\)。<br>在实际应用中，\(\gamma_{k}\)是一个非常有用的工具，它可以帮助我们判断时间序列的周期性，在某些时间序列模型中，我们使用\(\gamma_{k}\)来帮我们判断模型参数，这些应用即使在非平稳的状态下也有一定借鉴意义。</li>
 </ol>
-<h3 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h3><p>在进行单变量时间序列分析时，我们往往需要对时间序列模型作出一些假设。最常见的假设为线性叠加模型，即模型中各个组成部分是以线性叠加的方式组合到一起的。对于能预测的单变量模型来说，我们往往认为其具有平稳周期性，和非平稳部分。而非平稳部又可以分为趋势部分与局部异常部分。</p>
-<h4 id="周期性"><a href="#周期性" class="headerlink" title="周期性"></a>周期性</h4><p>在单变量时间序列模型中，我们往往假设模型是具有周期性的，在对用户数据建模时，这一点往往是成立的（比如：分析用户PV、UV等，往往具有明显的7天周期与一年周期，在这不同周期中，用户数据整体波动出现明显相似的变化）。<br>对于这一部分的建模，有很多方式，如：简单季节性模型根据周期性的经验估计直接建立模型，ARIMA中利用假设过去周期性的时间节点对当前时间点存在残留影响来建立模型，谱分析对时间序列进行傅立叶变换从而拟合周期部分等等。<br>不论是使用什么方式，在进行周期性估计时，我们往往不考虑序列的整体趋势，也就是说我们认为周期性部分是平稳的（往往只需要弱平稳即可）。</p>
-<h4 id="非平稳部分"><a href="#非平稳部分" class="headerlink" title="非平稳部分"></a>非平稳部分</h4><h5 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h5><p>对于时间序列模型，我们往往可以将其拆分为两部分，一部分是趋势拟合部分，另一部分是周期性拟合部分。对于趋势部分，一些模型是进行单独拟合的，例如：使用线性模型，或根据经验，使用相应的非线性模型，也有一些模型使用了差分的方式，消除趋势对周期性判断对影响（例如：ARIMA）。<br>当然也有一些模型不需要对趋势进行单独拟合，模型可以自动学习出整体趋势与周期特征（例如：使用深度学习方法对序列进行拟合）。</p>
-<h5 id="干预与异常"><a href="#干预与异常" class="headerlink" title="干预与异常"></a>干预与异常</h5><p>干预分析（Intervention Analysis）是指在时间序列中，因为在某一时刻发生了自然产生或人为施加的影响，导致整体序列产生了一定时间内均值或趋势发生了相应的变化，例如：外部广告投放导致一定时间内某应用UV突然增长，一段时间后稳定用户有一个明显的数量提升、商家在某一天投放广告导致商品购买量提升，广告停止投放，几天内购买量下降，但仍高于投放前，直至平稳、双十一大促，大促时购买量激增，但大促后用户消费明显疲软，一段时间后恢复正常等。在实际数据中，不同的干预可能有不同的特征，下文将介绍几种简单常见的干预拟合方式。</p>
+<h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><p>在进行单变量时间序列分析时，我们往往需要对时间序列模型作出一些假设。最常见的假设为线性叠加模型，即模型中各个组成部分是以线性叠加的方式组合到一起的。对于能预测的单变量模型来说，我们往往认为其具有平稳周期性，和非平稳部分。而非平稳部又可以分为趋势部分与局部异常部分。</p>
+<h3 id="周期性"><a href="#周期性" class="headerlink" title="周期性"></a>周期性</h3><p>在单变量时间序列模型中，我们往往假设模型是具有周期性的，在对用户数据建模时，这一点往往是成立的（比如：分析用户PV、UV等，往往具有明显的7天周期与一年周期，在这不同周期中，用户数据整体波动出现明显相似的变化）。<br>对于这一部分的建模，有很多方式，如：简单季节性模型根据周期性的经验估计直接建立模型，ARIMA中利用假设过去周期性的时间节点对当前时间点存在残留影响来建立模型，谱分析对时间序列进行傅立叶变换从而拟合周期部分等等。<br>不论是使用什么方式，在进行周期性估计时，我们往往不考虑序列的整体趋势，也就是说我们认为周期性部分是平稳的（往往只需要弱平稳即可）。</p>
+<h3 id="非平稳部分"><a href="#非平稳部分" class="headerlink" title="非平稳部分"></a>非平稳部分</h3><h4 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h4><p>对于时间序列模型，我们往往可以将其拆分为两部分，一部分是趋势拟合部分，另一部分是周期性拟合部分。对于趋势部分，一些模型是进行单独拟合的，例如：使用线性模型，或根据经验，使用相应的非线性模型，也有一些模型使用了差分的方式，消除趋势对周期性判断对影响（例如：ARIMA）。<br>当然也有一些模型不需要对趋势进行单独拟合，模型可以自动学习出整体趋势与周期特征（例如：使用深度学习方法对序列进行拟合）。</p>
+<h4 id="干预与异常"><a href="#干预与异常" class="headerlink" title="干预与异常"></a>干预与异常</h4><p>干预分析（Intervention Analysis）是指在时间序列中，因为在某一时刻发生了自然产生或人为施加的影响，导致整体序列产生了一定时间内均值或趋势发生了相应的变化，例如：外部广告投放导致一定时间内某应用UV突然增长，一段时间后稳定用户有一个明显的数量提升、商家在某一天投放广告导致商品购买量提升，广告停止投放，几天内购买量下降，但仍高于投放前，直至平稳、双十一大促，大促时购买量激增，但大促后用户消费明显疲软，一段时间后恢复正常等。在实际数据中，不同的干预可能有不同的特征，下文将介绍几种简单常见的干预拟合方式。</p>
 <p>产生干预时，我们的干预部分用\(S_t ^{(T)}\)表示，其中T为干预产生的时间点。则我们可以定义脉冲函数即：</p>
-<script type="math/tex; mode=display">P _t ^{(T)}=S _t ^{(T)}-S _{t-1} ^{(T)}</script><h6 id="阶梯干预"><a href="#阶梯干预" class="headerlink" title="阶梯干预"></a>阶梯干预</h6><p>我们可以将阶梯干预用如下阶梯函数表示：</p>
+<script type="math/tex; mode=display">P _t ^{(T)}=S _t ^{(T)}-S _{t-1} ^{(T)}</script><h5 id="阶梯干预"><a href="#阶梯干预" class="headerlink" title="阶梯干预"></a>阶梯干预</h5><p>我们可以将阶梯干预用如下阶梯函数表示：</p>
 <script type="math/tex; mode=display">
 S _t=\begin{cases}
 1,\quad x\geq T \\\\
 0,\quad x<T
 \end{cases}</script><p>对应的脉冲函数\(P_t ^{(T)}\)，当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。<br>此时我们干预对<em>时间序列均值的叠加部分\(m_t\)</em>为：</p>
 <script type="math/tex; mode=display">m _t = \omega S _t ^{(T)} \tag{1.1}</script><p>也就是说在T时刻激增并保持不变，这种干预往往可以看作是一种可加异常，也就是说当前时刻的异常并不影响之后的序列。</p>
-<h6 id="逐渐平稳的阶梯干预"><a href="#逐渐平稳的阶梯干预" class="headerlink" title="逐渐平稳的阶梯干预"></a>逐渐平稳的阶梯干预</h6><p>阶梯干预的形式非常理想，但实际应用中，全部影响作用其实会持续很长一段时间最终趋于稳定。我们可以对\(m_t\)建立一个AR(1)模型（后续会对其进行介绍）：</p>
+<h5 id="逐渐平稳的阶梯干预"><a href="#逐渐平稳的阶梯干预" class="headerlink" title="逐渐平稳的阶梯干预"></a>逐渐平稳的阶梯干预</h5><p>阶梯干预的形式非常理想，但实际应用中，全部影响作用其实会持续很长一段时间最终趋于稳定。我们可以对\(m_t\)建立一个AR(1)模型（后续会对其进行介绍）：</p>
 <script type="math/tex; mode=display">
 m _t=\begin{cases}
 \omega\frac{1-\delta ^{t-T}}{1-\delta},\quad x\geq T \\\\
 0,\quad other
 \end{cases}</script><p>其中0&lt;\(\delta\)&lt;1。此时<br>均值增量在会在一段时间内激增最终收敛到\(\frac{\delta}{1-\delta}\)，其中达到极限的一半所用时间\(log(0.5)/log(\delta)\)被称为干预的<strong>半衰期</strong></p>
-<h6 id="逐渐消失的干预"><a href="#逐渐消失的干预" class="headerlink" title="逐渐消失的干预"></a>逐渐消失的干预</h6><p>对于一些干预，在干预瞬间，序列均值会激增，但随着时间推移这种干预影响会逐渐消失。令T时刻干预产生，这时当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。我们可以将这种干预混入我们的模型例如，混入AR(1)模型中：</p>
+<h5 id="逐渐消失的干预"><a href="#逐渐消失的干预" class="headerlink" title="逐渐消失的干预"></a>逐渐消失的干预</h5><p>对于一些干预，在干预瞬间，序列均值会激增，但随着时间推移这种干预影响会逐渐消失。令T时刻干预产生，这时当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。我们可以将这种干预混入我们的模型例如，混入AR(1)模型中：</p>
 <script type="math/tex; mode=display">m _t=\delta m _{t-1} + \omega P^{(T)} _{t-1}</script><p>此时T时刻产生的干预成指数级衰减。</p>
-<h6 id="判断与检验"><a href="#判断与检验" class="headerlink" title="判断与检验"></a>判断与检验</h6><p>受到干预或异常的数据，有很多表示方法，针对不容模型，可能表示形式也不尽相同，而上述方法对于ARIMA模型是适用的，对于其他模型则要因模型而异。面对可能的异常，我们需要进行判断和检验，常用的方法可以使用先猜测异常，然后修正模型，进行假设检验，通过反复修正，最终直至不再发现异常为止。<br>在进行检验时，常用多重检验，可以使用保守的Bonferroni矫正（如果在同一数据集上同时检验n个独立的假设，那么用于每一假设的统计显著水平，应为仅检验一个假设时的显著水平的1/n。）控制多重检验的总体误差率。</p>
-<h2 id="ARIMA（自回归差分滑动平滑方法）"><a href="#ARIMA（自回归差分滑动平滑方法）" class="headerlink" title="ARIMA（自回归差分滑动平滑方法）"></a>ARIMA（自回归差分滑动平滑方法）</h2><p>对于时间序列\(\{Y _t\}\)，若我们令\(\{e _t\}\)代表一系列未观测到的白噪声序列数据，若我们将其看作一系列独立同分布的均值为0的随机变量。则对于一个序列而言，我们可以将其转化为过去时间点序列值残留的影响与当前时间点白噪声的叠加。<br>因此，对于我们可以将上述过程，简化成一个简单的线性过程：</p>
+<h5 id="判断与检验"><a href="#判断与检验" class="headerlink" title="判断与检验"></a>判断与检验</h5><p>受到干预或异常的数据，有很多表示方法，针对不容模型，可能表示形式也不尽相同，而上述方法对于ARIMA模型是适用的，对于其他模型则要因模型而异。面对可能的异常，我们需要进行判断和检验，常用的方法可以使用先猜测异常，然后修正模型，进行假设检验，通过反复修正，最终直至不再发现异常为止。<br>在进行检验时，常用多重检验，可以使用保守的Bonferroni矫正（如果在同一数据集上同时检验n个独立的假设，那么用于每一假设的统计显著水平，应为仅检验一个假设时的显著水平的1/n。）控制多重检验的总体误差率。</p>
+<h1 id="ARIMA（自回归差分滑动平滑方法）"><a href="#ARIMA（自回归差分滑动平滑方法）" class="headerlink" title="ARIMA（自回归差分滑动平滑方法）"></a>ARIMA（自回归差分滑动平滑方法）</h1><p>对于时间序列\(\{Y _t\}\)，若我们令\(\{e _t\}\)代表一系列未观测到的白噪声序列数据，若我们将其看作一系列独立同分布的均值为0的随机变量。则对于一个序列而言，我们可以将其转化为过去时间点序列值残留的影响与当前时间点白噪声的叠加。<br>因此，对于我们可以将上述过程，简化成一个简单的线性过程：</p>
 <script type="math/tex; mode=display">Y _t=e _t + \psi _1 e _{t-1} + \psi _2 e _{t-2} + \cdots \tag{2.1}</script><p>也就是说当前时间点是过去时间点的残留影响加上当前时间点点白噪声。对于这一模型，若表达式右边是一个无穷级数项，则要求：</p>
 <script type="math/tex; mode=display">\sum _ {i=1} ^ \infty {\psi _i ^2} < \infty</script><p>也就是说我们希望整体序列整体是收敛的。显然，我们希望考虑到过去的影响，但又不希望过去对当前的影响是发散的。 </p>
-<h3 id="MA"><a href="#MA" class="headerlink" title="MA"></a>MA</h3><p>对于公式2.1，若\(\psi \)的数量有限且不为0个，则我们称：</p>
+<h2 id="MA"><a href="#MA" class="headerlink" title="MA"></a>MA</h2><p>对于公式2.1，若\(\psi \)的数量有限且不为0个，则我们称：</p>
 <script type="math/tex; mode=display">Y _t=e _t - \theta _1 e _{t-1} - \cdots - \theta _n e _{t-q}</script><p>为q阶滑动平均过程，简记MA(q)，其中为方便后续公式表达，我们用\(-\theta\)。<br>对于MA(q)过程我们有：</p>
 <script type="math/tex; mode=display">\gamma _0 = (1 + \theta _1 ^2 + \theta _2 ^2 + \cdots + \theta _n ^2)\delta _e ^2</script><script type="math/tex; mode=display">
 \rho _k=\begin{cases}
 \frac{-\theta _k + \theta _1 \theta _{k+1} + \theta _2 \theta _{k+2} + \theta _{q-k} \theta _{q}}{1+\theta _1 ^2+\theta _2 ^2 + \cdots + \theta _q ^2},\quad k=1,2,\cdot,q \\\\ 
 0,\quad k>q
-\end{cases}</script><h3 id="AR"><a href="#AR" class="headerlink" title="AR"></a>AR</h3><p>对于时间序列\(\{Y _t\}\)若满足方程：</p>
+\end{cases}</script><h2 id="AR"><a href="#AR" class="headerlink" title="AR"></a>AR</h2><p>对于时间序列\(\{Y _t\}\)若满足方程：</p>
 <script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t</script><p>则，我们称其为p阶自回归过程。从方程我们可以看出，自回归过程是用自身序列做回归变量。对于t时刻的\(Y _t\)来说其值等于过去p个时间点与当前时间点噪声\(e _t\)的加权叠加，其中\(e _t\)要求与t时刻前的Y独立。从等式2.2我们可以看出，通过将右侧Y展开，我们可以还原出等式2.1的形式，但参数的表达可能十分复杂，同时该序列项数可能趋于无穷大。<br>对于MA模型来说，我们较容易保证其平稳，而对于AR模型，平稳显然需要满足条件。令，</p>
 <script type="math/tex; mode=display">\phi(x)=1 - \phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><script type="math/tex; mode=display">0=1-\phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><p>为AR模型的特征多项式和特征方程。若特征方程存在平稳解，当且仅当AR特征方程每一个根的绝对值都大于1。因此有如下必要不充分的条件：</p>
 <script type="math/tex; mode=display">\phi _1 + \phi _2 + \cdots + \phi _p < 1</script><script type="math/tex; mode=display">| \phi _p |< 1</script><p>假定序列平稳且均值为0。则，我们可以在AR模型方程两边同时乘以\(Y _{t-k}\)并求期望，再除以\(\gamma _0\)可以获得以下重要递推关系：</p>
 <script type="math/tex; mode=display">\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}</script><p>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho <em>k\)。<br>对于AR模型而言，若序列平稳，通过对自回归进行逐层展开，我们可以将其还原为式2.1形式。<br>而对于MA模型，我们可以通过\(Y </em>{t-k}\) 迭代消去序列中的第k项(e _{t-k}\),从而将MA模型转化为AR模型。若原时间序列是无穷的，那么我们最终可能转化为一个无穷阶的AR模型。这种MA可逆的转化是有条件的，需要MA特征方程：</p>
 <script type="math/tex; mode=display">0=1-\theta _1 x - \theta _2 x^2 - \cdots - \theta _p x ^ p</script><p>的根的模大于1（类似AR模型平稳性条件）。</p>
-<h3 id="ARMA-p-q-模型"><a href="#ARMA-p-q-模型" class="headerlink" title="ARMA(p,q)模型"></a>ARMA(p,q)模型</h3><p>若序列心中一部分是自回归，一部分是滑动平均的，那么我们可以得到一个相当普遍的时间序列模型。如下：</p>
+<h2 id="ARMA-p-q-模型"><a href="#ARMA-p-q-模型" class="headerlink" title="ARMA(p,q)模型"></a>ARMA(p,q)模型</h2><p>若序列心中一部分是自回归，一部分是滑动平均的，那么我们可以得到一个相当普遍的时间序列模型。如下：</p>
 <script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>对于该模型而言，MA部分我们可以保证解的平稳，因此对于模型整体平稳性，我们只需要保证AR部分过程平稳，即保证模型中AR特征方程根的模大于1。<br>此时模型可以由下式决定：</p>
 <script type="math/tex; mode=display">
 \left\\{
@@ -417,14 +1146,14 @@ m _t=\begin{cases}
 \psi _j = -\theta _j + \phi _p\theta _{j-p} + \phi _{p-1}\theta _{j-p+1} + \cdots + \phi _1\theta _{j-1} \\\\
 \end{array}
 \right.</script><p>这里我们将模型中AR部分展开得到公式2.1的形式，其中参数\(\psi\)为2.1中系数。<br>对于ARMA模型，我们通常要求AR和MA分别满足平稳和可逆两个条件（上文提到，各自特征方程根模大于一）</p>
-<h3 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h3><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y<em>t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y </em>{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
+<h2 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h2><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y<em>t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y </em>{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
 <p><img src="/home/picture/不同阶差分.png" alt="avatar"></p>
 <p>如果一个时间序列 \(\{Y _t\}\)的d次差分 \(W _t = \Delta ^d Y _t\)是一个平稳的ARMA(p,q)过程，则称\(\{Y _t\}\)为自回归滑动平均求和模型ARIMA(p,d,q)。通常取d=1或最多2。<br>考虑ARIMA(p,1,q)，令\(W _t = \Delta ^d Y _t\)，我们有：</p>
 <script type="math/tex; mode=display">W _t=\phi _1 W _{t-1} + \phi _2 W _{t-2} + \cdots + \phi _n W _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>通过将W用Y替换并合并，可得：</p>
 <script type="math/tex; mode=display">Y _t=(1 + \phi _1)W _{t-1} + (\phi _2 -\phi _1)W _{t-2} + \cdots +  (\phi _{t-p} -\phi _{t-p-1}) W _{t-p} - \phi _p W _{t-p-1} \\\\+ e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>我们称上述形式为模型的差分方程形式。我们分析其AR特征方程：</p>
 <script type="math/tex; mode=display">1-(1+\phi _1)x-(\phi _2 - \phi _1)x ^2-\cdots-(\phi _{t-p} -\phi _{t-p-1})x ^p + \phi _p x ^{p+1}=(1-\phi _1 -\phi _2x ^2-/cdots-\phi _px ^p)(1-x)</script><p>此时 x=1是一个根，因此这个过程非平稳，但其余的根是平稳过程\( \Delta ^d Y _t\)的特征多项式的根。这也说明了为什么当原序列非平稳，我们使用一阶差分来得到平稳序列的原因。</p>
 <p>差分是实现平稳较好的方式，出了差分外，我们还可以根据序列特征对序列进行其他的变换。例如：如果发现序列散度随着时间增加，可以尝试使用对数方法对序列进行变换等。</p>
-<h3 id="季节性ARIMA"><a href="#季节性ARIMA" class="headerlink" title="季节性ARIMA"></a>季节性ARIMA</h3><p>对于普通的ARIMA模型，我们考虑的是当前相近的时间节点对现在的影响，然而实际上数据的周期可能会更长。例如：对于用户数据而言，往往存在以周和年为周期的pattern。对于这种较长跨度的周期性影响，ARIMA模型不能进行很好的表达，这时我们可以引入季节性ARIMA模型。<br><strong>简单的季节性ARIMA模型</strong>我们可以通过经验知识，选出相应周期，考虑序列影响时，只考虑倍数于周期的相应时间节点。例如以s（s大于P和Q）为周期，则我们的AR(P)和MA(Q)以及差分I(D)模型如下：</p>
+<h2 id="季节性ARIMA"><a href="#季节性ARIMA" class="headerlink" title="季节性ARIMA"></a>季节性ARIMA</h2><p>对于普通的ARIMA模型，我们考虑的是当前相近的时间节点对现在的影响，然而实际上数据的周期可能会更长。例如：对于用户数据而言，往往存在以周和年为周期的pattern。对于这种较长跨度的周期性影响，ARIMA模型不能进行很好的表达，这时我们可以引入季节性ARIMA模型。<br><strong>简单的季节性ARIMA模型</strong>我们可以通过经验知识，选出相应周期，考虑序列影响时，只考虑倍数于周期的相应时间节点。例如以s（s大于P和Q）为周期，则我们的AR(P)和MA(Q)以及差分I(D)模型如下：</p>
 <script type="math/tex; mode=display">
 Y _t = Y _t - \Phi _1Y _{t-s}  - \Phi _2Y _{t-2s} - \cdots - \Phi _PY _{t-Ps}</script><script type="math/tex; mode=display">
 Y _t = e _t - \Theta _1e _{t-s}  - \Theta _2e _{t-2s} - \cdots - \Theta _Qe _{t-Qs}</script><script type="math/tex; mode=display">
@@ -435,11 +1164,11 @@ Y _t = e _t - \Theta _1e _{t-s}  - \Theta _2e _{t-2s} - \cdots - \Theta _Qe _{t-
 Y _t = e _t - \theta e _{t-1} - \Theta e _{t-12} - \theta\Theta e _{t-13}</script><p>因此我们定义周期为s的乘法季节\(ARMA(p,q)\times(P,Q) _s\)模型，通过分别求AR特征多项式\(\phi\Phi(x)\)和MA特征多项式\(\theta(x)\Theta(x)\)得到相应AR与MA模型序列通过相加合并两个子模型。<br>对于差分模型而言我们可以定义混合差分操作：</p>
 <script type="math/tex; mode=display">
 W _t = \Delta ^d \Delta _s ^D Y _t</script><p>因此我们可以得到新的季节ARIMA模型：\(ARMA(p,d,q)\times(P,D,Q) _s\)</p>
-<h3 id="模型识别"><a href="#模型识别" class="headerlink" title="模型识别"></a>模型识别</h3><h4 id="k阶滞后自相关函数（ACF）"><a href="#k阶滞后自相关函数（ACF）" class="headerlink" title="k阶滞后自相关函数（ACF）"></a>k阶滞后自相关函数（ACF）</h4><p>回顾第一节，我们有k阶滞后的自相关函数:</p>
+<h2 id="模型识别"><a href="#模型识别" class="headerlink" title="模型识别"></a>模型识别</h2><h3 id="k阶滞后自相关函数（ACF）"><a href="#k阶滞后自相关函数（ACF）" class="headerlink" title="k阶滞后自相关函数（ACF）"></a>k阶滞后自相关函数（ACF）</h3><p>回顾第一节，我们有k阶滞后的自相关函数:</p>
 <script type="math/tex; mode=display">
 \rho _{k} = Corr(Y _t,Y _{t-k}) = \frac{Cov(Y _t, Y _{t-k})}{\sqrt{Var(Y _t)Var(Y _{t-k})}} = \frac{\gamma _{k}}{\gamma _{0}}</script><script type="math/tex; mode=display">
 \gamma _{k} = Cov(Y _t, Y _{t-k}) = \frac{\sum _{t=k+1} ^{n} {(Y _t - \overline{Y})(Y _{t-k} - \overline{Y})} }{\sum _{t=1} ^n {(Y _t - \overline{Y}) ^2}}  k=1,2,\cdots</script><p>对于MA(q)模型而言当k&gt;q时，\(\rho _k = 0\)，这里r为\(\rho \)的估计量。因此对于MA模型而言我们可以使用K阶之后自相关函数确定起q的取值。</p>
-<h4 id="k阶滞后偏自相关函数（PACF）"><a href="#k阶滞后偏自相关函数（PACF）" class="headerlink" title="k阶滞后偏自相关函数（PACF）"></a>k阶滞后偏自相关函数（PACF）</h4><p>对于AR模型而言，由于模型往往可以展开成无穷阶MA模型，因此k阶滞后自相关函数不适用。从另一方面考虑，若我们希望计算\(Y <em>{t-k} \)对\(Y _t \)的影响程度从而判断模型是否含有第k阶，直接计算\(Y </em>{t-k} \)与\(Y <em>t \)的相关性是不合理的，这是因为对于\(Y _t \)而言其自身还包含了<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项。因此我们考虑消除\(Y <em>t \)中的<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)影响后，再计算消除影响后的\(Y <em>t \)与\(Y </em>{t-k} \)的相关系数，我们称这个系数为<strong>k阶滞后偏自相关系数</strong>。<br>由于AR模型为回归方法，为了达到消除影响的目的，因此我们可以考虑先对序列进行拟合，然后为了计算得到样本的k阶滞后偏自相关函数。对\(Y <em>t \)我们使用\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项进行预测： </p>
+<h3 id="k阶滞后偏自相关函数（PACF）"><a href="#k阶滞后偏自相关函数（PACF）" class="headerlink" title="k阶滞后偏自相关函数（PACF）"></a>k阶滞后偏自相关函数（PACF）</h3><p>对于AR模型而言，由于模型往往可以展开成无穷阶MA模型，因此k阶滞后自相关函数不适用。从另一方面考虑，若我们希望计算\(Y <em>{t-k} \)对\(Y _t \)的影响程度从而判断模型是否含有第k阶，直接计算\(Y </em>{t-k} \)与\(Y <em>t \)的相关性是不合理的，这是因为对于\(Y _t \)而言其自身还包含了<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项。因此我们考虑消除\(Y <em>t \)中的<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)影响后，再计算消除影响后的\(Y <em>t \)与\(Y </em>{t-k} \)的相关系数，我们称这个系数为<strong>k阶滞后偏自相关系数</strong>。<br>由于AR模型为回归方法，为了达到消除影响的目的，因此我们可以考虑先对序列进行拟合，然后为了计算得到样本的k阶滞后偏自相关函数。对\(Y <em>t \)我们使用\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项进行预测： </p>
 <script type="math/tex; mode=display">
 Y _t=</script><p>对\(\beta \)我们可以使用均方误差最小化，利用最小二乘法估计。<br>对于\(Y _{t-k} \)，我们可以利用t-k之后的k-1个项来进行向前预测，由序列平稳可得（？？？）：</p>
 <script type="math/tex; mode=display">
@@ -453,19 +1182,19 @@ Y _{t-k} - \beta _1 Y _{t-K+1} - \beta _2 Y _{t-K+2} - \cdots - \beta _{k-1} Y _
 \rho _j = \phi _{k1} \rho _{j-1} +\phi _{k2} \rho _{j-2} +\phi _{k3} \rho _{j-3} + \cdots+\phi _{kk} \rho _{j-k} , j=1,2,\cdots,k</script><p>我们可以先算出各阶\(\rho\)然后带入方程组从而求解出\(\phi <em>{k1},\phi </em>{k2},\cdots,\phi <em>{kk} \)，这里我们只需要最后一项。对于不同阶k，反复求解方程组从而得到\(\phi </em>{kk}\)，我们有\(\phi _{kk}\)递归方程：</p>
 <script type="math/tex; mode=display">
 \phi _{kk} = \frac{\phi _{k} - \sum _{j=1} ^{k-1}{\phi _{k-1,j}\rho _{k-j}}}{1 - \sum _{j=1} ^{k-1}{\phi _{k-1,j} \rho _{j}}}</script><p>对于大于p时样本偏自相关函数近似服从均值为0，方差为1/n的正态分布. 因此，当 k&gt;p 时，我们可以用\(\pm 2/\sqrt{n}\)作为\(\hat \phi _{kk}\)的临界极值来检验AR(p)模型的正确0假设。</p>
-<h3 id="非平稳性"><a href="#非平稳性" class="headerlink" title="非平稳性"></a>非平稳性</h3><p>在实际使用ARIMA模型时，我们往往仅使用1～2阶差分，过度的差分，会导致差分后的序列产生不必要的相关性，从而使模型变得复杂，最终导致过拟合。同时过度差分还可能导致差分后序列模型不可逆。<br>在对差分阶数进行判断时，ACF仍然是一个非常好用的工具。如果ACF的图像呈现明显近似线性的衰减，说明非平稳性影响了序列的自相关性。此时序列需要进行差分。更具体的方法还有Dickey-Fuller单位根检验（检验AR方程是否存在单位根）等。</p>
-<h4 id="ARIMA模型的判别"><a href="#ARIMA模型的判别" class="headerlink" title="ARIMA模型的判别"></a>ARIMA模型的判别</h4><p>对于ARMA模型来说，由于ACF和PACF都只能针对AR或MA其中一个模型进行判别，若二者混合，不能很好判别。因此我们引入了一些扩展的方法来识别。</p>
-<h5 id="EACF（扩展自相关法）："><a href="#EACF（扩展自相关法）：" class="headerlink" title="EACF（扩展自相关法）："></a>EACF（扩展自相关法）：</h5><p>如果AR模型是已知的，则可以从ARMA模型中去掉自回归部分从而得到一个纯MA过程。</p>
-<h5 id="AIC（Akaike’s-Information-Criterion-赤池信息准则）："><a href="#AIC（Akaike’s-Information-Criterion-赤池信息准则）：" class="headerlink" title="AIC（Akaike’s Information Criterion,赤池信息准则）："></a>AIC（Akaike’s Information Criterion,赤池信息准则）：</h5><p>AIC要求模型最小化：</p>
+<h2 id="非平稳性"><a href="#非平稳性" class="headerlink" title="非平稳性"></a>非平稳性</h2><p>在实际使用ARIMA模型时，我们往往仅使用1～2阶差分，过度的差分，会导致差分后的序列产生不必要的相关性，从而使模型变得复杂，最终导致过拟合。同时过度差分还可能导致差分后序列模型不可逆。<br>在对差分阶数进行判断时，ACF仍然是一个非常好用的工具。如果ACF的图像呈现明显近似线性的衰减，说明非平稳性影响了序列的自相关性。此时序列需要进行差分。更具体的方法还有Dickey-Fuller单位根检验（检验AR方程是否存在单位根）等。</p>
+<h3 id="ARIMA模型的判别"><a href="#ARIMA模型的判别" class="headerlink" title="ARIMA模型的判别"></a>ARIMA模型的判别</h3><p>对于ARMA模型来说，由于ACF和PACF都只能针对AR或MA其中一个模型进行判别，若二者混合，不能很好判别。因此我们引入了一些扩展的方法来识别。</p>
+<h4 id="EACF（扩展自相关法）："><a href="#EACF（扩展自相关法）：" class="headerlink" title="EACF（扩展自相关法）："></a>EACF（扩展自相关法）：</h4><p>如果AR模型是已知的，则可以从ARMA模型中去掉自回归部分从而得到一个纯MA过程。</p>
+<h4 id="AIC（Akaike’s-Information-Criterion-赤池信息准则）："><a href="#AIC（Akaike’s-Information-Criterion-赤池信息准则）：" class="headerlink" title="AIC（Akaike’s Information Criterion,赤池信息准则）："></a>AIC（Akaike’s Information Criterion,赤池信息准则）：</h4><p>AIC要求模型最小化：</p>
 <script type="math/tex; mode=display">
 AIC = -2\log {(D(p,q _\theta))+2k}</script><p>如果模型包含常数项或者截距项，则k=p+q+1，否则k=p+q。<br>AIC是估计模型与真实模型等平均KL偏离度的估计量。另\(p(y <em>1,y _2,\cdots,y _n)\)是\(Y _1,Y _2,\cdots,Y _n\)的真实pdf，\(q </em>\theta(y _1,y _2,\cdots,y _n)\) 是参数为 \(\theta\)的模型相应的pdf。则q和p的KL偏离由下面公式定义：</p>
 <script type="math/tex; mode=display">
 D(p,q _\theta) = \int _{-\infty} ^{\infty} \int _{-\infty} ^{\infty} \cdots\int _{-\infty} ^{\infty}{p(y _1,y _2,\cdots,y _n) \log{[\frac{p(y _1,y _2,\cdots,y _n)}{q _\theta(y _1,y _2,\cdots,y _n)}]}}dy _1dy _2\cdots dy _n</script><p>AIC估计了\(E(D(p,q _\hat \theta))\)，这里\(\hat \theta\)是参数\(\theta\)的极大似然估计。但是AIC是有偏估计量，若参数数量和数据容量的比率较大，则偏差会很大。因此引入\(AIC _c\)方法对AIC进行修正：</p>
 <script type="math/tex; mode=display">
 AIC _c = AIC + \frac{2(k+1)(k+2)}{n-k-2}</script><p>其中n是样本容量，k是出去噪声方差后的总参数量，当k/n&gt;0.1时，\(AIC _c\)表现优于其他模型选择准则（包括AIC、BIC）</p>
-<h5 id="BIC（Bayesian-Information-Criterion-贝叶斯信息准则）："><a href="#BIC（Bayesian-Information-Criterion-贝叶斯信息准则）：" class="headerlink" title="BIC（Bayesian Information Criterion,贝叶斯信息准则）："></a>BIC（Bayesian Information Criterion,贝叶斯信息准则）：</h5><script type="math/tex; mode=display">
-BIC =  -2\log {(D(p,q _\theta))+k\log{(n)}}</script><h3 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h3><p>当确定相应的ARIMA阶数后，我们既可以进行参数估计。常用的参数估计有最小二乘法与极大似然函数。</p>
-<h4 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h4><p><span id="e——"></span><br>对于AR模型而言，其满足标准最小二乘法形式，因此用最小二乘法估计十分简单。但对MA模型，由于其中存在e的噪声项，因此无法直接求的，所以我们需要对其进行转换：</p>
+<h4 id="BIC（Bayesian-Information-Criterion-贝叶斯信息准则）："><a href="#BIC（Bayesian-Information-Criterion-贝叶斯信息准则）：" class="headerlink" title="BIC（Bayesian Information Criterion,贝叶斯信息准则）："></a>BIC（Bayesian Information Criterion,贝叶斯信息准则）：</h4><script type="math/tex; mode=display">
+BIC =  -2\log {(D(p,q _\theta))+k\log{(n)}}</script><h2 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h2><p>当确定相应的ARIMA阶数后，我们既可以进行参数估计。常用的参数估计有最小二乘法与极大似然函数。</p>
+<h3 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h3><p><span id="e——"></span><br>对于AR模型而言，其满足标准最小二乘法形式，因此用最小二乘法估计十分简单。但对MA模型，由于其中存在e的噪声项，因此无法直接求的，所以我们需要对其进行转换：</p>
 <script type="math/tex; mode=display">
 e _t = Y _t + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}</script><p>其中\(e <em>0 = e </em>{-1}=\cdots=e _{-q} = 0\)，因此：</p>
 <script type="math/tex; mode=display">
@@ -478,12 +1207,12 @@ S _c (\theta) = \sum{(e _t)^2}</script><p>通过递推的计算\(e <em>1 , e </e
 <script type="math/tex; mode=display">
 e _t = Y _t - \phi _1 Y _{t-1} - \phi _2 Y _{t-2} - \cdots - \phi _p Y _{t-p}  + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}</script><p>注意对于大样本而言，初始值\(e <em>{p} , e </em>{p-1},\cdots,e <em>{p-q+1}\)对于可逆模型影响甚。因此这里\(e </em>{p} = e <em>{p-1}=\cdots=e </em>{p-q+1} = 0\),序列从p+1开始递推。</p>
 <h4 id="自回归逼近法"><a href="#自回归逼近法" class="headerlink" title="自回归逼近法"></a>自回归逼近法</h4><p>自回归逼近法，先将数据看做纯\(AR(\hat p)\)模型，利用AIC定阶确定\(\hat p\)，利用最小二乘法估计出相应的参数。用得到的\(AR(\hat p)\)模型对序列进行一步预测得到预测变量\(\hat Y _t\)，从而进一步估计出\(\hat e _t = Y _t - \hat Y _t\)。将得到的\(\hat e _t \)与真实数据\( Y _t\) 带入ARMA模型，于是就可以使用最小二乘法直接对AR与MA的参数进行估计。</p>
-<h4 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h4><p>对于最小二乘法，我们利用了分布的一阶矩和二阶矩，而对于最大似然法，我们使用了数据的全部信息。<br>模型定阶完成后，对于ARIMA(p,d,q)实际需要估计的参数有\(\phi,\theta,\mu,\sigma _e\)，对于序列中的\(e _t\)服从于\( Normal(0,\sigma ^2)\)，且彼此独立。因此我们可以得到\(e _2,e _3,\cdots,e _n\)联合概率密度：</p>
+<h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p>对于最小二乘法，我们利用了分布的一阶矩和二阶矩，而对于最大似然法，我们使用了数据的全部信息。<br>模型定阶完成后，对于ARIMA(p,d,q)实际需要估计的参数有\(\phi,\theta,\mu,\sigma _e\)，对于序列中的\(e _t\)服从于\( Normal(0,\sigma ^2)\)，且彼此独立。因此我们可以得到\(e _2,e _3,\cdots,e _n\)联合概率密度：</p>
 <script type="math/tex; mode=display">
 (2\pi\sigma _e ^2) ^{-(n-1)/2}exp(-e _t ^2 /2\sigma _e ^2\sum _{t=2} ^{n} e _t ^2)</script><p>ARIMA的极大似然估计法通过逐步递推预测公式导出，极大似然函数，具体过程较为复杂，可以参考PKU李东风老师的备课笔记CH21<sup><a href="#fn_PKUTimeSerious" id="reffn_PKUTimeSerious">PKUTimeSerious</a></sup></p>
-<h3 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h3><p><span id="e_estimation"></span></p>
+<h2 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h2><p><span id="e_estimation"></span></p>
 <p>在获得模型之后，既可以用模型对未来数据进行预测，对于预测结果，我们同时还可以估计预测的精度。<br>我们令：\(\hat Y _t(l)\)为序列前t项已知状态下对t之后第l项进行预测的预测值。</p>
-<h4 id="AR模型的预测"><a href="#AR模型的预测" class="headerlink" title="AR模型的预测"></a>AR模型的预测</h4><p>则对于AR模型而言，有：</p>
+<h3 id="AR模型的预测"><a href="#AR模型的预测" class="headerlink" title="AR模型的预测"></a>AR模型的预测</h3><p>则对于AR模型而言，有：</p>
 <script type="math/tex; mode=display">
 \hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i Y _{t+l-i}}\\\\
 Y _{t+l-i} = \hat Y _t(l-i) \qquad  when:\quad l-i>0</script><p>可以采用一步预测的方式，从预测\(\hat Y <em>t(1)\)开始逐步递推到l项。<br>可以看到与AR模型相比，预测缺少了\(e </em>{t+l}\) 项。对于一步预测\(\hat Y <em>t(1)\)而言,预测误差\(e _t(1) = Y </em>{t+l} - \hat Y <em>t(l) = e </em>{t+1}\)。<br>对于</p>
@@ -494,7 +1223,7 @@ e _{t+l-i} = 0 \qquad  when:\quad l-i<=0</script><p>其中，\(\psi\)是由AR模
 Var(e _t(l)) = \delta _e ^ 2 (1 + \psi _{1} ^2 + \psi _{2} ^2 + \cdots + \psi _{l-1} ^2 )</script><p>由于我们假设序列平稳，因此这里：</p>
 <script type="math/tex; mode=display">
 Var(e _t(l)) \approx Var(Y _t) = \gamma _0 , 当l较大时</script><p>证明略，感兴趣的同学，可以尝试使用AR(1)模型进行验证。<br>同时，对于arima模型，若序列非平稳则方差随预测时间窗口l的增大而无限增大。</p>
-<h4 id="MA模型的预测"><a href="#MA模型的预测" class="headerlink" title="MA模型的预测"></a>MA模型的预测</h4><p>对于MA模型而言，由于预测模型与e相关，因此需要先对e进行求解。<br>我们使用模型估计时用到的<a href="#e_estimation">递推估计方法</a>，求得\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)。因此，可以得到：</p>
+<h3 id="MA模型的预测"><a href="#MA模型的预测" class="headerlink" title="MA模型的预测"></a>MA模型的预测</h3><p>对于MA模型而言，由于预测模型与e相关，因此需要先对e进行求解。<br>我们使用模型估计时用到的<a href="#e_estimation">递推估计方法</a>，求得\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)。因此，可以得到：</p>
 <script type="math/tex; mode=display">
 \hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)}\\\\
 E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)  = \left\\{
@@ -503,15 +1232,15 @@ E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)  = \left\\{
 e _{t+l-i},\qquad  when \quad l-i<=0\\\\
 \end{array}
 \right.</script><p>其中对于l-i&gt;0的情况，由于相应的Y值是我们预测得到，因此我们无法通过递推关系求得相应残差的期望，另一方面，我们希望我们的预测尽可能准确，因此另残差期望为零也是合理的。<br>这里值得注意的一点，我们使用递推估计的方法逼近残差，需要满足模型可逆的前提。<br>同时，在对\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)进行估计的时候，因为我们将e序列转化成了无穷序列的Y只和，因此，我们可以考虑，当逼近项数j&gt;t-q时，对应Y的参数项\(\pi _j\)可以忽略。</p>
-<h4 id="ARIMA模型的预测"><a href="#ARIMA模型的预测" class="headerlink" title="ARIMA模型的预测"></a>ARIMA模型的预测</h4><p>对arima模型的预测可分为AR部分与MA部分，值得注意的是，若MA的截断j值选取t-q时，当l&gt;q时，ARIMA模型中MA部分将不起作用，因此此时模型只包含AR部分。<br>对ARMA模型，以\(\{e _t\}\)为基进行展开，得到相应参数\(\{\psi _t\}\)，则此时预测对应残差为：  </p>
+<h3 id="ARIMA模型的预测"><a href="#ARIMA模型的预测" class="headerlink" title="ARIMA模型的预测"></a>ARIMA模型的预测</h3><p>对arima模型的预测可分为AR部分与MA部分，值得注意的是，若MA的截断j值选取t-q时，当l&gt;q时，ARIMA模型中MA部分将不起作用，因此此时模型只包含AR部分。<br>对ARMA模型，以\(\{e _t\}\)为基进行展开，得到相应参数\(\{\psi _t\}\)，则此时预测对应残差为：  </p>
 <script type="math/tex; mode=display">
 e _t(l) = Y _{t+1} - \hat Y(l) \\\\
 = e _{t+l} + \psi _{1} e _{t+l-1} + \psi _{2} e _{t+l-2} + \cdots + \psi _{l-1} e _{t+1}</script><p>也就是说对于真实的\(Y _{t+l}\)，对l周期内的误差对l点的预测具有累计效应。当序列平稳时，l趋于无穷，序列误差对方差趋于\(\gamma _0 \)。<br>这里由于我们误差服从正态分布，因此通过计算置信区间，利用误差的方差，我们可以对预测结果的范围进行估计。</p>
-<h3 id="模型诊断"><a href="#模型诊断" class="headerlink" title="模型诊断"></a>模型诊断</h3><p>为判断学习出的ARIMA模型是否有效，我们需要对得到的模型进行诊断。</p>
-<h4 id="残差分析"><a href="#残差分析" class="headerlink" title="残差分析"></a>残差分析</h4><p>对于ARIMA模型，我们假设我们的数据满足模型:</p>
+<h2 id="模型诊断"><a href="#模型诊断" class="headerlink" title="模型诊断"></a>模型诊断</h2><p>为判断学习出的ARIMA模型是否有效，我们需要对得到的模型进行诊断。</p>
+<h3 id="残差分析"><a href="#残差分析" class="headerlink" title="残差分析"></a>残差分析</h3><p>对于ARIMA模型，我们假设我们的数据满足模型:</p>
 <script type="math/tex; mode=display">Y _t=\pi _1 Y _{t-1} + \pi _2 Y _{t-2} + \cdots + e _{t-q}</script><p>这里假设模型平稳可逆，\(\pi\)是模型差分和MA部分展开并与AR部分合并后得到的合并参数。<br>在模型建立好后，对每一个\(\pi\)，我们有一个估计量\(\hat \pi\)，因此使用过去序列对现在时间点t进行预测后，我们可以得到残差（实际值-预测值）：</p>
 <script type="math/tex; mode=display">\hat e _{t-q} = Y _t - \hat \pi _1 Y _{t-1} - \hat \pi _2 Y _{t-2} + \cdots</script><p>如果我们的ARIMA模型预测无误，则\(\hat e <em>{t} = e </em>{t}\)，也就是说我们的残差应：1. 服从正态分布 2. 每一时刻的残差与前序时刻不相关。通过判断残差这两点特性，我们可以分析出ARIMA模型对数据的拟合程度。<br>在实际判别中，我们主要判断方法有：残差图，QQ图，残差自相关性判定，统计量检验等方法。</p>
-<h5 id="残差图"><a href="#残差图" class="headerlink" title="残差图"></a>残差图</h5><p>由于残差应近似服从正态分布，因此我们绘制出残差的时间序列散点图（即残差图，X轴为时间，Y轴为残差值），通过比较散点图的随机性，与正态分布的特点来判断其正态性。这里我们可以关注：      </p>
+<h4 id="残差图"><a href="#残差图" class="headerlink" title="残差图"></a>残差图</h4><p>由于残差应近似服从正态分布，因此我们绘制出残差的时间序列散点图（即残差图，X轴为时间，Y轴为残差值），通过比较散点图的随机性，与正态分布的特点来判断其正态性。这里我们可以关注：      </p>
 <ol>
 <li>在相邻时刻残差是否产生了明显的相关特点. </li>
 <li>不同时间段内，残差的变化幅度是否相近. </li>
@@ -525,16 +1254,75 @@ e _t(l) = Y _{t+1} - \hat Y(l) \\\\
 <li>稀疏变化程度应该与正态分布的分布一致</li>
 </ol>
 <p>如图：</p>
-<script type="math/tex; mode=display">此处应有图+解释</script><h5 id="残差自相关性"><a href="#残差自相关性" class="headerlink" title="残差自相关性"></a>残差自相关性</h5><p>除了残差的正态性，我们还可以从残差相关性入手。通过计算残差序列不同阶的相关性，我们可以画出残差的ACF图。若无相关性，则各阶滞后均应该处于一个较低的水平。通过对相关性显著性分析，我们可以定量的判断模型是否有异常。</p>
+<script type="math/tex; mode=display">此处应有图+解释</script><h4 id="残差自相关性"><a href="#残差自相关性" class="headerlink" title="残差自相关性"></a>残差自相关性</h4><p>除了残差的正态性，我们还可以从残差相关性入手。通过计算残差序列不同阶的相关性，我们可以画出残差的ACF图。若无相关性，则各阶滞后均应该处于一个较低的水平。通过对相关性显著性分析，我们可以定量的判断模型是否有异常。</p>
 <script type="math/tex; mode=display">ACF显著性判断</script><p>如图：</p>
 <script type="math/tex; mode=display">此处应有图+解释</script><p>通过观察ACF图，我们可以找到是否有单个的滞后相关性具有异常。而另一方面，我们还可以对各个滞后进行综合考虑，可能单个相关系数没有异常，但是整体来看，具有异常。因此我们引入<strong>Ljung-Box检验</strong>，其统计量为：</p>
 <script type="math/tex; mode=display">Q=n(\hat r _1 ^2 + \hat r _2 ^2 + \cdots +\hat r _k ^2 )</script><p>若我们估计的模型正确，则Q应该近似服从自由度为k-p-q的卡方分布，若假设检验不能通过，则可以判断模型拟合有误。5t t</p>
-<h4 id="过拟合和参数冗余"><a href="#过拟合和参数冗余" class="headerlink" title="过拟合和参数冗余"></a>过拟合和参数冗余</h4><p>数据缺失<a href="http://rpubs.com/englianhu/handle-missing-value" target="_blank" rel="noopener">http://rpubs.com/englianhu/handle-missing-value</a></p>
-<h2 id="谱分析"><a href="#谱分析" class="headerlink" title="谱分析"></a>谱分析</h2><h2 id="综合方法：Prophet"><a href="#综合方法：Prophet" class="headerlink" title="综合方法：Prophet"></a>综合方法：Prophet</h2><p>zzz</p>
+<h3 id="过拟合和参数冗余"><a href="#过拟合和参数冗余" class="headerlink" title="过拟合和参数冗余"></a>过拟合和参数冗余</h3><p>数据缺失<a href="http://rpubs.com/englianhu/handle-missing-value" target="_blank" rel="noopener">http://rpubs.com/englianhu/handle-missing-value</a></p>
+<h1 id="谱表示与谱分析"><a href="#谱表示与谱分析" class="headerlink" title="谱表示与谱分析"></a>谱表示与谱分析</h1><p>ARIMA模型主要从滑动窗口和序列自相关性两方面对序列的周期性进行拟合。而考虑到对周期性问题进行拟合，我们很容易想到信号处理中的谱表示，即通过使用不同频率的正弦余弦函数，拟合出我们希望得到的周期变化。同时，我们还引入了傅立叶变换，将序列从空域变换到频域，通过分析频域图像，从而对周期性，相关性等进行更好的分析，这是谱分析的基本思想。</p>
+<h2 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="基本公式与概念"><a href="#基本公式与概念" class="headerlink" title="基本公式与概念"></a>基本公式与概念</h3><p>一下为一些简单常用的公式：</p>
+<script type="math/tex; mode=display">
+R\  cos(2\pi ft + \Phi)=A\ cos(2\pi ft )+B\ sin(2\pi ft)</script><script type="math/tex; mode=display">
+R = \sqrt{(A^2 + B^2)},\ \Phi = artan(-B/A)</script><script type="math/tex; mode=display">
+B = R * cos(\Phi),\    A = -R * sin(\Phi)</script><p>对于谱表示来说，我们可以将通项公式写成如下形式： </p>
+<script type="math/tex; mode=display">
+Y  _t  = A _0 + \sum _{j=1} ^m {[A _j cos(2 \pi f _j t) + B _jsin(2 \pi f _j t)]}
+\tag{谱1.1}</script><p>这是一种利用正弦余弦对，对时间序列的拟合，对于其中的各项A与B我们可以用最小二乘法进行回归，对于其中频率f 如果我们取特殊形式，则回归将会变得特别简单，例如：<br>1）n=2k+1：<br>则频率为依次为：1/n,2/n,…,k/n (k/n=1/2-1/(2n))。这种频率我们称之为傅立叶频率，在这些频率下，正弦和余弦的预测变量是正交的。<br>因此，最小二乘估计可得：</p>
+<script type="math/tex; mode=display">
+\hat A _0 = \overline Y</script><script type="math/tex; mode=display">
+\hat A _j = \frac{2}{n} \sum _{t=1} ^n {Y _t cos(2 \pi t j/n)},\ \hat B _j = \frac{2}{n} \sum _{t=1} ^n {Y _t sin(2 \pi t j/n)}</script><p>2）n=2k：<br>则：</p>
+<script type="math/tex; mode=display">
+\hat A _k = \frac{1}{n} \sum _{t=1} ^n (-1) ^t Y _t,\ \hat B _j = 0</script><p>对于任意长度的序列，无论其是确定性的还是随机的，都可以用通项公式进行完美拟合。<br>同时，对于长序列，通常来说可以使用快速傅立叶变换进行快速求解。</p>
+<h3 id="周期图"><a href="#周期图" class="headerlink" title="周期图"></a>周期图</h3><p>通过上述通项公式，我们可以对时间序列进行拟合。但实际拟合中，我们需要确定实际需要拟合哪一些周期。这时周期图是一个较好的工具。<br>周期图定义为:</p>
+<script type="math/tex; mode=display">
+I(j/n) = \frac{n}{2} (\hat A _j ^2 + \hat B _j ^2 )</script><p>对于样本量为偶数时，即 \(n=2k)\)时，在极端频率\(f=k/b=1/2)\)时，有：</p>
+<script type="math/tex; mode=display">
+I(1/2) = n(\hat A_k)^2</script><p>周期图的高峰显示了序列整体行为中不同频率上余弦-正弦对的相对强度。我们可以选取周期图中峰值较高的周期进行建模。<br>实际上对于一般的时间序列而言，周期图是时间序列从空域向频域变换后频域的图像。<br>对于较长序列，我们可以使用快速傅立叶变换的方式（FFT）进行快速有效的数值计算。</p>
+<h2 id="谱表分析"><a href="#谱表分析" class="headerlink" title="谱表分析"></a>谱表分析</h2><h3 id="谱表示"><a href="#谱表示" class="headerlink" title="谱表示"></a>谱表示</h3><p>对于谱分析的通项公式（谱1.1）来说，我们先考虑\(A_0=0\)的情况，又或者说，我们可以移除样本均值，令\(Y _t\)为样本到样本均值的偏差。此时，我们仅考虑\(0&lt;f&lt;1/2\)的情况（ 对于f在(0,1/2)和(1/2,1)区间，图像实际上是重叠的 ）。<br>我们令：  </p>
+<script type="math/tex; mode=display">
+a(f)=\sum _{\\{j|f _j<f\\}} A _j, b(f)=\sum _{\\{j|f _j<f\\}} B _j</script><p>从而构造出两个阶梯函数。从而我们可以对通项公式进行改写,得到谱表示：</p>
+<script type="math/tex; mode=display">
+Y _t = \int _0 ^{1/2} cos(2\pi ft) \rm{d}a(f) + \int _0 ^{1/2} sin(2\pi ft)
+ \rm{d}b(f) \tag{谱1.2}</script><p><strong>事实上，任何零均值平稳的过程都能表示成上述方程的形式。即，平稳过程可以用连续频带上无穷多个余弦正弦对的线形组合表示。</strong></p>
+<h3 id="周期图与谱密度"><a href="#周期图与谱密度" class="headerlink" title="周期图与谱密度"></a>周期图与谱密度</h3><p>正如上文提到的，要分析时间序列，周期图是一个很好的工具。实际上周期图是对谱表示的时间序列过程进行傅立叶变换的频域图像。这里我们引入谱密度（功率谱）概念，一个信号的功率谱密度就是该信号自相关函数的傅里叶变换。谱密度是过程经过傅立叶变换后在频域的密度函数。</p>
+<p>平稳随机过程的功率谱是一个确定函数。通过计算我们可以得到其公式为：</p>
+<script type="math/tex; mode=display">
+S(f)=\gamma_0 + 2\sum _{k=1} ^\infty \gamma _k cos(2\pi fk)</script><p>其中，\(\gamma _k\)为函数的k阶滞后样本协方差。根据傅立叶理论（QA：Planchere定理？是否需要过程满足先决条件，例如函数属于L2空间?），必存在一个相反关系，即：  </p>
+<script type="math/tex; mode=display">
+\gamma _k = \int _{-1/2} ^{1/2} S(f) cos(2\pi kf) \rm{d}f</script><p>从数学上来讲，S(f)是序列 \(\{\gamma _k\}\)的离散时间傅立叶变换，而 \(\{\gamma _k\}\)是谱密度的傅立叶逆变换。<br>同时还有：</p>
+<script type="math/tex; mode=display">
+F(f) = \int _{0} ^{f} S(x) \rm{d}x ,0<= f <=1/2</script><p>可以看出，谱密度下方区域面积的两倍是过程方差对应频率区间上构成该过程的余弦正弦对的那部分。<br>对于周期图I(f)，我们有：</p>
+<script type="math/tex; mode=display">
+\hat{S}(f)=1/2I(f),\hat{S}(1/2)=I(1/2),</script><h3 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h3><p>傅立叶变换公式：</p>
+<script type="math/tex; mode=display">
+F(\omega) = \int _{-\infty} ^{\infty} f(t)e^{-i\omega t} \rm{d}t</script><h1 id="综合方法"><a href="#综合方法" class="headerlink" title="综合方法"></a>综合方法</h1><h2 id="Prophet"><a href="#Prophet" class="headerlink" title="Prophet"></a>Prophet</h2><p>prophet是facebook开源的python预测库，该库的api设计与sklearn很像，也是分为fit方法和predict方法。prophet将时间序列分解为三个不同的成分：趋势成分，周期性成分与特殊点（如节假日），并采用加法模型，将三个成分相结合：</p>
+<script type="math/tex; mode=display">
+y(t)=g(t)+s(t)+h(t)+\epsilon_t</script><p>其中g(t)为趋势函数，代表序列中非周期性的改变，s(t)为周期性成分，h(t)为节假日等特殊点。\(\epsilon _t\) 为随机成分，我们一般令其为正态分布。<br>我们知道对于ARIMA模型而言我们可以利用差分方法来拟合趋势，而利用这种加性模型，对于趋势我们可以更加自由的进行拟合。</p>
+<h3 id="趋势拟合"><a href="#趋势拟合" class="headerlink" title="趋势拟合"></a>趋势拟合</h3><p>prophet主要使用了两种趋势拟合模型，增长模型与线性模型</p>
+<h4 id="增长模型"><a href="#增长模型" class="headerlink" title="增长模型"></a>增长模型</h4><p>增长模型常被用于生态系统模型中（被广为熟知的增长s曲线）如下：</p>
+<script type="math/tex; mode=display">
+g(t)=\frac{C}{1+exp(-k(t-m))}</script><p><img src="./time_series1/prophet_growth_curve.png" alt="avatar"></p>
+<p>然而在实际使用过程中，这种完美的曲线是不存在的，以用户数据为例：当新功能发布，用户增长率（k）与曲线容量（C）可能发生变化，而实际情况中，这种变化是经常发生的。因此，我们需要对模型进行适应。<br>对于曲线容量（C）而言，我们可以使用一个随时间变化的动态容量C(t)。<br>而对变化率（k）来说，我们可以假定，变化率是在某些时刻发生突然变化的（这也符合我们上述例子中的实际情况）。我们将这些变化的点用序列\(\boldsymbol{S}=\{s _j\}\)表示，\(\boldsymbol{\delta}=\{\delta _j\}\)表示第\(s _j\)时间点上的变化率增量，令k为基础增长率，令向量\(\boldsymbol{a}(t)=\{0,1\} ^{|S|}\)，有</p>
+<script type="math/tex; mode=display">
+a _j (t)=\begin{cases}
+1,\quad t \geq s _j \\\\
+0,\quad other
+\end{cases}</script><p>则对增长率，我们有\(k + a _j(t)^T\delta\)，而当增长率发生变化的时候，我们的偏移参数m也需要发生变化，举发生一次变化的图像为例：<br><img src="./time_series1/prophet_growth_curve2.png" alt="avatar"></p>
+<p>f曲线是变化前曲线，在s点处，增长率发生变化，变化后曲线为f‘。则我们有：</p>
+<script type="math/tex; mode=display">
+f(t)=\frac{C}{1+exp(-k(t-m))}</script><script type="math/tex; mode=display">
+f(t)=\frac{C}{1+exp(-(k+\delta)(t-(m + \gamma)))}</script><p>其中\(\delta,\gamma\)分别为k和m的增量，又由于曲线在t=s点相交，我们有f(s)=f’(s)。通过整理等式我们可得：</p>
+<script type="math/tex; mode=display">
+\gamma=\frac{\delta(s-m)}{k+\delta}</script><p>推广到多点的情况，则我们的得到：</p>
+<script type="math/tex; mode=display">
+\gamma _j=\frac{(s _j -m -\sum _{l<j}\gamma _l)\delta _j}{k+\sum _{l \leq j}\gamma _l}</script><p>令\(\boldsymbol{\gamma}=\{\gamma _j\}\)，则，我们得到最终模型：</p>
+<script type="math/tex; mode=display">
+g(t)=\frac{C(t)}{1+exp(-(k+\boldsymbol{a}(t)^T\delta)(t-(m+\boldsymbol{a}(t)^t\boldsymbol{\\gamma})))}</script><!--
+<p>—&gt;</p>
 <blockquote id="fn_PKUTimeSerious">
-<sup>PKUTimeSerious</sup>. <a href="http://www.math.pku.edu.cn/teachers/lidf/course/atsa/atsanotes/html/_atsanotes/atsa-estarma.html#estarma-mlearma/, 2016/2018-8.19" target="_blank" rel="noopener">应用时间序列分析备课笔记</a><a href="#reffn_PKUTimeSerious" title="Jump back to footnote [PKUTimeSerious] in the text."> &#8617;</a>
+<sup>PKUTimeSerious</sup>. <a href="http://www.math.pku.edu.cn/teachers/lidf/course/atsa/atsanotes/html/_atsanotes/atsa-estarma.html#estarma-mlearma/, 2016/2018-8.19">应用时间序列分析备课笔记</a><a href="#reffn_PKUTimeSerious" title="Jump back to footnote [PKUTimeSerious] in the text."> &#8617;</a>
 </blockquote>
-
+-->
           
         
       
@@ -745,7 +1533,7 @@ e _t(l) = Y _{t+1} - \hat Y(l) \\\\
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -767,7 +1555,7 @@ e _t(l) = Y _{t+1} - \hat Y(l) \\\\
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

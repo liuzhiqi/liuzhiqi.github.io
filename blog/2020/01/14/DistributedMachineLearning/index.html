@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.jpeg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习,优化方法,预测,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="集成学习：BaggingBoosting间隔定理GDBThttps://www.cnblogs.com/jiangxinyang/p/9248154.html 神经网络逼近定理逼近定理深度定理[30]On the Depth of Deep Neural Networks A Theoretical Viewhttps://arxiv.org/abs/1506.05232 损失函数严重非凸多次随机">
+<meta name="keywords" content="机器学习,优化方法,预测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式机器学习读书笔记与扩充">
+<meta property="og:url" content="https://liuzhiqi.github.io/blog/2020/01/14/DistributedMachineLearning/index.html">
+<meta property="og:site_name" content="Zhiqi Liu">
+<meta property="og:description" content="集成学习：BaggingBoosting间隔定理GDBThttps://www.cnblogs.com/jiangxinyang/p/9248154.html 神经网络逼近定理逼近定理深度定理[30]On the Depth of Deep Neural Networks A Theoretical Viewhttps://arxiv.org/abs/1506.05232 损失函数严重非凸多次随机">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-01-17T14:40:58.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式机器学习读书笔记与扩充">
+<meta name="twitter:description" content="集成学习：BaggingBoosting间隔定理GDBThttps://www.cnblogs.com/jiangxinyang/p/9248154.html 神经网络逼近定理逼近定理深度定理[30]On the Depth of Deep Neural Networks A Theoretical Viewhttps://arxiv.org/abs/1506.05232 损失函数严重非凸多次随机">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuzhiqi.github.io/blog/2020/01/14/DistributedMachineLearning/">
+
+
+
+
+
+  <title>分布式机器学习读书笔记与扩充 | Zhiqi Liu</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiqi Liu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-articles">
+          <a href="/articles" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br>
+            
+            Articles
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-notes">
+          <a href="/categories/Notes" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wpforms"></i> <br>
+            
+            Notes
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/01/14/DistributedMachineLearning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiqi Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiqi Liu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">分布式机器学习读书笔记与扩充</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-14T22:37:52+08:00">
+                2020-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="集成学习："><a href="#集成学习：" class="headerlink" title="集成学习："></a>集成学习：</h1><h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><h2 id="间隔定理"><a href="#间隔定理" class="headerlink" title="间隔定理"></a>间隔定理</h2><h2 id="GDBT"><a href="#GDBT" class="headerlink" title="GDBT"></a>GDBT</h2><p><a href="https://www.cnblogs.com/jiangxinyang/p/9248154.html" target="_blank" rel="noopener">https://www.cnblogs.com/jiangxinyang/p/9248154.html</a></p>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><h2 id="逼近定理"><a href="#逼近定理" class="headerlink" title="逼近定理"></a>逼近定理</h2><h3 id="逼近定理-1"><a href="#逼近定理-1" class="headerlink" title="逼近定理"></a>逼近定理</h3><h3 id="深度定理"><a href="#深度定理" class="headerlink" title="深度定理"></a>深度定理</h3><p>[30]On the Depth of Deep Neural Networks A Theoretical View<br><a href="https://arxiv.org/abs/1506.05232" target="_blank" rel="noopener">https://arxiv.org/abs/1506.05232</a></p>
+<h2 id="损失函数严重非凸"><a href="#损失函数严重非凸" class="headerlink" title="损失函数严重非凸"></a>损失函数严重非凸</h2><h3 id="多次随机初始化"><a href="#多次随机初始化" class="headerlink" title="多次随机初始化"></a>多次随机初始化</h3><h3 id="模拟退火技术"><a href="#模拟退火技术" class="headerlink" title="模拟退火技术"></a>模拟退火技术</h3><h3 id="神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值"><a href="#神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值" class="headerlink" title="神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值"></a>神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值</h3><p>[31] Deep learning Without Poor Local Minima<br><a href="https://arxiv.org/abs/1605.07110" target="_blank" rel="noopener">https://arxiv.org/abs/1605.07110</a></p>
+<h2 id="过拟合问题"><a href="#过拟合问题" class="headerlink" title="过拟合问题"></a>过拟合问题</h2><p>神经网络表达能力太强，容易过拟合</p>
+<h3 id="DropOut"><a href="#DropOut" class="headerlink" title="DropOut"></a>DropOut</h3><p>在2012年，Alex、Hinton在其论文《ImageNet Classification with Deep Convolutional Neural Networks》中用到了Dropout算法，用于防止过拟合。并且，这篇论文提到的AlexNet网络模型引爆了神经网络应用热潮，并赢得了2012年图像识别大赛冠军，使得CNN成为图像分类上的核心算法模型。<br>随后，又有一些关于Dropout的文章《Dropout:A Simple Way to Prevent Neural Networks from Overfitting》、《Improving Neural Networks with Dropout》、《Dropout as data augmentation》。</p>
+<h3 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h3><p><a href="https://zhuanlan.zhihu.com/p/41679153" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41679153</a></p>
+<h3 id="批量归一化"><a href="#批量归一化" class="headerlink" title="批量归一化"></a>批量归一化</h3><p><a href="https://zhuanlan.zhihu.com/p/34879333" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34879333</a><br>34|2015| Batch Normalization- Accelerating Deep Network Training b y Reducing Internal Covariate Shift</p>
+<h3 id="权值衰减"><a href="#权值衰减" class="headerlink" title="权值衰减"></a>权值衰减</h3><p><a href="https://zhuanlan.zhihu.com/p/33006526" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33006526</a><br><a href="https://zhuanlan.zhihu.com/p/51490163" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/51490163</a><br><a href="https://cloud.tencent.com/developer/article/1374163" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1374163</a></p>
+<p>35|1992| A simple weight decay can improve generalization </p>
+<h3 id="提前终止"><a href="#提前终止" class="headerlink" title="提前终止"></a>提前终止</h3><p>36|1998 Automatic Early Stopping Using Cross Validation : quantifying the criteria</p>
+<h2 id="梯度消减1"><a href="#梯度消减1" class="headerlink" title="梯度消减1"></a>梯度消减1</h2><p>神经网络过深 预测误差难以顺利传递 RNN一套走一遍<br>p26，梯度消减，Paper - 37  Learning Long-Term Dependencies with Gradient Descent is Difficult <a href="https://www.jianshu.com/p/46367f985c64" target="_blank" rel="noopener">https://www.jianshu.com/p/46367f985c64</a><br>p26，门限法，Paper - 38 </p>
+<h2 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h2><h3 id="池化算子"><a href="#池化算子" class="headerlink" title="池化算子"></a>池化算子</h3><p>p27，池化算子，Paper -39 Network In Network </p>
+<h3 id="梯度消减2"><a href="#梯度消减2" class="headerlink" title="梯度消减2"></a>梯度消减2</h3><h5 id="残差学习"><a href="#残差学习" class="headerlink" title="残差学习"></a>残差学习</h5><p>p28<br>40 Deep Residual Learning for Image Recognition<br>41 Identity Mappings in Deep Residual Networks</p>
+<h5 id="高密度网络"><a href="#高密度网络" class="headerlink" title="高密度网络"></a>高密度网络</h5><p>p28，高密度网络，Paper - 42 Densely Connected Convolutional Networks</p>
+<h2 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h2><p>LSTM CRU</p>
+<h2 id="attention"><a href="#attention" class="headerlink" title="attention"></a>attention</h2><p>attention 三篇</p>
+<h1 id="常用优化方法："><a href="#常用优化方法：" class="headerlink" title="常用优化方法："></a>常用优化方法：</h1><p>p32，基础优化方法优劣 对比，Paper -45-52</p>
+<p>p33，随机采样控制方差，Paper 54 Accelerating Stochastic Gradient Descent using Predictive Variance Reduction<br>p33，下方神经网络优化算法 整理整合<br>p35，误差估计 VC维 拉的马赫平均q</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/优化方法/" rel="tag"># 优化方法</a>
+          
+            <a href="/tags/预测/" rel="tag"># 预测</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/12/06/temp/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/01/17/复习List/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Zhiqi Liu">
+            
+              <p class="site-author-name" itemprop="name">Zhiqi Liu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhiqi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集成学习："><span class="nav-number">1.</span> <span class="nav-text">集成学习：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bagging"><span class="nav-number">1.1.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boosting"><span class="nav-number">1.2.</span> <span class="nav-text">Boosting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#间隔定理"><span class="nav-number">1.3.</span> <span class="nav-text">间隔定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GDBT"><span class="nav-number">1.4.</span> <span class="nav-text">GDBT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">2.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逼近定理"><span class="nav-number">2.1.</span> <span class="nav-text">逼近定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逼近定理-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">逼近定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度定理"><span class="nav-number">2.1.2.</span> <span class="nav-text">深度定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数严重非凸"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数严重非凸</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多次随机初始化"><span class="nav-number">2.2.1.</span> <span class="nav-text">多次随机初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟退火技术"><span class="nav-number">2.2.2.</span> <span class="nav-text">模拟退火技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值"><span class="nav-number">2.2.3.</span> <span class="nav-text">神经网络足够深，所有局部解与全局最优解油非常类似的损失函数值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过拟合问题"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DropOut"><span class="nav-number">2.3.1.</span> <span class="nav-text">DropOut</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据增强"><span class="nav-number">2.3.2.</span> <span class="nav-text">数据增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量归一化"><span class="nav-number">2.3.3.</span> <span class="nav-text">批量归一化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权值衰减"><span class="nav-number">2.3.4.</span> <span class="nav-text">权值衰减</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提前终止"><span class="nav-number">2.3.5.</span> <span class="nav-text">提前终止</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度消减1"><span class="nav-number">2.4.</span> <span class="nav-text">梯度消减1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNN"><span class="nav-number">2.5.</span> <span class="nav-text">CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#池化算子"><span class="nav-number">2.5.1.</span> <span class="nav-text">池化算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度消减2"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度消减2</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#残差学习"><span class="nav-number">2.5.2.0.1.</span> <span class="nav-text">残差学习</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高密度网络"><span class="nav-number">2.5.2.0.2.</span> <span class="nav-text">高密度网络</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN"><span class="nav-number">2.6.</span> <span class="nav-text">RNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention"><span class="nav-number">2.7.</span> <span class="nav-text">attention</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#常用优化方法："><span class="nav-number">3.</span> <span class="nav-text">常用优化方法：</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiqi Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
