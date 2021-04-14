@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Social Network,Community Analysis,Network Analysis,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="title: 基础社群分析方法date: 2020-05-12 22:13:11mathjax: truetype: notestags:  Social Network Community Analysis Network Analysiscategories: Notes   基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，">
+<meta name="description" content="基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，思路是社区内部的连边密度要高于社区间。   流分析：后者适用于有向有权网络，思路是发现在网络的某种流动（物质、能量、信息）中形成的社区结构。   　  拓扑分析计算网络的模块化程度Q-ModularityQ-Modularity是一种定义社群划分的指标，其定义在[-0.5,1)区间">
+<meta name="keywords" content="Social Network,Community Analysis,Network Analysis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zhiqi Liu">
-<meta property="og:url" content="https://liuzhiqi.github.io/blog/2021/04/14/基础社群分析方法/index.html">
+<meta property="og:title" content="基础社群分析方法">
+<meta property="og:url" content="https://liuzhiqi.github.io/blog/2020/05/12/basic_community_analysis/index.html">
 <meta property="og:site_name" content="Zhiqi Liu">
-<meta property="og:description" content="title: 基础社群分析方法date: 2020-05-12 22:13:11mathjax: truetype: notestags:  Social Network Community Analysis Network Analysiscategories: Notes   基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，">
+<meta property="og:description" content="基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，思路是社区内部的连边密度要高于社区间。   流分析：后者适用于有向有权网络，思路是发现在网络的某种流动（物质、能量、信息）中形成的社区结构。   　  拓扑分析计算网络的模块化程度Q-ModularityQ-Modularity是一种定义社群划分的指标，其定义在[-0.5,1)区间">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-04-14T00:56:53.962Z">
+<meta property="og:updated_time" content="2021-04-14T00:58:51.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zhiqi Liu">
-<meta name="twitter:description" content="title: 基础社群分析方法date: 2020-05-12 22:13:11mathjax: truetype: notestags:  Social Network Community Analysis Network Analysiscategories: Notes   基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，">
+<meta name="twitter:title" content="基础社群分析方法">
+<meta name="twitter:description" content="基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，思路是社区内部的连边密度要高于社区间。   流分析：后者适用于有向有权网络，思路是发现在网络的某种流动（物质、能量、信息）中形成的社区结构。   　  拓扑分析计算网络的模块化程度Q-ModularityQ-Modularity是一种定义社群划分的指标，其定义在[-0.5,1)区间">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://liuzhiqi.github.io/blog/2021/04/14/基础社群分析方法/">
+  <link rel="canonical" href="https://liuzhiqi.github.io/blog/2020/05/12/basic_community_analysis/">
 
 
 
 
 
-  <title> | Zhiqi Liu</title>
+  <title>基础社群分析方法 | Zhiqi Liu</title>
   
 
 
@@ -257,12 +258,12 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2021/04/14/基础社群分析方法/">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/05/12/basic_community_analysis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiqi Liu">
@@ -279,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">基础社群分析方法</h1>
         
 
         <div class="post-meta">
@@ -291,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-14T08:56:25+08:00">
-                2021-04-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-12T22:13:11+08:00">
+                2020-05-12
               </time>
             
 
@@ -301,6 +302,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -331,14 +354,7 @@
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-<hr>
-<p>title: 基础社群分析方法<br>date: 2020-05-12 22:13:11<br>mathjax: true<br>type: notes<br>tags:</p>
-<ul>
-<li>Social Network</li>
-<li>Community Analysis</li>
-<li>Network Analysis<br>categories: Notes</li>
-</ul>
-<hr>
+
 <h1 id="基础社群分析方法"><a href="#基础社群分析方法" class="headerlink" title="基础社群分析方法"></a>基础社群分析方法</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>社区划分的算法比较多，大致可以分为两大类：    </p>
 <ul>
 <li>拓扑分析：前者一般适用于无向无权网络，思路是社区内部的连边密度要高于社区间。  </li>
@@ -378,6 +394,16 @@ r _{ij} = \sqrt{\sum _{k=1} ^n \frac{(P _{ik} ^t - P _{jk} ^t)^2}{d(k)}} = ||D ^
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Social-Network/" rel="tag"># Social Network</a>
+          
+            <a href="/tags/Community-Analysis/" rel="tag"># Community Analysis</a>
+          
+            <a href="/tags/Network-Analysis/" rel="tag"># Network Analysis</a>
+          
+        </div>
+      
 
       
       
@@ -387,8 +413,8 @@ r _{ij} = \sqrt{\sum _{k=1} ^n \frac{(P _{ik} ^t - P _{jk} ^t)^2}{d(k)}} = ||D ^
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/05/12/basic_community_analysis/" rel="next" title="基础社群分析方法">
-                <i class="fa fa-chevron-left"></i> 基础社群分析方法
+              <a href="/blog/2020/01/27/Untitled/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -396,6 +422,10 @@ r _{ij} = \sqrt{\sum _{k=1} ^n \frac{(P _{ik} ^t - P _{jk} ^t)^2}{d(k)}} = ||D ^
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2021/04/14/基础社群分析方法/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
