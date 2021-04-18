@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="\( \)  SiNE（2017）SiNE主要针对符号网络来进行embedding，考虑正边和负边。SiNE主要参考了结构平衡理论，即符号网络中的用户与朋友的距离比敌人更近（相似度更高）。SiNE假设每一个顶点都存在一个正负边三元组，\((v _i,v _j,v _k)\)，其中ij边为+1，ik边为-1。实际社交网络中，负边样本往往是少数，甚至不存在的，若某一顶点不存在，则为该边添加一个">
+<meta name="description" content="\( \)  \begin{cases} \end{cases} 本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译的文字摘抄自【论文笔记】A Survey on Network Embedding">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zhiqi Liu">
 <meta property="og:url" content="https://liuzhiqi.github.io/draft/M-NMF-.html">
 <meta property="og:site_name" content="Zhiqi Liu">
-<meta property="og:description" content="\( \)  SiNE（2017）SiNE主要针对符号网络来进行embedding，考虑正边和负边。SiNE主要参考了结构平衡理论，即符号网络中的用户与朋友的距离比敌人更近（相似度更高）。SiNE假设每一个顶点都存在一个正负边三元组，\((v _i,v _j,v _k)\)，其中ij边为+1，ik边为-1。实际社交网络中，负边样本往往是少数，甚至不存在的，若某一顶点不存在，则为该边添加一个">
+<meta property="og:description" content="\( \)  \begin{cases} \end{cases} 本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译的文字摘抄自【论文笔记】A Survey on Network Embedding">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-04-14T00:11:24.075Z">
+<meta property="og:updated_time" content="2021-04-18T05:19:06.700Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zhiqi Liu">
-<meta name="twitter:description" content="\( \)  SiNE（2017）SiNE主要针对符号网络来进行embedding，考虑正边和负边。SiNE主要参考了结构平衡理论，即符号网络中的用户与朋友的距离比敌人更近（相似度更高）。SiNE假设每一个顶点都存在一个正负边三元组，\((v _i,v _j,v _k)\)，其中ij边为+1，ik边为-1。实际社交网络中，负边样本往往是少数，甚至不存在的，若某一顶点不存在，则为该边添加一个">
+<meta name="twitter:description" content="\( \)  \begin{cases} \end{cases} 本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译的文字摘抄自【论文笔记】A Survey on Network Embedding">
 
 
 
@@ -273,9 +273,9 @@
 
 <p>\( \)</p>
 <script type="math/tex; mode=display">
-</script><h4 id="SiNE（2017）"><a href="#SiNE（2017）" class="headerlink" title="SiNE（2017）"></a>SiNE（2017）</h4><p>SiNE主要针对符号网络来进行embedding，考虑正边和负边。SiNE主要参考了结构平衡理论，即符号网络中的用户与朋友的距离比敌人更近（相似度更高）。SiNE假设每一个顶点都存在一个正负边三元组，\((v _i,v _j,v _k)\)，其中ij边为+1，ik边为-1。实际社交网络中，负边样本往往是少数，甚至不存在的，若某一顶点不存在，则为该边添加一个虚拟节点\(v _0 \)，令\( v _k = v _0\)，则由结构平衡理论：</p>
-<script type="math/tex; mode=display">
-f(x _i,x _j) \ge f(x _i,x _k) + \sigma</script><p>即z<br>\( \sigma\)</p>
+</script><p>\begin{cases}</p>
+<p>\end{cases}</p>
+<p>本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译的文字摘抄自<a href="https://blog.csdn.net/zjwreal/article/details/87897474" target="_blank" rel="noopener">【论文笔记】A Survey on Network Embedding</a> </p>
 
         
       </div>
@@ -318,17 +318,8 @@ f(x _i,x _j) \ge f(x _i,x _k) + \sigma</script><p>即z<br>\( \sigma\)</p>
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -406,22 +397,6 @@ f(x _i,x _j) \ge f(x _i,x _k) + \sigma</script><p>即z<br>\( \sigma\)</p>
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SiNE（2017）"><span class="nav-number">1.</span> <span class="nav-text">SiNE（2017）</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://liuzhiqi.github.io/home/picture/不同阶差分.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2019/10/22/时间序列分析（一）/time_series1/prophet_growth_curve.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2019/10/22/时间序列分析（一）/time_series1/prophet_growth_curve2.png">
-<meta property="og:updated_time" content="2021-04-14T00:59:05.802Z">
+<meta property="og:updated_time" content="2021-04-18T06:02:30.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="时间序列分析（一）单变量时间序列分析">
 <meta name="twitter:description" content="一、Background在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩">
@@ -405,21 +405,19 @@ m _t=\begin{cases}
 <script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t</script><p>则，我们称其为p阶自回归过程。从方程我们可以看出，自回归过程是用自身序列做回归变量。对于t时刻的\(Y _t\)来说其值等于过去p个时间点与当前时间点噪声\(e _t\)的加权叠加，其中\(e _t\)要求与t时刻前的Y独立。从等式2.2我们可以看出，通过将右侧Y展开，我们可以还原出等式2.1的形式，但参数的表达可能十分复杂，同时该序列项数可能趋于无穷大。<br>对于MA模型来说，我们较容易保证其平稳，而对于AR模型，平稳显然需要满足条件。令，</p>
 <script type="math/tex; mode=display">\phi(x)=1 - \phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><script type="math/tex; mode=display">0=1-\phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p</script><p>为AR模型的特征多项式和特征方程。若特征方程存在平稳解，当且仅当AR特征方程每一个根的绝对值都大于1。因此有如下必要不充分的条件：</p>
 <script type="math/tex; mode=display">\phi _1 + \phi _2 + \cdots + \phi _p < 1</script><script type="math/tex; mode=display">| \phi _p |< 1</script><p>假定序列平稳且均值为0。则，我们可以在AR模型方程两边同时乘以\(Y _{t-k}\)并求期望，再除以\(\gamma _0\)可以获得以下重要递推关系：</p>
-<script type="math/tex; mode=display">\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}</script><p>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho <em>k\)。<br>对于AR模型而言，若序列平稳，通过对自回归进行逐层展开，我们可以将其还原为式2.1形式。<br>而对于MA模型，我们可以通过\(Y </em>{t-k}\) 迭代消去序列中的第k项(e _{t-k}\),从而将MA模型转化为AR模型。若原时间序列是无穷的，那么我们最终可能转化为一个无穷阶的AR模型。这种MA可逆的转化是有条件的，需要MA特征方程：</p>
+<script type="math/tex; mode=display">\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}</script><p>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho _k\)。<br>对于AR模型而言，若序列平稳，通过对自回归进行逐层展开，我们可以将其还原为式2.1形式。<br>而对于MA模型，我们可以通过\(Y _{t-k}\) 迭代消去序列中的第k项\(e _{t-k}\),从而将MA模型转化为AR模型。若原时间序列是无穷的，那么我们最终可能转化为一个无穷阶的AR模型。这种MA可逆的转化是有条件的，需要MA特征方程：</p>
 <script type="math/tex; mode=display">0=1-\theta _1 x - \theta _2 x^2 - \cdots - \theta _p x ^ p</script><p>的根的模大于1（类似AR模型平稳性条件）。</p>
 <h2 id="ARMA-p-q-模型"><a href="#ARMA-p-q-模型" class="headerlink" title="ARMA(p,q)模型"></a>ARMA(p,q)模型</h2><p>若序列心中一部分是自回归，一部分是滑动平均的，那么我们可以得到一个相当普遍的时间序列模型。如下：</p>
 <script type="math/tex; mode=display">Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>对于该模型而言，MA部分我们可以保证解的平稳，因此对于模型整体平稳性，我们只需要保证AR部分过程平稳，即保证模型中AR特征方程根的模大于1。<br>此时模型可以由下式决定：</p>
 <script type="math/tex; mode=display">
-\left\\{
-\begin{array}{l}
+\begin{cases}
 \psi _0 = 1\\\\
 \psi _1 = -\theta _1 + \phi _1\\\\
 \psi _2 = -\theta _2 + \phi _2 + \phi _1\theta _1\\\\
 \cdots\\\\
 \psi _j = -\theta _j + \phi _p\theta _{j-p} + \phi _{p-1}\theta _{j-p+1} + \cdots + \phi _1\theta _{j-1} \\\\
-\end{array}
-\right.</script><p>这里我们将模型中AR部分展开得到公式2.1的形式，其中参数\(\psi\)为2.1中系数。<br>对于ARMA模型，我们通常要求AR和MA分别满足平稳和可逆两个条件（上文提到，各自特征方程根模大于一）</p>
-<h2 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h2><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y<em>t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y </em>{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
+\end{cases}</script><p>这里我们将模型中AR部分展开得到公式2.1的形式，其中参数\(\psi\)为2.1中系数。<br>对于ARMA模型，我们通常要求AR和MA分别满足平稳和可逆两个条件（上文提到，各自特征方程根模大于一）</p>
+<h2 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h2><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y _t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y _{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
 <p><img src="/home/picture/不同阶差分.png" alt="avatar"></p>
 <p>如果一个时间序列 \(\{Y _t\}\)的d次差分 \(W _t = \Delta ^d Y _t\)是一个平稳的ARMA(p,q)过程，则称\(\{Y _t\}\)为自回归滑动平均求和模型ARIMA(p,d,q)。通常取d=1或最多2。<br>考虑ARIMA(p,1,q)，令\(W _t = \Delta ^d Y _t\)，我们有：</p>
 <script type="math/tex; mode=display">W _t=\phi _1 W _{t-1} + \phi _2 W _{t-2} + \cdots + \phi _n W _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}</script><p>通过将W用Y替换并合并，可得：</p>
@@ -441,7 +439,7 @@ W _t = \Delta ^d \Delta _s ^D Y _t</script><p>因此我们可以得到新的季�
 <script type="math/tex; mode=display">
 \rho _{k} = Corr(Y _t,Y _{t-k}) = \frac{Cov(Y _t, Y _{t-k})}{\sqrt{Var(Y _t)Var(Y _{t-k})}} = \frac{\gamma _{k}}{\gamma _{0}}</script><script type="math/tex; mode=display">
 \gamma _{k} = Cov(Y _t, Y _{t-k}) = \frac{\sum _{t=k+1} ^{n} {(Y _t - \overline{Y})(Y _{t-k} - \overline{Y})} }{\sum _{t=1} ^n {(Y _t - \overline{Y}) ^2}}  k=1,2,\cdots</script><p>对于MA(q)模型而言当k&gt;q时，\(\rho _k = 0\)，这里r为\(\rho \)的估计量。因此对于MA模型而言我们可以使用K阶之后自相关函数确定起q的取值。</p>
-<h3 id="k阶滞后偏自相关函数（PACF）"><a href="#k阶滞后偏自相关函数（PACF）" class="headerlink" title="k阶滞后偏自相关函数（PACF）"></a>k阶滞后偏自相关函数（PACF）</h3><p>对于AR模型而言，由于模型往往可以展开成无穷阶MA模型，因此k阶滞后自相关函数不适用。从另一方面考虑，若我们希望计算\(Y <em>{t-k} \)对\(Y _t \)的影响程度从而判断模型是否含有第k阶，直接计算\(Y </em>{t-k} \)与\(Y <em>t \)的相关性是不合理的，这是因为对于\(Y _t \)而言其自身还包含了<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项。因此我们考虑消除\(Y <em>t \)中的<br>\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)影响后，再计算消除影响后的\(Y <em>t \)与\(Y </em>{t-k} \)的相关系数，我们称这个系数为<strong>k阶滞后偏自相关系数</strong>。<br>由于AR模型为回归方法，为了达到消除影响的目的，因此我们可以考虑先对序列进行拟合，然后为了计算得到样本的k阶滞后偏自相关函数。对\(Y <em>t \)我们使用\(Y  </em>{t-1},Y <em>{t-2}, \cdots ,Y </em>{t-k+1} \)项进行预测： </p>
+<h3 id="k阶滞后偏自相关函数（PACF）"><a href="#k阶滞后偏自相关函数（PACF）" class="headerlink" title="k阶滞后偏自相关函数（PACF）"></a>k阶滞后偏自相关函数（PACF）</h3><p>对于AR模型而言，由于模型往往可以展开成无穷阶MA模型，因此k阶滞后自相关函数不适用。从另一方面考虑，若我们希望计算\(Y _{t-k} \)对\(Y _t \)的影响程度从而判断模型是否含有第k阶，直接计算\(Y _{t-k} \)与\(Y _t \)的相关性是不合理的，这是因为对于\(Y _t \)而言其自身还包含了<br>\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)项。因此我们考虑消除\(Y _t \)中的<br>\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)影响后，再计算消除影响后的\(Y _t \)与\(Y _{t-k} \)的相关系数，我们称这个系数为<strong>k阶滞后偏自相关系数</strong>。<br>由于AR模型为回归方法，为了达到消除影响的目的，因此我们可以考虑先对序列进行拟合，然后为了计算得到样本的k阶滞后偏自相关函数。对\(Y _t \)我们使用\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)项进行预测： </p>
 <script type="math/tex; mode=display">
 Y _t=</script><p>对\(\beta \)我们可以使用均方误差最小化，利用最小二乘法估计。<br>对于\(Y _{t-k} \)，我们可以利用t-k之后的k-1个项来进行向前预测，由序列平稳可得（？？？）：</p>
 <script type="math/tex; mode=display">
@@ -452,7 +450,7 @@ Y _{t-k} - \beta _1 Y _{t-K+1} - \beta _2 Y _{t-K+2} - \cdots - \beta _{k-1} Y _
 <script type="math/tex; mode=display">
 \phi _{kk} = 0, k>p</script><p>而对于MA模型来说，其偏自相关函数从不为0，但随着滞后的增加，会指数级快速衰减到0。这一点与AR(1)过程的子相关函数类似。<br>对于K阶偏自相关系数，我们可以用最小二乘法分别求不同阶的预测模型，然后再求其相关系数。同时我们也可以使用Yule-Walker方程来进行求解。<br>具有自相关函数\(\rho _k\)的任意平稳过程，对于k阶滞后，我们有：</p>
 <script type="math/tex; mode=display">
-\rho _j = \phi _{k1} \rho _{j-1} +\phi _{k2} \rho _{j-2} +\phi _{k3} \rho _{j-3} + \cdots+\phi _{kk} \rho _{j-k} , j=1,2,\cdots,k</script><p>我们可以先算出各阶\(\rho\)然后带入方程组从而求解出\(\phi <em>{k1},\phi </em>{k2},\cdots,\phi <em>{kk} \)，这里我们只需要最后一项。对于不同阶k，反复求解方程组从而得到\(\phi </em>{kk}\)，我们有\(\phi _{kk}\)递归方程：</p>
+\rho _j = \phi _{k1} \rho _{j-1} +\phi _{k2} \rho _{j-2} +\phi _{k3} \rho _{j-3} + \cdots+\phi _{kk} \rho _{j-k} , j=1,2,\cdots,k</script><p>我们可以先算出各阶\(\rho\)然后带入方程组从而求解出\(\phi _{k1},\phi _{k2},\cdots,\phi _{kk} \)，这里我们只需要最后一项。对于不同阶k，反复求解方程组从而得到\(\phi _{kk}\)，我们有\(\phi _{kk}\)递归方程：</p>
 <script type="math/tex; mode=display">
 \phi _{kk} = \frac{\phi _{k} - \sum _{j=1} ^{k-1}{\phi _{k-1,j}\rho _{k-j}}}{1 - \sum _{j=1} ^{k-1}{\phi _{k-1,j} \rho _{j}}}</script><p>对于大于p时样本偏自相关函数近似服从均值为0，方差为1/n的正态分布. 因此，当 k&gt;p 时，我们可以用\(\pm 2/\sqrt{n}\)作为\(\hat \phi _{kk}\)的临界极值来检验AR(p)模型的正确0假设。</p>
 <h2 id="非平稳性"><a href="#非平稳性" class="headerlink" title="非平稳性"></a>非平稳性</h2><p>在实际使用ARIMA模型时，我们往往仅使用1～2阶差分，过度的差分，会导致差分后的序列产生不必要的相关性，从而使模型变得复杂，最终导致过拟合。同时过度差分还可能导致差分后序列模型不可逆。<br>在对差分阶数进行判断时，ACF仍然是一个非常好用的工具。如果ACF的图像呈现明显近似线性的衰减，说明非平稳性影响了序列的自相关性。此时序列需要进行差分。更具体的方法还有Dickey-Fuller单位根检验（检验AR方程是否存在单位根）等。</p>
@@ -460,7 +458,7 @@ Y _{t-k} - \beta _1 Y _{t-K+1} - \beta _2 Y _{t-K+2} - \cdots - \beta _{k-1} Y _
 <h4 id="EACF（扩展自相关法）："><a href="#EACF（扩展自相关法）：" class="headerlink" title="EACF（扩展自相关法）："></a>EACF（扩展自相关法）：</h4><p>如果AR模型是已知的，则可以从ARMA模型中去掉自回归部分从而得到一个纯MA过程。</p>
 <h4 id="AIC（Akaike’s-Information-Criterion-赤池信息准则）："><a href="#AIC（Akaike’s-Information-Criterion-赤池信息准则）：" class="headerlink" title="AIC（Akaike’s Information Criterion,赤池信息准则）："></a>AIC（Akaike’s Information Criterion,赤池信息准则）：</h4><p>AIC要求模型最小化：</p>
 <script type="math/tex; mode=display">
-AIC = -2\log {(D(p,q _\theta))+2k}</script><p>如果模型包含常数项或者截距项，则k=p+q+1，否则k=p+q。<br>AIC是估计模型与真实模型等平均KL偏离度的估计量。另\(p(y <em>1,y _2,\cdots,y _n)\)是\(Y _1,Y _2,\cdots,Y _n\)的真实pdf，\(q </em>\theta(y _1,y _2,\cdots,y _n)\) 是参数为 \(\theta\)的模型相应的pdf。则q和p的KL偏离由下面公式定义：</p>
+AIC = -2\log {(D(p,q _\theta))+2k}</script><p>如果模型包含常数项或者截距项，则k=p+q+1，否则k=p+q。<br>AIC是估计模型与真实模型等平均KL偏离度的估计量。另\(p(y _1,y _2,\cdots,y _n)\)是\(Y _1,Y _2,\cdots,Y _n\)的真实pdf，\(q _\theta(y _1,y _2,\cdots,y _n)\) 是参数为 \(\theta\)的模型相应的pdf。则q和p的KL偏离由下面公式定义：</p>
 <script type="math/tex; mode=display">
 D(p,q _\theta) = \int _{-\infty} ^{\infty} \int _{-\infty} ^{\infty} \cdots\int _{-\infty} ^{\infty}{p(y _1,y _2,\cdots,y _n) \log{[\frac{p(y _1,y _2,\cdots,y _n)}{q _\theta(y _1,y _2,\cdots,y _n)}]}}dy _1dy _2\cdots dy _n</script><p>AIC估计了\(E(D(p,q _\hat \theta))\)，这里\(\hat \theta\)是参数\(\theta\)的极大似然估计。但是AIC是有偏估计量，若参数数量和数据容量的比率较大，则偏差会很大。因此引入\(AIC _c\)方法对AIC进行修正：</p>
 <script type="math/tex; mode=display">
@@ -469,16 +467,16 @@ AIC _c = AIC + \frac{2(k+1)(k+2)}{n-k-2}</script><p>其中n是样本容量，k�
 BIC =  -2\log {(D(p,q _\theta))+k\log{(n)}}</script><h2 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h2><p>当确定相应的ARIMA阶数后，我们既可以进行参数估计。常用的参数估计有最小二乘法与极大似然函数。</p>
 <h3 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h3><p><span id="e——"></span><br>对于AR模型而言，其满足标准最小二乘法形式，因此用最小二乘法估计十分简单。但对MA模型，由于其中存在e的噪声项，因此无法直接求的，所以我们需要对其进行转换：</p>
 <script type="math/tex; mode=display">
-e _t = Y _t + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}</script><p>其中\(e <em>0 = e </em>{-1}=\cdots=e _{-q} = 0\)，因此：</p>
+e _t = Y _t + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}</script><p>其中\(e _0 = e _{-1}=\cdots=e _{-q} = 0\)，因此：</p>
 <script type="math/tex; mode=display">
 e _1 = Y _1</script><script type="math/tex; mode=display">
 e _2 = Y _2 + \theta _1 e _{t-1}</script><script type="math/tex; mode=display">
 e _3 = Y _3 + \theta _1 e _{2}+  \theta _2 e _{1}</script><script type="math/tex; mode=display">
 \cdots</script><p>此时，我们最小化目标函数：</p>
 <script type="math/tex; mode=display">
-S _c (\theta) = \sum{(e _t)^2}</script><p>通过递推的计算\(e <em>1 , e </em>{2} , \cdots , e <em>{q}\)，带入方程组，利用多元数值算法，可以就\(\theta _1 ,\theta </em>{2} , \cdots , \theta _{q}\)联合的求取平方和最小值。<br>对于ARMA(p,q)模型，通过对模型公式进行整理，我们也可以使用同样方法：</p>
+S _c (\theta) = \sum{(e _t)^2}</script><p>通过递推的计算\(e _1 , e _{2} , \cdots , e _{q}\)，带入方程组，利用多元数值算法，可以就\(\theta _1 ,\theta _{2} , \cdots , \theta _{q}\)联合的求取平方和最小值。<br>对于ARMA(p,q)模型，通过对模型公式进行整理，我们也可以使用同样方法：</p>
 <script type="math/tex; mode=display">
-e _t = Y _t - \phi _1 Y _{t-1} - \phi _2 Y _{t-2} - \cdots - \phi _p Y _{t-p}  + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}</script><p>注意对于大样本而言，初始值\(e <em>{p} , e </em>{p-1},\cdots,e <em>{p-q+1}\)对于可逆模型影响甚。因此这里\(e </em>{p} = e <em>{p-1}=\cdots=e </em>{p-q+1} = 0\),序列从p+1开始递推。</p>
+e _t = Y _t - \phi _1 Y _{t-1} - \phi _2 Y _{t-2} - \cdots - \phi _p Y _{t-p}  + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}</script><p>注意对于大样本而言，初始值\(e _{p} , e _{p-1},\cdots,e _{p-q+1}\)对于可逆模型影响甚。因此这里\(e _{p} = e _{p-1}=\cdots=e _{p-q+1} = 0\),序列从p+1开始递推。</p>
 <h4 id="自回归逼近法"><a href="#自回归逼近法" class="headerlink" title="自回归逼近法"></a>自回归逼近法</h4><p>自回归逼近法，先将数据看做纯\(AR(\hat p)\)模型，利用AIC定阶确定\(\hat p\)，利用最小二乘法估计出相应的参数。用得到的\(AR(\hat p)\)模型对序列进行一步预测得到预测变量\(\hat Y _t\)，从而进一步估计出\(\hat e _t = Y _t - \hat Y _t\)。将得到的\(\hat e _t \)与真实数据\( Y _t\) 带入ARMA模型，于是就可以使用最小二乘法直接对AR与MA的参数进行估计。</p>
 <h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p>对于最小二乘法，我们利用了分布的一阶矩和二阶矩，而对于最大似然法，我们使用了数据的全部信息。<br>模型定阶完成后，对于ARIMA(p,d,q)实际需要估计的参数有\(\phi,\theta,\mu,\sigma _e\)，对于序列中的\(e _t\)服从于\( Normal(0,\sigma ^2)\)，且彼此独立。因此我们可以得到\(e _2,e _3,\cdots,e _n\)联合概率密度：</p>
 <script type="math/tex; mode=display">
@@ -488,7 +486,7 @@ e _t = Y _t - \phi _1 Y _{t-1} - \phi _2 Y _{t-2} - \cdots - \phi _p Y _{t-p}  +
 <h3 id="AR模型的预测"><a href="#AR模型的预测" class="headerlink" title="AR模型的预测"></a>AR模型的预测</h3><p>则对于AR模型而言，有：</p>
 <script type="math/tex; mode=display">
 \hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i Y _{t+l-i}}\\\\
-Y _{t+l-i} = \hat Y _t(l-i) \qquad  when:\quad l-i>0</script><p>可以采用一步预测的方式，从预测\(\hat Y <em>t(1)\)开始逐步递推到l项。<br>可以看到与AR模型相比，预测缺少了\(e </em>{t+l}\) 项。对于一步预测\(\hat Y <em>t(1)\)而言,预测误差\(e _t(1) = Y </em>{t+l} - \hat Y <em>t(l) = e </em>{t+1}\)。<br>对于</p>
+Y _{t+l-i} = \hat Y _t(l-i) \qquad  when:\quad l-i>0</script><p>可以采用一步预测的方式，从预测\(\hat Y _t(1)\)开始逐步递推到l项。<br>可以看到与AR模型相比，预测缺少了\(e _{t+l}\) 项。对于一步预测\(\hat Y _t(1)\)而言,预测误差\(e _t(1) = Y _{t+l} - \hat Y _t(l) = e _{t+1}\)。<br>对于</p>
 <script type="math/tex; mode=display">
 \hat e _t(l) =\sum _{i=1} ^{\infty} {\psi _i e _{t+l-i}}\\\\
 e _{t+l-i} = 0 \qquad  when:\quad l-i<=0</script><p>其中，\(\psi\)是由AR模型进行MA展开得到的相应参数。<br>因此，\(E(e _t(l)) = 0\)，相应预测估计是无偏估计。对于误差方差：</p>
@@ -499,12 +497,10 @@ Var(e _t(l)) \approx Var(Y _t) = \gamma _0 , 当l较大时</script><p>证明略�
 <h3 id="MA模型的预测"><a href="#MA模型的预测" class="headerlink" title="MA模型的预测"></a>MA模型的预测</h3><p>对于MA模型而言，由于预测模型与e相关，因此需要先对e进行求解。<br>我们使用模型估计时用到的<a href="#e_estimation">递推估计方法</a>，求得\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)。因此，可以得到：</p>
 <script type="math/tex; mode=display">
 \hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)}\\\\
-E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)  = \left\\{
-\begin{array}{l}
+E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)  = \begin{cases}
 0, \qquad when\quad  l-i>0\\\\
-e _{t+l-i},\qquad  when \quad l-i<=0\\\\
-\end{array}
-\right.</script><p>其中对于l-i&gt;0的情况，由于相应的Y值是我们预测得到，因此我们无法通过递推关系求得相应残差的期望，另一方面，我们希望我们的预测尽可能准确，因此另残差期望为零也是合理的。<br>这里值得注意的一点，我们使用递推估计的方法逼近残差，需要满足模型可逆的前提。<br>同时，在对\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)进行估计的时候，因为我们将e序列转化成了无穷序列的Y只和，因此，我们可以考虑，当逼近项数j&gt;t-q时，对应Y的参数项\(\pi _j\)可以忽略。</p>
+e _{t+l-i},\qquad  when \quad l-i<=0
+\end{cases}</script><p>其中对于l-i&gt;0的情况，由于相应的Y值是我们预测得到，因此我们无法通过递推关系求得相应残差的期望，另一方面，我们希望我们的预测尽可能准确，因此另残差期望为零也是合理的。<br>这里值得注意的一点，我们使用递推估计的方法逼近残差，需要满足模型可逆的前提。<br>同时，在对\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)进行估计的时候，因为我们将e序列转化成了无穷序列的Y只和，因此，我们可以考虑，当逼近项数j&gt;t-q时，对应Y的参数项\(\pi _j\)可以忽略。</p>
 <h3 id="ARIMA模型的预测"><a href="#ARIMA模型的预测" class="headerlink" title="ARIMA模型的预测"></a>ARIMA模型的预测</h3><p>对arima模型的预测可分为AR部分与MA部分，值得注意的是，若MA的截断j值选取t-q时，当l&gt;q时，ARIMA模型中MA部分将不起作用，因此此时模型只包含AR部分。<br>对ARMA模型，以\(\{e _t\}\)为基进行展开，得到相应参数\(\{\psi _t\}\)，则此时预测对应残差为：  </p>
 <script type="math/tex; mode=display">
 e _t(l) = Y _{t+1} - \hat Y(l) \\\\
@@ -512,7 +508,7 @@ e _t(l) = Y _{t+1} - \hat Y(l) \\\\
 <h2 id="模型诊断"><a href="#模型诊断" class="headerlink" title="模型诊断"></a>模型诊断</h2><p>为判断学习出的ARIMA模型是否有效，我们需要对得到的模型进行诊断。</p>
 <h3 id="残差分析"><a href="#残差分析" class="headerlink" title="残差分析"></a>残差分析</h3><p>对于ARIMA模型，我们假设我们的数据满足模型:</p>
 <script type="math/tex; mode=display">Y _t=\pi _1 Y _{t-1} + \pi _2 Y _{t-2} + \cdots + e _{t-q}</script><p>这里假设模型平稳可逆，\(\pi\)是模型差分和MA部分展开并与AR部分合并后得到的合并参数。<br>在模型建立好后，对每一个\(\pi\)，我们有一个估计量\(\hat \pi\)，因此使用过去序列对现在时间点t进行预测后，我们可以得到残差（实际值-预测值）：</p>
-<script type="math/tex; mode=display">\hat e _{t-q} = Y _t - \hat \pi _1 Y _{t-1} - \hat \pi _2 Y _{t-2} + \cdots</script><p>如果我们的ARIMA模型预测无误，则\(\hat e <em>{t} = e </em>{t}\)，也就是说我们的残差应：1. 服从正态分布 2. 每一时刻的残差与前序时刻不相关。通过判断残差这两点特性，我们可以分析出ARIMA模型对数据的拟合程度。<br>在实际判别中，我们主要判断方法有：残差图，QQ图，残差自相关性判定，统计量检验等方法。</p>
+<script type="math/tex; mode=display">\hat e _{t-q} = Y _t - \hat \pi _1 Y _{t-1} - \hat \pi _2 Y _{t-2} + \cdots</script><p>如果我们的ARIMA模型预测无误，则\(\hat e _{t} = e _{t}\)，也就是说我们的残差应：1. 服从正态分布 2. 每一时刻的残差与前序时刻不相关。通过判断残差这两点特性，我们可以分析出ARIMA模型对数据的拟合程度。<br>在实际判别中，我们主要判断方法有：残差图，QQ图，残差自相关性判定，统计量检验等方法。</p>
 <h4 id="残差图"><a href="#残差图" class="headerlink" title="残差图"></a>残差图</h4><p>由于残差应近似服从正态分布，因此我们绘制出残差的时间序列散点图（即残差图，X轴为时间，Y轴为残差值），通过比较散点图的随机性，与正态分布的特点来判断其正态性。这里我们可以关注：      </p>
 <ol>
 <li>在相邻时刻残差是否产生了明显的相关特点. </li>

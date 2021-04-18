@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Social Network,Community Analysis,Network Analysis,">
+  <meta name="keywords" content="Social Network,Network Analysis,Community Analysis,">
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，思路是社区内部的连边密度要高于社区间。   流分析：后者适用于有向有权网络，思路是发现在网络的某种流动（物质、能量、信息）中形成的社区结构。   　  拓扑分析计算网络的模块化程度Q-ModularityQ-Modularity是一种定义社群划分的指标，其定义在[-0.5,1)区间">
-<meta name="keywords" content="Social Network,Community Analysis,Network Analysis">
+<meta name="keywords" content="Social Network,Network Analysis,Community Analysis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基础社群分析方法">
 <meta property="og:url" content="https://liuzhiqi.github.io/blog/2020/05/12/基础社群分析方法/index.html">
 <meta property="og:site_name" content="Zhiqi Liu">
 <meta property="og:description" content="基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，思路是社区内部的连边密度要高于社区间。   流分析：后者适用于有向有权网络，思路是发现在网络的某种流动（物质、能量、信息）中形成的社区结构。   　  拓扑分析计算网络的模块化程度Q-ModularityQ-Modularity是一种定义社群划分的指标，其定义在[-0.5,1)区间">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-04-14T01:46:17.348Z">
+<meta property="og:updated_time" content="2021-04-18T05:45:15.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基础社群分析方法">
 <meta name="twitter:description" content="基础社群分析方法介绍社区划分的算法比较多，大致可以分为两大类：      拓扑分析：前者一般适用于无向无权网络，思路是社区内部的连边密度要高于社区间。   流分析：后者适用于有向有权网络，思路是发现在网络的某种流动（物质、能量、信息）中形成的社区结构。   　  拓扑分析计算网络的模块化程度Q-ModularityQ-Modularity是一种定义社群划分的指标，其定义在[-0.5,1)区间">
@@ -363,7 +363,7 @@
 </ul>
 <h2 id="拓扑分析"><a href="#拓扑分析" class="headerlink" title="拓扑分析"></a>拓扑分析</h2><h3 id="计算网络的模块化程度Q-Modularity"><a href="#计算网络的模块化程度Q-Modularity" class="headerlink" title="计算网络的模块化程度Q-Modularity"></a>计算网络的模块化程度Q-Modularity</h3><p>Q-Modularity是一种定义社群划分的指标，其定义在[-0.5,1)区间。其具体计算公式如下：</p>
 <script type="math/tex; mode=display">
-Q = \sum _{ij} (A _{ij} - \frac {k _i} {2m} * \frac {k _j} {2m} ) \delta(c _i,c _j)</script><p>其中A为网络G的邻接矩阵，\( A <em>{ij} \) 为1表示从i到j存在边，反之为0。m表示总边数，2m则为每一个节点的度数和。\( \frac {A </em>{ij}} {2m}\) 为ij实际的链接概率。\( \frac {k <em>{i}k </em>{j}} {2m*2m}\) 表示保持i和j的度数，对网络的边进行随机分配，ij两点存在边的概率。\( \delta(c <em>i,c _j)\)表示i和j是否处于同一社群，是为1，否为0。<br>可见Q值越大说明当前社群划分，社群内部连边越多，也就是社群更加聚集。因此Q可以用来作为衡量社群划分好坏的一种度量。<br>Newman(2006)对上式进行了化简，定义\( S </em>{ir}\)为\(N \times R\)的矩阵，N是节点数，R是社区数。如果节点i属于社区r，则为1，否则为0，得到矩阵表达如下：</p>
+Q = \sum _{ij} (A _{ij} - \frac {k _i} {2m} * \frac {k _j} {2m} ) \delta(c _i,c _j)</script><p>其中A为网络G的邻接矩阵，\( A _{ij} \) 为1表示从i到j存在边，反之为0。m表示总边数，2m则为每一个节点的度数和。\( \frac {A _{ij}} {2m}\) 为ij实际的链接概率。\( \frac {k _{i}k _{j}} {2m*2m}\) 表示保持i和j的度数，对网络的边进行随机分配，ij两点存在边的概率。\( \delta(c _i,c _j)\)表示i和j是否处于同一社群，是为1，否为0。<br>可见Q值越大说明当前社群划分，社群内部连边越多，也就是社群更加聚集。因此Q可以用来作为衡量社群划分好坏的一种度量。<br>Newman(2006)对上式进行了化简，定义\( S _{ir}\)为\(N \times R\)的矩阵，N是节点数，R是社区数。如果节点i属于社区r，则为1，否则为0，得到矩阵表达如下：</p>
 <script type="math/tex; mode=display">
 Q = \frac {1}{2m}\sum _{ij}\sum _r[A _{ij} - \frac {k _ik _j}{2m}]S _{ir}S _{jr}=\frac{1}{2m}Tr(S ^TBS)\\\\
 B _{ij} = A _{ij} -  \frac{k _i k _j}{2m}</script><p>其中B行列和均为1。<br>通过一系列数值优化方法（Fast Greedy、Muti LevelGraRep <font color="#dd0000">【Need dive deep】</font>：）最大化Q，我们可以找到一个对网络的社群的划分。可以利用的方法有fast greedy和multi level等。</p>
@@ -398,9 +398,9 @@ r _{ij} = \sqrt{\sum _{k=1} ^n \frac{(P _{ik} ^t - P _{jk} ^t)^2}{d(k)}} = ||D ^
           
             <a href="/tags/Social-Network/" rel="tag"># Social Network</a>
           
-            <a href="/tags/Community-Analysis/" rel="tag"># Community Analysis</a>
-          
             <a href="/tags/Network-Analysis/" rel="tag"># Network Analysis</a>
+          
+            <a href="/tags/Community-Analysis/" rel="tag"># Community Analysis</a>
           
         </div>
       
