@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.jpeg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Attention, please! A survey of Neural Attention Models in Deep Learning1 Introduction最初Attention主要应用于计算机视觉，用于选择图像的重要区域。且在深度学习之前，attention机制一直都有良好的表现，例如用attention进行图像压缩、图像匹配、图像分割、物体捕捉等等。 自2014年，Atte">
+<meta name="keywords" content="Attention,Survey,Deep Learning,Neural Networks">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【Paper-Reading】ATTENTION-PLEASE-A-SURVEY-OF-NEURAL-ATTENTION-MODELS-IN-DEEP-LEARNING">
+<meta property="og:url" content="https://liuzhiqi.github.io/draft/【Paper-Reading】ATTENTION-PLEASE-A-SURVEY-OF-NEURAL-ATTENTION-MODELS-IN-DEEP-LEARNING.html">
+<meta property="og:site_name" content="Zhiqi Liu">
+<meta property="og:description" content="Attention, please! A survey of Neural Attention Models in Deep Learning1 Introduction最初Attention主要应用于计算机视觉，用于选择图像的重要区域。且在深度学习之前，attention机制一直都有良好的表现，例如用attention进行图像压缩、图像匹配、图像分割、物体捕捉等等。 自2014年，Atte">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/attention_survey/cite_bubble.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/attention_survey/RNNSearch.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/attention_survey/BiDAF.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/attention_survey/HAN.png">
+<meta property="og:updated_time" content="2021-04-21T06:43:09.559Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Paper-Reading】ATTENTION-PLEASE-A-SURVEY-OF-NEURAL-ATTENTION-MODELS-IN-DEEP-LEARNING">
+<meta name="twitter:description" content="Attention, please! A survey of Neural Attention Models in Deep Learning1 Introduction最初Attention主要应用于计算机视觉，用于选择图像的重要区域。且在深度学习之前，attention机制一直都有良好的表现，例如用attention进行图像压缩、图像匹配、图像分割、物体捕捉等等。 自2014年，Atte">
+<meta name="twitter:image" content="https://liuzhiqi.github.io/draft/attention_survey/cite_bubble.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://liuzhiqi.github.io/draft/【Paper-Reading】ATTENTION-PLEASE-A-SURVEY-OF-NEURAL-ATTENTION-MODELS-IN-DEEP-LEARNING.html">
+
+
+
+
+
+  <title>【Paper-Reading】ATTENTION-PLEASE-A-SURVEY-OF-NEURAL-ATTENTION-MODELS-IN-DEEP-LEARNING | Zhiqi Liu</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhiqi Liu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-articles">
+          <a href="/articles" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br>
+            
+            Articles
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-notes">
+          <a href="/categories/Notes" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wpforms"></i> <br>
+            
+            Notes
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">【Paper-Reading】ATTENTION-PLEASE-A-SURVEY-OF-NEURAL-ATTENTION-MODELS-IN-DEEP-LEARNING</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+<h1 id="Attention-please-A-survey-of-Neural-Attention-Models-in-Deep-Learning"><a href="#Attention-please-A-survey-of-Neural-Attention-Models-in-Deep-Learning" class="headerlink" title="Attention, please! A survey of Neural Attention Models in Deep Learning"></a>Attention, please! A survey of Neural Attention Models in Deep Learning</h1><h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h1><p>最初Attention主要应用于计算机视觉，用于选择图像的重要区域。且在深度学习之前，attention机制一直都有良好的表现，例如用attention进行图像压缩、图像匹配、图像分割、物体捕捉等等。</p>
+<p>自2014年，Attention逐渐成为深度学习领域一个基本的概念，关于attention的相关发表数量也逐年递增。在神经网络中，Attention机制被用来管理信息、特征传递，提升学习效果，过滤无关信息，帮助网络处理long-time dependencies。  </p>
+<p><strong>相关Survey：</strong>   </p>
+<ol>
+<li>Recurrent networks and applications in computer vision：<br><em>Survey on the attention based rnn model and its applications in computer vision, 2016</em>.   </li>
+<li>Attention in natural language processing (NLP)：<br><em>An introductory survey on attention mechanisms in nlp problems. 2019.</em><br><em>Attention in natural language processing, 2020.</em>   </li>
+<li>Attention in graph neural networks:<br><em>Attention models in graphs: A survey, 2018</em>.  </li>
+<li>General short review:<br><em>An attentive survey of attention models, 2019</em></li>
+</ol>
+<p>本文从6000多的文章中，找到并着重分析了650篇文章。</p>
+<h1 id="2-Overview"><a href="#2-Overview" class="headerlink" title="2 Overview"></a>2 Overview</h1><p>先放一张根据论文引用情况得到的Bubble Chart：</p>
+<p><img src="./attention_survey/cite_bubble.png" alt="bubble"><br>引用最多的为：RNNSearch [2015, 44], Transformer [37], Memory Networks [38], “show, attend and tell” [45] 和 RAM [46]。<br>经典的Encoder-Decoder框架的瓶颈问题驱动了Attention的发展。最主要的问题是NN需要将原句中所有信息压缩到一个固定大小的向量，Choetal. [47]指出，经典Encoder-Decoder框架效果，会随着句子的长度变长而快速恶化。因此Bahdanau et al. [44] 提出了RNNSearch，将输入向量转化成一些列的内容向量，在预测某一个词时，利用attention机制对Encode出的向量序列进行加权求和。如图：<br><img src="./attention_survey/RNNSearch.png" alt="bubble"><br>其中，加权求和时，权重与:</p>
+<script type="math/tex; mode=display">
+a _{ij} = \frac {e _{ij}}{\sum _{k=1} ^{T _x} exp(e _{ik})} \\\\
+e _{ij} = a(s _{i-1},h _j)</script><p>RNNSearch是一种soft attention方法，基于RNNSearch在NN上有很多的尝试，其中比较有代表性的两个方面的工作为：attentional interfaces 和 end-to-end attention。Attentional interfaces 将attention视作一个模块，因此可以很容易的将其插入经典深度学习网络中，如RNNSearch。End-to-end attention 则是一个比较新的研究方向，其将attention替换传统神经网络层，将attention覆盖到了整个神经网络。End-to-end attention 模型引出了一种新的神经网络类型。</p>
+<h2 id="2-1-Attentional-interfaces"><a href="#2-1-Attentional-interfaces" class="headerlink" title="2.1 Attentional interfaces"></a>2.1 Attentional interfaces</h2><p>RNNSearch是Attentional interfaces研究的基础，在其之上有很多扩展。<br><strong>Listen, Attend and Spell</strong>[2015, 48]：采用了类似RNNSearch的模型，将RNN+Attention扩展到了语音识别上（Encode编码语音，Decode解码成文本），RNN部分使用，Attention部分和RNNSearch类似，其中\(e _{ij} = &lt;\phi(s _i),\psi(h _u)&gt;\)，其使用MLP将语音编码和文本状态映射到同一空间上，用内积计算相似度。</p>
+<p><strong>Grammar as a Foreign Language</strong>[2015, 49]：文本分析领域，同样是用LSTM+S2S，输入文本输出语法节点，使用深度优先遍历将语法树变换为序列。Attention部分使用\(e _{ij} = v ^T tanh(W _h ^T h _i + W _s ^T s _t)\)，其中v与W均为学习参数。</p>
+<p><strong>BiDAF</strong>[2016, 51]：面向问答场景，输入是文字段落+相关问题，输出是问题的答案。BiDAF设计了分层的多阶段体系结构，其结构如下图。<br><img src="./attention_survey/BiDAF.png" alt="bubble"></p>
+<p>对于输入文字段落与相关问题，BiDAF设计了word embedding层(GLOVE)和Character embedding层(Char-CNN)，然后输入到Contextual结合上下文进行进一步embedding聚合，从而得到ContextEmbedding结果和QueryEmbedding结果。<br>在得到Embedding结果后，与RNNSearch的attention不同，BiDAF使用了双向attention，根据Context对Query进行加权求和得到Query-Context表示(C2Q)（哪个Query词汇对当前Context更相关），根据Query对Context进行加权求和得到Context-Query(Q2C)表示（哪个Context词汇对当前Query更相关）。其具体attention过程为：</p>
+<script type="math/tex; mode=display">
+S _{ij} = w ^T[h;u;h \cdot u] \\\\
+a _{t} = softmax(S _{t:}) \\\\
+\hat U _{:t} = \sum _j a _{tj}U _{:j} \\\\
+b = softmax(max _{col}S ) \\\\
+\hat h = \sum _t b _t H _{:t}</script><p>其中S可以看作Query与Context的相关矩阵。<br>\(\hat U \in R ^{2d \times T}\)，即对每一个Context都对应一个Query Embedding空间的结果（理解为，当前context表征了问题哪一方面）。<br>对于Context-Query，因为对于Query的每一个词找到相应的Context似乎意义不大，切可能因为Context过多导致冗余信息累加后Attention趋于平均，因此我们使用了max函数，找到context与query中词最大的相似度作为分量。这一步骤个人理解为，query整体应该反应的context某一个方面，而不是query每一个词反映了context某个方面。因此没有像Query-Context一样形成矩阵。由于Context-Query是单个向量，为了拉齐，我们duplicate该向量T次，构成\(\hat H \in R ^{2d \times T}\)<br>我们汇总所有表示：</p>
+<script type="math/tex; mode=display">
+G _{:t}=[H _{:t};\hat U _{:t} ;\hat U _{:t} \cdot H _{:t};\hat H _{:t} \cdot H _{:t}] \in R ^{8d\times T}</script><p>G为输入到下一层的数据，其由context embedding结果，C2Q结果以及context embedding与C2Q、Q2C特征交叉得到。<br>之后的ModelingLayer 采用了普通的双向LSTM，而OutputLayer则根据不同任务目标设定了不同模块。</p>
+<p><strong>Hierarchical Attention Network (HAN)</strong>[2016, 52]：HAN方法针对文本分类问题，其采用了双层GRU，一层编码Word，一层编码sentence。在word层和sentence层输出分别加入attention，希望使用attention使分类问题更聚焦与关键词和关键句。如下图：<br><img src="./attention_survey/HAN.png" alt="bubble"><br>其Attention部分的特殊之处在于，并没有对两个状态进行相似度计算，而是引入了一个参数\(u _w\)与状态计算相似度，即query向量是未知的，希望优化能计算出这个参数。其Attention部分如下：</p>
+<script type="math/tex; mode=display">
+e _{ij} = u _w ^T tanh(Wh _{ij} + b)</script><p><strong>Dynamic coattention networks for question answering</strong>[2016, 53]：目标也为文档问答，输入为文档与问题，输出为文档中文本起止位置。使用该方法使用attention来对文档和问题embedding进行交叉，经过交叉合并得到Embedding向量，其思路与BiDAF类似，也是通过不同方向的attention对D和Q进行交叉。</p>
+<p><strong>Ptr-Net(Pointer Networks)</strong>[NIPS2015, 54]：解决了输出序列词汇表和输入序列有关的问题（如从输入序列选词，这也是Pointer一词的由来），即输出词汇表可变问题。Ptr-Net主要是在decode输出端，将decode向量与encode向量结合，引入attention机制，利用attention权重从输入中挑选输出。</p>
+<p><strong>Get to the point: Summarization with pointer-generator networks</strong>[ACL2017, 55]：在生成文本摘要时，有两种方式extractive（从原文获得）和abstractive（新生成词汇）。利用Ptr-Net，我们可以得到extractive方式，本文则通过融合Ptr-Net和S2S方法，是摘要生成时词汇即可以从原文生成也可以使用新词汇。通过学习得到一个概率Pgen，来判断是使用S2S生成新词还是使用Ptr-Net从现有词汇中选择，同时在计算Pgen时，还加入了计算文本重复度的分量，从而降低重复。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Zhiqi Liu">
+            
+              <p class="site-author-name" itemprop="name">Zhiqi Liu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhiqi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention-please-A-survey-of-Neural-Attention-Models-in-Deep-Learning"><span class="nav-number">1.</span> <span class="nav-text">Attention, please! A survey of Neural Attention Models in Deep Learning</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Overview"><span class="nav-number">3.</span> <span class="nav-text">2 Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Attentional-interfaces"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Attentional interfaces</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiqi Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

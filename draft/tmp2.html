@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="Friendes-mearsure既然两个人有相同的好友可以表达他们间的距离，那么我们可以把这一个思想推广，我们认为，他们的好友之间很有可能互为好友。我们就计算他们好友之间互为好友的数量作为评价标准。  Score(x,y)=\sum _{u \in \tau(x) } \sum _{v \in \tau(y) } \delta(x,y) \\\\ \delta(x,y) =  \begin">
+<meta name="description" content="\(\) FusionNet[2017, 56]：">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zhiqi Liu">
 <meta property="og:url" content="https://liuzhiqi.github.io/draft/tmp2.html">
 <meta property="og:site_name" content="Zhiqi Liu">
-<meta property="og:description" content="Friendes-mearsure既然两个人有相同的好友可以表达他们间的距离，那么我们可以把这一个思想推广，我们认为，他们的好友之间很有可能互为好友。我们就计算他们好友之间互为好友的数量作为评价标准。  Score(x,y)=\sum _{u \in \tau(x) } \sum _{v \in \tau(y) } \delta(x,y) \\\\ \delta(x,y) =  \begin">
+<meta property="og:description" content="\(\) FusionNet[2017, 56]：">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-04-13T22:03:17.035Z">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/attention_survey/1.png">
+<meta property="og:updated_time" content="2021-04-21T06:39:49.223Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zhiqi Liu">
-<meta name="twitter:description" content="Friendes-mearsure既然两个人有相同的好友可以表达他们间的距离，那么我们可以把这一个思想推广，我们认为，他们的好友之间很有可能互为好友。我们就计算他们好友之间互为好友的数量作为评价标准。  Score(x,y)=\sum _{u \in \tau(x) } \sum _{v \in \tau(y) } \delta(x,y) \\\\ \delta(x,y) =  \begin">
+<meta name="twitter:description" content="\(\) FusionNet[2017, 56]：">
+<meta name="twitter:image" content="https://liuzhiqi.github.io/draft/attention_survey/1.png">
 
 
 
@@ -269,16 +271,10 @@
         
           <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
+<script type="math/tex; mode=display">
+</script><p>\(\)<br><img src="./attention_survey/1.png" alt="bubble"></p>
+<p><strong>FusionNet</strong>[2017, 56]：</p>
 
-<h3 id="Friendes-mearsure"><a href="#Friendes-mearsure" class="headerlink" title="Friendes-mearsure"></a>Friendes-mearsure</h3><p>既然两个人有相同的好友可以表达他们间的距离，那么我们可以把这一个思想推广，我们认为，他们的好友之间很有可能互为好友。我们就计算他们好友之间互为好友的数量作为评价标准。</p>
-<script type="math/tex; mode=display">
-Score(x,y)=\sum _{u \in \tau(x) } \sum _{v \in \tau(y) } \delta(x,y) \\\\
-\delta(x,y) =  \begin{cases}
-1 \ if\ u=v\ or\ A _{uv}=1\ or\ A _{uv}=1\\\\
-0\ other
-\end{cases}</script><h3 id="Preferential-Attachment"><a href="#Preferential-Attachment" class="headerlink" title="Preferential Attachment"></a>Preferential Attachment</h3><p>另外，如果两个用户拥有的好友数量越多，那么就越有可能更愿意去建立联系。也就是“富人越富”原则，基于这思想,用他们两个用户的好友数量的乘积作为评分。</p>
-<script type="math/tex; mode=display">
-Score(x,y)=|\tau(x)||\tau(y)|</script>
         
       </div>
       
@@ -320,17 +316,8 @@ Score(x,y)=|\tau(x)||\tau(y)|</script>
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -347,7 +334,7 @@ Score(x,y)=|\tau(x)||\tau(y)|</script>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -369,7 +356,7 @@ Score(x,y)=|\tau(x)||\tau(y)|</script>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -408,22 +395,6 @@ Score(x,y)=|\tau(x)||\tau(y)|</script>
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Friendes-mearsure"><span class="nav-number">1.</span> <span class="nav-text">Friendes-mearsure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preferential-Attachment"><span class="nav-number">2.</span> <span class="nav-text">Preferential Attachment</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
