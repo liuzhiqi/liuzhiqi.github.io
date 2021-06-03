@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="Zhiqi Liu">
 <meta property="og:description" content="【Paper Reading】A Survey on Network Embedding本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译文字摘抄自【论文笔记】A Survey on Network Embedding  1 Introduction传统的方法，我们通常将一个网络表">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://liuzhiqi.github.io/draft/【Paper-Reading】A-Survey-on-Network-Embedding/SiNE_architecture.png">
-<meta property="og:image" content="https://liuzhiqi.github.io/draft/【Paper-Reading】A-Survey-on-Network-Embedding/Deepcas.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/SiNE_architecture.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/Deepcas.png">
 <meta property="og:updated_time" content="2021-04-18T05:41:23.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Paper Reading】A Survey on Network Embedding">
 <meta name="twitter:description" content="【Paper Reading】A Survey on Network Embedding本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译文字摘抄自【论文笔记】A Survey on Network Embedding  1 Introduction传统的方法，我们通常将一个网络表">
-<meta name="twitter:image" content="https://liuzhiqi.github.io/draft/【Paper-Reading】A-Survey-on-Network-Embedding/SiNE_architecture.png">
+<meta name="twitter:image" content="https://liuzhiqi.github.io/draft/SiNE_architecture.png">
 
 
 
@@ -340,7 +340,7 @@
 <h5 id="Adamic-Adar-AA）"><a href="#Adamic-Adar-AA）" class="headerlink" title="Adamic-Adar (AA）"></a>Adamic-Adar (AA）</h5><p>$$<br>M _g = I  \\<br>M _l = ADA<br>$$<br>因此s的svd变成了：<br>$$<br>M _g ^{-1}M _l = V ^s \Sigma{V ^t} ^T \\<br> = ADA<br>$$</p>
 <p>将原始SVD转变为通用的SVD问题，也就是可以不求s直接进行SVD。</p>
 <h4 id="SiNE（2017）"><a href="#SiNE（2017）" class="headerlink" title="SiNE（2017）"></a>SiNE（2017）</h4><p>SiNE主要针对符号网络来进行embedding，考虑正边和负边。SiNE主要参考了结构平衡理论，即符号网络中的用户与朋友的距离比敌人更近（相似度更高）。SiNE假设每一个顶点都存在一个正负边三元组，\((v _i,v _j,v _k)\)，其中ij边为+1，ik边为-1。实际社交网络中，负边样本往往是少数，甚至不存在的，若某一顶点不存在，则为该边添加一个虚拟节点\(v _0 \)，令\( v _k = v _0\)，则由结构平衡理论，我们希望有：</p>
-<p>$$<br>f(x _i,x _j) \ge f(x _i,x _k) + \sigma<br>$$<br>其中\( \sigma\)为负边控制参数，\( \sigma\)越大，互斥的变离得越远。SiNE根据三元组设计了一种双路深度神经网络，下图为其为2层时的结构：<br><img src="/draft/【Paper-Reading】A-Survey-on-Network-Embedding/SiNE_architecture.png" alt="这是代替图片的文字，随便写"></p>
+<p>$$<br>f(x _i,x _j) \ge f(x _i,x _k) + \sigma<br>$$<br>其中\( \sigma\)为负边控制参数，\( \sigma\)越大，互斥的变离得越远。SiNE根据三元组设计了一种双路深度神经网络，下图为其为2层时的结构：<br><img src="//liuzhiqi.github.io/draft/SiNE_architecture.png" alt="这是代替图片的文字，随便写"></p>
 <h2 id="5-Network-Embedding-with-Side-Information"><a href="#5-Network-Embedding-with-Side-Information" class="headerlink" title="5 Network Embedding with Side Information"></a>5 Network Embedding with Side Information</h2><p>除了网络的结构信息之外，网络的侧信息也是NE的另一个重要数据源。在NE中，网络的侧信息可以被分为两种：节点信息和节点与边的类型。</p>
 <h3 id="5-1-Network-Embedding-with-Node-Content"><a href="#5-1-Network-Embedding-with-Node-Content" class="headerlink" title="5.1 Network Embedding with Node Content"></a>5.1 Network Embedding with Node Content</h3><h4 id="MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）"><a href="#MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）" class="headerlink" title="MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）"></a>MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）</h4><p>传统的DeepWalk是一种无监督的方法，如果能够引入label数据，生成的向量对于分类任务会有更好的作用，因此MMDW在此基础上对DeepWalk进行了改进，在embedding的过程中加入了label信息，使用SVM的软间隔思想，使embedding结果更有效的服务于分类算法。<br>Network representation learning with rich text information 一文认为，DeepWalk 等价于对一个矩阵M进行矩阵分解，矩阵中的每一个元素为：<br>$$<br>M _{ij} = \log \frac {[e _i(A + A ^2 + \cdots + A ^t)] _j} {t}<br>$$<br>其中A为邻接矩阵，\(e _i\)为第i个位置为1其余为0的向量。我们随机游走t步，M矩阵每一个元素可以理解为表示i游走到j的可能性。我们用DeepWalk得到一个表示，实际上可以理解为对M进行类似传统主题模型矩阵分解的操作，即：</p>
 <p>$$<br> min _{W,H} L _{DW} = min _{W,H} \sum _{i,j} (M _{ij} - (W ^T H) _{ij}) ^2 + \lambda/2(||W|| _2 ^2 +||H|| _2 ^2)<br>$$</p>
@@ -365,7 +365,7 @@
 <h4 id="Learning-social-network-embeddings-for-predicting-information-diffusion-Simon-et-al-63"><a href="#Learning-social-network-embeddings-for-predicting-information-diffusion-Simon-et-al-63" class="headerlink" title="Learning social network embeddings for predicting information diffusion [Simon et al. [63]]"></a>Learning social network embeddings for predicting information diffusion [Simon et al. [63]]</h4><p>Simon et al. (Bourigault et al. 2014)的社会网络嵌入算法来预测information diffusion。将传播过程映射到热传播过程，学习节点的表示，使得扩散核可以解释训练集， 其模型如下：</p>
 <p>$$<br>K _Z (t,s ^c,u _i)=(4\pi t)^ {-n/2} e ^{\frac {||z _s c -z _{u _i}|| ^2}{4 t}}<br>$$<br>其中t为时刻，s为热度源头，u为用户，z为对应表示空间向量。则K为热源s在t时刻对用户u的影响。则优化函数：</p>
 <p>$$<br>L(Z)=\sum _{c \in C _l} \Delta(K _Z(.,s ^c,.),c)<br>$$<br>其中c为实际观察到的传播值，所以最小化目标为找到最合适的向量使传播值增加最小。其中增量算子可以使用hinge-loss函数</p>
-<h4 id="Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18"><a href="#Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18" class="headerlink" title="Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]"></a>Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]</h4><p>Deepcas提出了一种E2E的深度学习模型，其整体流程为：首先使用类似DeepWalk模型的随机游走方法，得到路径序列，然后使用GRU进行路径的embedding，由于预测时需要较多网络信息，因此想要进行预测需要多条序列，所以Deepcas接着使用Attention机制，来对多条序列进行整合，最终使用MLP来对结果进行预测。其流程图如下：<br><img src="/draft/【Paper-Reading】A-Survey-on-Network-Embedding/Deepcas.png" alt="Deepcas"> </p>
+<h4 id="Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18"><a href="#Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18" class="headerlink" title="Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]"></a>Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]</h4><p>Deepcas提出了一种E2E的深度学习模型，其整体流程为：首先使用类似DeepWalk模型的随机游走方法，得到路径序列，然后使用GRU进行路径的embedding，由于预测时需要较多网络信息，因此想要进行预测需要多条序列，所以Deepcas接着使用Attention机制，来对多条序列进行整合，最终使用MLP来对结果进行预测。其流程图如下：<br><img src="//liuzhiqi.github.io/draft/Deepcas.png" alt="Deepcas"> </p>
 <h3 id="6-2-Anomaly-Detection"><a href="#6-2-Anomaly-Detection" class="headerlink" title="6.2 Anomaly Detection"></a>6.2 Anomaly Detection</h3><p>本文中提到的异常检测主要用来检测结构的异常（不一致），比如异常节点连接到各种不同有影响力的社区。如图中的红色节点。</p>
 <p>![Anomaly_Detection](./A_Survey_on_Network_Embedding/Anomaly_Detection .png) </p>
 <h4 id="An-embedding-approach-to-anomaly-detection-Hu-et-al-2016"><a href="#An-embedding-approach-to-anomaly-detection-Hu-et-al-2016" class="headerlink" title="An embedding approach to anomaly detection [Hu et al. 2016]"></a>An embedding approach to anomaly detection [Hu et al. 2016]</h4><p>Hu对网络节点进行embedding，并将embedding向量的每一项看作节点对每一个community的相关度，来对异常点进行检测。其Embedding过程如下：<br>$$<br>S(\overline X _i,\overline X _j) = \begin{cases}<br>||\overline X _i - \overline X _j|| ^2 \quad (i,j) \in E \\<br>(||\overline X _i - \overline X _j||-1) ^2 \quad (i,j) \in E \\<br>\end{cases}<br>$$</p>
@@ -476,7 +476,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
