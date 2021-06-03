@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Social Network,Network Analysis,Network Embedding,">
+  <meta name="keywords" content="Social Network,Network Embedding,Network Analysis,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="【Paper Reading】A Survey on Network Embedding本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译文字摘抄自【论文笔记】A Survey on Network Embedding  1 Introduction传统的方法，我们通常将一个网络表">
-<meta name="keywords" content="Social Network,Network Analysis,Network Embedding">
+<meta name="keywords" content="Social Network,Network Embedding,Network Analysis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Paper Reading】A Survey on Network Embedding">
 <meta property="og:url" content="https://liuzhiqi.github.io/blog/2020/11/12/A-Survey-on-Network-Embedding/index.html">
@@ -89,7 +89,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2020/11/12/A-Survey-on-Network-Embedding/SiNE_architecture.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2020/11/12/A-Survey-on-Network-Embedding/Deepcas.png">
-<meta property="og:updated_time" content="2021-06-03T16:01:26.265Z">
+<meta property="og:updated_time" content="2021-06-03T16:07:39.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Paper Reading】A Survey on Network Embedding">
 <meta name="twitter:description" content="【Paper Reading】A Survey on Network Embedding本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译文字摘抄自【论文笔记】A Survey on Network Embedding  1 Introduction传统的方法，我们通常将一个网络表">
@@ -376,7 +376,7 @@
 <h3 id="2-2-常用方法"><a href="#2-2-常用方法" class="headerlink" title="2.2 常用方法"></a>2.2 常用方法</h3><h4 id="2-2-1-矩阵分解"><a href="#2-2-1-矩阵分解" class="headerlink" title="2.2.1 矩阵分解"></a>2.2.1 矩阵分解</h4><p>NE的目标是得到低维向量空间以表示网络，这与矩阵分解方法具有相同的目标。常用的矩阵分解模型：奇异值分解（SVD）、非负矩阵分解</p>
 <h4 id="2-2-2-随机游走"><a href="#2-2-2-随机游走" class="headerlink" title="2.2.2 随机游走"></a>2.2.2 随机游走</h4><p>类比于Word2Vec，基于随机游走的模型在网络中进行随机游走。将节点作为语言模型中的词，将随机游走作为句子，节点邻居可以用Word2Vec中共同出现的概率来定义。代表工作：DeepWalk（KDD 2014），Node2Vec（KDD 2016）</p>
 <h4 id="2-2-3-深度神经网络"><a href="#2-2-3-深度神经网络" class="headerlink" title="2.2.3 深度神经网络"></a>2.2.3 深度神经网络</h4><p>作为非线性的学习模型，深度神经网络取得了很大的成功。代表性的使用深度神经网络的NE方法： SDNE [6], SDAE [26], and SiNE [13],</p>
-<h2 id="3-Network-Embedding和Graph-Embedding对比"><a href="#3-Network-Embedding和Graph-Embedding对比" class="headerlink" title="3 Network Embedding和Graph Embedding对比"></a>3 Network Embedding和Graph Embedding对比</h2><p>Graph embedding（GE）的目标与network embedding的目标相似，是将一个图（graph）嵌入到低维的向量空间。传统的图嵌入方法，图是从以特征表示的数据集中构造得到的，如图像数据集。GE综述（Fu and Ma 2012）</p>
+<h2 id="3-Network-Embedding和Graph-Embedding对比"><a href="#3-Network-Embedding和Graph-Embedding对比" class="headerlink" title="3 Network Embedding和Graph Embedding对比"></a>3 Network Embedding和Graph Embedding对比</h2><p>Graph Embedding（GE）的目标与Network Embedding的目标相似，是将一个图（graph）嵌入到低维的向量空间。传统的图嵌入方法，图是从以特征表示的数据集中构造得到的，如图像数据集。GE综述（Fu and Ma 2012）</p>
 <h3 id="3-1-代表性的GE方法"><a href="#3-1-代表性的GE方法" class="headerlink" title="3.1 代表性的GE方法"></a>3.1 代表性的GE方法</h3><p>GE方法起初是作为一种降维的技术来被学习的。 一个图通常是由一些有特征的数据集构成的，如图像数据集。<br>作者主要提到了三种方法，Isomap，LLE，LE。均为经典流行学习的方法。这些方法均利用特征构建出图结构，并利用图结构行计算。</p>
 <h4 id="Isomap-28-："><a href="#Isomap-28-：" class="headerlink" title="Isomap[28]："></a>Isomap[28]：</h4><p>Isomap 为经典流行学习方法，假设高维的数据都存在低维的本征结构。<br>Isomap利用流形在局部上与欧氏空间同胚这个性质（一个点的小邻域内，在流形空间的距离与实际空间中的距离近似），对每个点基于欧氏距离找出其近邻点，然后就能建立一个近邻连接图，图中近邻点之间存在连接，而非近邻点之间不存在连接，于是，计算两点之间测地线距离的问题就转变为计算近邻连接图上两点之间的最短路径问题.<br>Isomap通过使用连接线算法（如：knn）构建了一个邻居网络，从而构成流行空间，在近邻连接图上计算两点间的最短路径，从而构建距离矩阵。最终利用MDS的方法得到流行空间的表示(优化如下目标)。<br>$$<br>J(x’) = \sum _i ^ N {|| (||x’ _i - x’ _j|| - d _{ij}} )|| \\<br>$$</p>
 <h4 id="LLE-局部线性嵌入"><a href="#LLE-局部线性嵌入" class="headerlink" title="LLE 局部线性嵌入."></a>LLE 局部线性嵌入.</h4><p>LLE同样使用连接线算法（如：knn）构建了一个邻居网络。Isomap构建网络目的是为了得到距离矩阵，而LLE构建网络则是希望能保证点与其紧邻的关系在变幻前后保持不变。<br>当构建好邻居网络之后，使用邻居节点来对自身点进行线性表示（ \( x _i = \sum _k ^K \omega _ {ij} x _j  \) ）。我们希望在进行流形变换之后的流形空间里，临近点同样保持相应的关系（ \( x’ _i = \sum _k ^K \omega _{ij} x’ _j  \), x’为变换后的x）。这一步，我们使用均方误差作为回归问题损失函数。  </p>
@@ -433,10 +433,12 @@
 <h4 id="Probabilistic-latent-document-network-embedding-Le-et-al-2014-50"><a href="#Probabilistic-latent-document-network-embedding-Le-et-al-2014-50" class="headerlink" title="Probabilistic latent document network embedding[Le et al,2014,[50]]"></a>Probabilistic latent document network embedding[Le et al,2014,[50]]</h4><p>同时考虑每个文档相关的词以及文档之间的关系。对于每个节点，学到低维表示。同时也学习在topic space（基于Relation Topic Model）的表示。作者通过耦合节点表示空间与Topic空间，讲两种表示交织在一起（两点在表示空间越近，他们的topic分布越相似）。在论文中，作者对节点低维表示仅使用了2维，top的表示纬度远高于节点为度。实际上这种表示较弱，但用来可视化似乎比较合适。</p>
 <h4 id="TADW（2015）"><a href="#TADW（2015）" class="headerlink" title="TADW（2015）"></a>TADW（2015）</h4><p>在MMDW中我们提到，DeepWalk等价于一个矩阵M的矩阵分解。而在实际中，一些节点上往往会有其他信息，所以在矩阵分解这个框架中，将节点信息直接以一个子矩阵的方式加入，会使学到的向量包含更丰富的信息。<br>$$<br> min _{W,H} L = min _{W,H}||M - W ^T HT|| _F ^2 + \lambda/2(||W|| _F ^2 +||H|| _F ^2)<br>$$<br>改进的DW方法中，因为加入了节点的信息T，所以W的embedding具有了更多的信息。<br>然而加入文本信息T后, 计算代价很高高，且节点属性文本无序，失去语义信息。Sun et al. (Sun et al. 2016) 将context视为一种特殊的Node,得到一个更大的network，然后有node-node 和 node-content 的链接,利用负采样和逻辑函数，学习Node在联合目标函数中的表示，从而同时保留Node-content和网络结构。</p>
 <h4 id="TriDNR-2016"><a href="#TriDNR-2016" class="headerlink" title="TriDNR 2016"></a>TriDNR 2016</h4><p>采用了网络结构+节点属性+节点标签。其思路是在进行embedding使，用节点的embedding向量联立结构与内容两部分表示学习过程。其目标函数为最大化：</p>
-<p>$$<br>L = (1-\alpha)\sum _i ^N\sum _{s\in S }\sum _{-b\le j \le b,j\ne0}log P(v _{i+j}|v _i) \\</p>
-<ul>
-<li>\alpha \sum _i ^N \sum _{-b\le j \le b}log P(w _j|v _i) + \alpha \sum _i ^{|L|} \sum _{-b\le j \le b}log P(w _j|c _i)<br>$$<br>对于每一项概率：<br>$$<br>P(v _{i+j}|v _i) = \frac {exp(V _{v _i} ^T V’ _{v _{i+j} })}{\sum _v ^ N exp(V _{v _i} ^T V _{v })}<br>$$<br>$$<br>P(w _j|v _i) = \frac {exp(V _{v _i} ^T V’ _{w _j })}{\sum _w ^ N exp(V _{v _i} ^T V’ _{w})}<br>$$<br>$$<br>P(w _j|c _i)  = \frac {exp(V _{c _i} ^T V’ _{w _j })}{\sum _w ^ N exp(V _{c _i} ^T V’ _{w})}<br>$$<br>其中V表示输入空间的embedding，V’表示word空间的embeding向量。在L中第1项是Random walk + Skip-gram的概率表达，也就是在当前点vi作为输入时，输出的的到的向量要更大可能的表示他的邻居。第2项是在当前节点的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。第3项是在当前节点的label的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。</li>
-</ul>
+<p>$$<br>L = (1-\alpha)\sum _i ^N\sum _{s\in S }\sum _{-b\le j \le b,j\ne0}log P(v _{i+j}|v _i) + \alpha \sum _i ^N \sum _{-b\le j \le b}log P(w _j|v _i) + \alpha \sum _i ^{|L|} \sum _{-b\le j \le b}log P(w _j|c _i)<br>$$</p>
+<p>对于每一项概率：</p>
+<p>$$<br>P(v _{i+j}|v _i) = \frac {exp(V _{v _i} ^T V’ _{v _{i+j} })}{\sum _v ^ N exp(V _{v _i} ^T V _{v })}<br>$$</p>
+<p>$$<br>P(w _j|v _i) = \frac {exp(V _{v _i} ^T V’ _{w _j })}{\sum _w ^ N exp(V _{v _i} ^T V’ _{w})}<br>$$</p>
+<p>$$<br>P(w _j|c _i)  = \frac {exp(V _{c _i} ^T V’ _{w _j })}{\sum _w ^ N exp(V _{c _i} ^T V’ _{w})}<br>$$</p>
+<p>其中V表示输入空间的embedding，V’表示word空间的embeding向量。在L中第1项是Random walk + Skip-gram的概率表达，也就是在当前点vi作为输入时，输出的的到的向量要更大可能的表示他的邻居。第2项是在当前节点的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。第3项是在当前节点的label的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。</p>
 <h4 id="LANE（2017）"><a href="#LANE（2017）" class="headerlink" title="LANE（2017）"></a>LANE（2017）</h4><p>LANE分别计算了节点的图结构相似度矩阵，节点属性相似度矩阵，节点标签相似度矩阵（利用图结构相似度矩阵平滑）。然后基于谱图理论，根据得到的Laplacian矩阵，将三种不同原映射为三种表示。为建立三种表示之间的联系，LANE将这三种表示投影到一个新的共同空间。学习得到的表示能够捕捉网络的结构邻接性，以及标签属性网络的相关性。</p>
 <h3 id="5-2-Heterogeneous-Information-Network-Embedding"><a href="#5-2-Heterogeneous-Information-Network-Embedding" class="headerlink" title="5.2 Heterogeneous Information Network Embedding"></a>5.2 Heterogeneous Information Network Embedding</h3><p>与带节点内容的网络不通，heterogeneous网络包含了各种不同种类的节点和边。因此如何统一这些不同类型的节点和边，就成为了一个挑战。</p>
 <h4 id="Learning-latent-representations-of-nodes-for-classifying-in-heterogeneous-social-networks-Yann-et-al-2017-58"><a href="#Learning-latent-representations-of-nodes-for-classifying-in-heterogeneous-social-networks-Yann-et-al-2017-58" class="headerlink" title="Learning latent representations of nodes for classifying in heterogeneous social networks [Yann et al,2017,[58]]"></a>Learning latent representations of nodes for classifying in heterogeneous social networks [Yann et al,2017,[58]]</h4><p>Yann将异构的社交网络节点统一到了一个向量空间中，然后根据不同的节点类别，在相同的表示空间上定义不同的分类器,使用 hinge-loss来度量对于标签y的损失：<br>$$<br>\sum _i ^l \Delta (f _\theta ^{t _i}(u _i),y _i)<br>$$</p>
@@ -477,7 +479,7 @@
 <p>（1） 如何合并network motifs (Benson, Gleich，和Leskovec 2016) —高阶结构</p>
 <p>（2） 如何将节点的更加复杂的结构作为嵌入的条件</p>
 <p>（3） 当前网络嵌入的假设通常基于成对的结构，即如果两个节点有一个链接，那么它们的表示是相似的。这样的话可以在一部分场景应用良好，比如链接预测；但是节点的中心性信息很难编码，因为它一般都有很复杂的结构。</p>
-<p>（4） 超边。一些真实网络中，一条边可能不单单只连接两个节点，因此节点中会隐藏更多的信息，有更多的特征。这种边的网络嵌入在真实网络中也是很重要的。</p>
+<p>（4） 超边：一些真实网络中，一条边可能不单单只连接两个节点，因此节点中会隐藏更多的信息，有更多的特征。这种边的网络嵌入在真实网络中也是很重要的。</p>
 <p>（5） 幂律分布特性表明，网络中的大多数节点与少量的边相关联。因此，对于信息有限的节点（是大多数），很难找到有效的表示方法。这一特性如何影响网络嵌入的性能，如何提高少数节点的嵌入程度，在很大程度上仍未受到影响。</p>
 <h3 id="8-2-The-Effect-of-Side-Information"><a href="#8-2-The-Effect-of-Side-Information" class="headerlink" title="8.2 The Effect of Side Information"></a>8.2 The Effect of Side Information</h3><p>（1） 所有现有的方法都假设网络结构和side信息之间存在一致性，至少是不矛盾的，但是这个假设真实网络中还是个保留的问题，（在哪适用，在哪不适用，在某个网络甚至某个应用中该怎么取舍）。如果Side information 和结构信息相关性很低，可能会导致网络映射成向量的性能变低，也可能正好因为网络结构与侧向信息互补，而提高性能。这些都可能是将来去发现规律，深入研究的地方。</p>
 <p>（2） 在异构信息网络中，元路径被广泛应用在测量两个对象的相关性中。元路径就是两个节点之间，路径的一个类型序列。元结构就可以提供了一个高阶结构约束。元结构本质上是两节点间节点和边组成的一个有向无环图。（图中的最短路径）这为改进异构信息网络嵌入提供了一个巨大的潜在方向。</p>
@@ -510,9 +512,9 @@
           
             <a href="/tags/Social-Network/" rel="tag"># Social Network</a>
           
-            <a href="/tags/Network-Analysis/" rel="tag"># Network Analysis</a>
-          
             <a href="/tags/Network-Embedding/" rel="tag"># Network Embedding</a>
+          
+            <a href="/tags/Network-Analysis/" rel="tag"># Network Analysis</a>
           
         </div>
       
