@@ -88,9 +88,6 @@
 <meta property="og:description" content="《Attention, please! A survey of Neural Attention Models in Deep Learning》为2021年新发表的详细介绍Attention机制的大综述文章，其全文文本共66页，引用了569篇文章，可以说是几乎覆盖了机器学习领域所有可圈点的Attention相关文章。其涵盖了NLP、CV、推荐、强化学习等可以说是各个机器学习覆盖等领域（当然">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png">
-<meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png">
-<meta property="og:image" content="https://liuzhiqi.github.io/ATTENTION-PLEASE/cite_bubble.png">
-<meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/RNNSearch.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/BiDAF.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/HAN.png">
@@ -131,7 +128,7 @@
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/BERT1.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/top-down_bottom-up.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/mattnet.jpeg">
-<meta property="og:updated_time" content="2021-06-03T15:48:32.254Z">
+<meta property="og:updated_time" content="2021-06-03T15:57:56.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Paper-Reading】《Attention, please! A survey of Neural Attention Models in Deep Learning》">
 <meta name="twitter:description" content="《Attention, please! A survey of Neural Attention Models in Deep Learning》为2021年新发表的详细介绍Attention机制的大综述文章，其全文文本共66页，引用了569篇文章，可以说是几乎覆盖了机器学习领域所有可圈点的Attention相关文章。其涵盖了NLP、CV、推荐、强化学习等可以说是各个机器学习覆盖等领域（当然">
@@ -409,13 +406,13 @@
 
 <p>论文原文是从6000多的文章中，找到并着重分析了650篇文章。本文则着重从其中挑选了作者详细提及或个人认为有可取之处的文章进行了略微详细的介绍。其中引用编号保留了原文的编号，详细提及的文章后面link了相应paper的超链接，想仔细了解的同学可以自行下载。</p>
 <h1 id="2-Overview"><a href="#2-Overview" class="headerlink" title="2 Overview"></a>2 Overview</h1><p>在一切开始前，首先放一张，Attention相关的，根据论文引用情况得到的Bubble Chart：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png" alt="bubble"><br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png" alt="bubble"><br><img src="/ATTENTION-PLEASE/cite_bubble.png" alt="bubble"><br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png" alt="bubble"><br>可以看到引用最多的为：RNNSearch [2015, 44], Transformer [37], Memory Networks [38], “show, attend and tell” [45] 和 RAM [46]。<br>而在这其中，RNNSearch应该是Attention在NlP领域最先提出，或者说在最初阶段最有名的文章，因此首先介绍一下RNNSearch：</p>
-<h5 id="RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115"><a href="#RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115" class="headerlink" title="RNNSearch： Neural machine translation by jointly learning to align and translate [2019, 115]"></a>RNNSearch： Neural machine translation by jointly learning to align and translate <a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="noopener">[2019, 115]</a></h5><p>经典的Encoder-Decoder框架的瓶颈问题驱动了Attention的发展。最主要的问题是NN需要将原句中所有信息压缩到一个固定大小的向量，Choetal. [47]指出，经典Encoder-Decoder框架效果，会随着句子的长度变长而快速恶化。因此Bahdanau et al. [44] 提出了RNNSearch，将输入向量转化成一些列的内容向量，在预测某一个词时，利用attention机制对Encode出的向量序列进行加权求和。如图：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/RNNSearch.png" alt="RNNSearch"><br>其中，加权求和时，权重与:<br>$$<br>a _{ij} = \frac {e _{ij}}{\sum _{k=1} ^{T _x} exp(e _{ik})} \\<br>e _{ij} = a(s _{i-1},h _j)<br>$$</p>
+<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png" alt="bubble"><br>可以看到引用最多的为：RNNSearch [2015, 44], Transformer [37], Memory Networks [38], “show, attend and tell” [45] 和 RAM [46]。<br>而在这其中，RNNSearch应该是Attention在NlP领域最先提出，或者说在最初阶段最有名的文章，因此首先介绍一下RNNSearch：</p>
+<h5 id="RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115"><a href="#RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115" class="headerlink" title="RNNSearch： Neural machine translation by jointly learning to align and translate [2019, 115]"></a>RNNSearch： Neural machine translation by jointly learning to align and translate <a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="noopener">[2019, 115]</a></h5><p>经典的Encoder-Decoder框架的瓶颈问题驱动了Attention的发展。最主要的问题是NN需要将原句中所有信息压缩到一个固定大小的向量，Choetal. [47]指出，经典Encoder-Decoder框架效果，会随着句子的长度变长而快速恶化。因此Bahdanau et al. [44] 提出了RNNSearch，将输入向量转化成一些列的内容向量，在预测某一个词时，利用attention机制对Encode出的向量序列进行加权求和。如图：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/RNNSearch.png" alt="bubble"><br>其中，加权求和时，权重与:<br>$$<br>a _{ij} = \frac {e _{ij}}{\sum _{k=1} ^{T _x} exp(e _{ik})} \\<br>e _{ij} = a(s _{i-1},h _j)<br>$$</p>
 <p>RNNSearch是一种soft attention方法，基于RNNSearch在NN上有很多的尝试，其中比较有代表性的两个方面的工作为：attentional interfaces 和 end-to-end attention。<br><strong>Attentional interfaces</strong>将attention视作一个模块，因此可以很容易的将其插入经典深度学习网络中，如RNNSearch。<br><strong>End-to-end attention</strong>则是一个比较新的研究方向，其将主要用attention层作为主要层，替换了传统神经网络连接层，将attention覆盖到了整个神经网络。而这种基于attention 的End-to-end模型也因此成为了一种新的神经网络类型。</p>
 <h2 id="2-1-Attentional-interfaces"><a href="#2-1-Attentional-interfaces" class="headerlink" title="2.1 Attentional interfaces"></a>2.1 Attentional interfaces</h2><p>RNNSearch是Attentional interfaces研究的基础，在其之上有很多扩展。  </p>
 <h3 id="2-1-1-Attentional-interfaces-in-NLP"><a href="#2-1-1-Attentional-interfaces-in-NLP" class="headerlink" title="2.1.1 Attentional interfaces in NLP"></a>2.1.1 Attentional interfaces in NLP</h3><h5 id="Listen-Attend-and-Spell-2015-48"><a href="#Listen-Attend-and-Spell-2015-48" class="headerlink" title="Listen, Attend and Spell [2015, 48]:"></a>Listen, Attend and Spell <a href="pdfs.semanticscholar.org/45f2/c264c496296b6600fafc340b8f0dbc4ac52f.pdf">[2015, 48]</a>:</h5><p>采用了类似RNNSearch的模型，将RNN+Attention扩展到了语音识别上（Encode编码语音，Decode解码成文本），RNN部分使用，Attention部分和RNNSearch类似，其中\(e _{ij} = &lt;\phi(s _i),\psi(h _u)&gt;\)，其使用MLP将语音编码和文本状态映射到同一空间上，用内积计算相似度。</p>
 <h5 id="Grammar-as-a-Foreign-Language-2015-49"><a href="#Grammar-as-a-Foreign-Language-2015-49" class="headerlink" title="Grammar as a Foreign Language [2015, 49]:"></a>Grammar as a Foreign Language <a href="http://de.arxiv.org/pdf/1412.7449" target="_blank" rel="noopener">[2015, 49]</a>:</h5><p>文本分析领域，同样是用LSTM+S2S，输入文本输出语法节点，使用深度优先遍历将语法树变换为序列。Attention部分使用\(e _{ij} = v ^T tanh(W _h ^T h _i + W _s ^T s _t)\)，其中v与W均为学习参数。</p>
-<h5 id="BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51"><a href="#BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51" class="headerlink" title="BiDAF：Bidirectional attention flow for machine comprehension[2016, 51]:"></a>BiDAF：Bidirectional attention flow for machine comprehension<a href="arxiv.org/pdf/1611.01603">[2016, 51]</a>:</h5><p>面向问答场景，输入是文字段落+相关问题，输出是问题的答案。BiDAF设计了分层的多阶段体系结构，其结构如下图。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/BiDAF.png" alt="BiDAF"></p>
+<h5 id="BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51"><a href="#BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51" class="headerlink" title="BiDAF：Bidirectional attention flow for machine comprehension[2016, 51]:"></a>BiDAF：Bidirectional attention flow for machine comprehension<a href="arxiv.org/pdf/1611.01603">[2016, 51]</a>:</h5><p>面向问答场景，输入是文字段落+相关问题，输出是问题的答案。BiDAF设计了分层的多阶段体系结构，其结构如下图。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/BiDAF.png" alt="bubble"></p>
 <p>对于输入文字段落与相关问题，BiDAF设计了word embedding层(GLOVE)和Character embedding层(Char-CNN)，然后输入到Contextual结合上下文进行进一步embedding聚合，从而得到ContextEmbedding结果和QueryEmbedding结果。<br>在得到Embedding结果后，与RNNSearch的attention不同，BiDAF使用了双向attention，根据Context对Query进行加权求和得到Query-Context表示(C2Q)（哪个Query词汇对当前Context更相关），根据Query对Context进行加权求和得到Context-Query(Q2C)表示（哪个Context词汇对当前Query更相关）。其具体attention过程为：</p>
 <p>$$<br>S _{ij} = w ^T[h;u;h \cdot u] \\<br>a _{t} = softmax(S _{t:}) \\<br>\hat U _{:t} = \sum _j a _{tj}U _{:j} \\<br>b = softmax(max _{col}S ) \\<br>\hat h = \sum _t b _t H _{:t}<br>$$</p>
 <p>其中S可以看作Query与Context的相关矩阵。<br>\(\hat U \in R ^{2d \times T}\)，即对每一个Context都对应一个Query Embedding空间的结果（理解为，当前context表征了问题哪一方面）。<br>对于Context-Query，因为对于Query的每一个词找到相应的Context似乎意义不大，切可能因为Context过多导致冗余信息累加后Attention趋于平均，因此我们使用了max函数，找到context与query中词最大的相似度作为分量。这一步骤个人理解为，query整体应该反应的context某一个方面，而不是query每一个词反映了context某个方面。因此没有像Query-Context一样形成矩阵。由于Context-Query是单个向量，为了拉齐，我们duplicate该向量T次，构成\(\hat H \in R ^{2d \times T}\)<br>我们汇总所有表示：<br>$$<br>G _{:t}=[H _{:t};\hat U _{:t} ;\hat U _{:t} \cdot H _{:t};\hat H _{:t} \cdot H _{:t}] \in R ^{8d\times T}<br>$$<br>G为输入到下一层的数据，其由context embedding结果，C2Q结果以及context embedding与C2Q、Q2C特征交叉得到。<br>之后的ModelingLayer 采用了普通的双向LSTM，而OutputLayer则根据不同任务目标设定了不同模块。</p>
@@ -572,8 +569,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2021/04/02/【Paper-Reading】ATTENTION-PLEASE-A-SURVEY-OF-NEURAL-ATTENTION-MODELS-IN-DEEP-LEARNING/" rel="next" title="【Paper-Reading】《Attention, please! A survey of Neural Attention Models in Deep Learning》">
-                <i class="fa fa-chevron-left"></i> 【Paper-Reading】《Attention, please! A survey of Neural Attention Models in Deep Learning》
+              <a href="/blog/2020/11/12/A-Survey-on-Network-Embedding/" rel="next" title="【Paper Reading】A Survey on Network Embedding">
+                <i class="fa fa-chevron-left"></i> 【Paper Reading】A Survey on Network Embedding
               </a>
             
           </div>
@@ -659,7 +656,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
