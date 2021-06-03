@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="Zhiqi Liu">
 <meta property="og:description" content="一、Background在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://liuzhiqi.github.io/home/picture/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/blog/2019/10/22/Time-Series1/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2019/10/22/Time-Series1/prophet_growth_curve.png">
 <meta property="og:image" content="https://liuzhiqi.github.io/blog/2019/10/22/Time-Series1/prophet_growth_curve2.png">
-<meta property="og:updated_time" content="2021-06-03T16:09:29.379Z">
+<meta property="og:updated_time" content="2021-06-03T16:12:59.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="时间序列分析（一）单变量时间序列分析">
 <meta name="twitter:description" content="一、Background在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩">
-<meta name="twitter:image" content="https://liuzhiqi.github.io/home/picture/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png">
+<meta name="twitter:image" content="https://liuzhiqi.github.io/blog/2019/10/22/Time-Series1/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png">
 
 
 
@@ -391,7 +391,7 @@
 <p>$$<br>\begin{cases}<br>\psi _0 = 1\\<br>\psi _1 = -\theta _1 + \phi _1\\<br>\psi _2 = -\theta _2 + \phi _2 + \phi _1\theta _1\\<br>\cdots\\<br>\psi _j = -\theta _j + \phi _p\theta _{j-p} + \phi _{p-1}\theta _{j-p+1} + \cdots + \phi _1\theta _{j-1} \\<br>\end{cases}<br>$$</p>
 <p>这里我们将模型中AR部分展开得到公式2.1的形式，其中参数\(\psi\)为2.1中系数。<br>对于ARMA模型，我们通常要求AR和MA分别满足平稳和可逆两个条件（上文提到，各自特征方程根模大于一）</p>
 <h2 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h2><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y _t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y _{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
-<p><img src="/home/picture/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png" alt="avatar"></p>
+<p><img src="//liuzhiqi.github.io/blog/2019/10/22/Time-Series1/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png" alt="avatar"></p>
 <p>如果一个时间序列 \(\{Y _t\}\)的d次差分 \(W _t = \Delta ^d Y _t\)是一个平稳的ARMA(p,q)过程，则称\(\{Y _t\}\)为自回归滑动平均求和模型ARIMA(p,d,q)。通常取d=1或最多2。<br>考虑ARIMA(p,1,q)，令\(W _t = \Delta ^d Y _t\)，我们有：<br>$$W _t=\phi _1 W _{t-1} + \phi _2 W _{t-2} + \cdots + \phi _n W _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>通过将W用Y替换并合并，可得：</p>
 <p>$$Y _t=(1 + \phi _1)W _{t-1} + (\phi _2 -\phi _1)W _{t-2} + \cdots +  (\phi _{t-p} -\phi _{t-p-1}) W _{t-p} - \phi _p W _{t-p-1} \\+ e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>我们称上述形式为模型的差分方程形式。我们分析其AR特征方程：<br>$$1-(1+\phi _1)x-(\phi _2 - \phi _1)x ^2-\cdots-(\phi _{t-p} -\phi _{t-p-1})x ^p + \phi _p x ^{p+1}=(1-\phi _1 -\phi _2x ^2-/cdots-\phi _px ^p)(1-x)$$<br>此时 x=1是一个根，因此这个过程非平稳，但其余的根是平稳过程\( \Delta ^d Y _t\)的特征多项式的根。这也说明了为什么当原序列非平稳，我们使用一阶差分来得到平稳序列的原因。</p>
 <p>差分是实现平稳较好的方式，出了差分外，我们还可以根据序列特征对序列进行其他的变换。例如：如果发现序列散度随着时间增加，可以尝试使用对数方法对序列进行变换等。</p>
