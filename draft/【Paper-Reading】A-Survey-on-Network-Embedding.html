@@ -87,14 +87,13 @@
 <meta property="og:site_name" content="Zhiqi Liu">
 <meta property="og:description" content="【Paper Reading】A Survey on Network Embedding本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译文字摘抄自【论文笔记】A Survey on Network Embedding  1 Introduction传统的方法，我们通常将一个网络表">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://liuzhiqi.github.io/draft/A_Survey_on_Network_Embedding/SiNE_architecture.png">
-<meta property="og:image" content="https://liuzhiqi.github.io/draft/A_Survey_on_Network_Embedding/Deepcas.png">
-<meta property="og:image" content="https://liuzhiqi.github.io/draft/A_Survey_on_Network_Embedding/Anomaly_Detection%20.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/【Paper-Reading】A-Survey-on-Network-Embedding/SiNE_architecture.png">
+<meta property="og:image" content="https://liuzhiqi.github.io/draft/【Paper-Reading】A-Survey-on-Network-Embedding/Deepcas.png">
 <meta property="og:updated_time" content="2021-04-18T05:41:23.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Paper Reading】A Survey on Network Embedding">
 <meta name="twitter:description" content="【Paper Reading】A Survey on Network Embedding本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译文字摘抄自【论文笔记】A Survey on Network Embedding  1 Introduction传统的方法，我们通常将一个网络表">
-<meta name="twitter:image" content="https://liuzhiqi.github.io/draft/A_Survey_on_Network_Embedding/SiNE_architecture.png">
+<meta name="twitter:image" content="https://liuzhiqi.github.io/draft/【Paper-Reading】A-Survey-on-Network-Embedding/SiNE_architecture.png">
 
 
 
@@ -275,7 +274,7 @@
           <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <h1 id="【Paper-Reading】A-Survey-on-Network-Embedding"><a href="#【Paper-Reading】A-Survey-on-Network-Embedding" class="headerlink" title="【Paper Reading】A Survey on Network Embedding"></a>【Paper Reading】A Survey on Network Embedding</h1><p>本文为Paper阅读笔记，除了基本的论文总结之外，由于原文对提到的方法描述较为简单，因此本文还对原文中提到的方法进行了补充说明。为了方便笔记的快速记录，文中部分直译文字摘抄自<a href="https://blog.csdn.net/zjwreal/article/details/87897474" target="_blank" rel="noopener">【论文笔记】A Survey on Network Embedding</a> </p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>传统的方法，我们通常将一个网络表示为一个图 G = &lt; V , E &gt; G = &lt;V,E&gt;G=<v,e> 但是大型网络中此表示方法不使用，存在以下挑战如：</v,e></p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>传统的方法，我们通常将一个网络表示为一个图 G = &lt; V , E &gt; G = &lt;V,E&gt;G=&lt;V,E&gt; 但是大型网络中此表示方法不使用，存在以下挑战如：</p>
 <ul>
 <li>高计算复杂度（需要不断地遍历节点，如计算节点之间的距离）</li>
 <li>低并行化（节点之间紧耦合，相互依赖）</li>
@@ -295,158 +294,84 @@
 <h4 id="2-2-3-深度神经网络"><a href="#2-2-3-深度神经网络" class="headerlink" title="2.2.3 深度神经网络"></a>2.2.3 深度神经网络</h4><p>作为非线性的学习模型，深度神经网络取得了很大的成功。代表性的使用深度神经网络的NE方法： SDNE [6], SDAE [26], and SiNE [13],</p>
 <h2 id="3-Network-Embedding和Graph-Embedding对比"><a href="#3-Network-Embedding和Graph-Embedding对比" class="headerlink" title="3 Network Embedding和Graph Embedding对比"></a>3 Network Embedding和Graph Embedding对比</h2><p>Graph embedding（GE）的目标与network embedding的目标相似，是将一个图（graph）嵌入到低维的向量空间。传统的图嵌入方法，图是从以特征表示的数据集中构造得到的，如图像数据集。GE综述（Fu and Ma 2012）</p>
 <h3 id="3-1-代表性的GE方法"><a href="#3-1-代表性的GE方法" class="headerlink" title="3.1 代表性的GE方法"></a>3.1 代表性的GE方法</h3><p>GE方法起初是作为一种降维的技术来被学习的。 一个图通常是由一些有特征的数据集构成的，如图像数据集。<br>作者主要提到了三种方法，Isomap，LLE，LE。均为经典流行学习的方法。这些方法均利用特征构建出图结构，并利用图结构行计算。</p>
-<h4 id="Isomap-28-："><a href="#Isomap-28-：" class="headerlink" title="Isomap[28]："></a>Isomap[28]：</h4><p>Isomap 为经典流行学习方法，假设高维的数据都存在低维的本征结构。<br>Isomap利用流形在局部上与欧氏空间同胚这个性质（一个点的小邻域内，在流形空间的距离与实际空间中的距离近似），对每个点基于欧氏距离找出其近邻点，然后就能建立一个近邻连接图，图中近邻点之间存在连接，而非近邻点之间不存在连接，于是，计算两点之间测地线距离的问题就转变为计算近邻连接图上两点之间的最短路径问题.<br>Isomap通过使用连接线算法（如：knn）构建了一个邻居网络，从而构成流行空间，在近邻连接图上计算两点间的最短路径，从而构建距离矩阵。最终利用MDS的方法得到流行空间的表示(优化如下目标)。   </p>
-<script type="math/tex; mode=display">
-J(x') = \sum _i ^ N {|| (||x' _i - x' _j|| - d _{ij}} )|| \\\\</script><h4 id="LLE-局部线性嵌入"><a href="#LLE-局部线性嵌入" class="headerlink" title="LLE 局部线性嵌入."></a>LLE 局部线性嵌入.</h4><p>LLE同样使用连接线算法（如：knn）构建了一个邻居网络。Isomap构建网络目的是为了得到距离矩阵，而LLE构建网络则是希望能保证点与其紧邻的关系在变幻前后保持不变。<br>当构建好邻居网络之后，使用邻居节点来对自身点进行线性表示（ \( x _i = \sum _k ^K \omega _ {ij} x _j  \) ）。我们希望在进行流形变换之后的流形空间里，临近点同样保持相应的关系（ \( x’ _i = \sum _k ^K \omega _{ij} x’ _j  \), x’为变换后的x）。这一步，我们使用均方误差作为回归问题损失函数。  </p>
-<script type="math/tex; mode=display">
-\begin{cases}
-J(\omega) = \sum _i ^ N {||x' _i - \sum _{x' _j \in G(x' _i)} \omega _{ij} x' _j || _2 ^2}  \\\\
-\sum _{x _j \in G(x _i)} \omega _{ij} =1
-\end{cases}</script><p>利用拉格朗日子乘法来求解这个最优化问题。<br>得到原始空间权重之后。我们反过来求解流形空间的点的表示。同样使用均方误差作为回归问题损失函数。       </p>
-<script type="math/tex; mode=display">
-J(x') = \sum _i ^ N {||x' _i - \sum _{x' _j \in G(x' _i)} \omega _{ij} x' _j || _2 ^2}  \\\\</script><h4 id="Laplacian-Eigenmaps-拉普拉斯特征映射"><a href="#Laplacian-Eigenmaps-拉普拉斯特征映射" class="headerlink" title="Laplacian Eigenmaps 拉普拉斯特征映射"></a>Laplacian Eigenmaps 拉普拉斯特征映射</h4><p>LE方法同样需要构建邻居网络，LE的目标是保证小邻域间的点的距离尽可能保持较小的状态。LE构建好邻居网络之后，利用邻居网络构建邻接矩阵：   </p>
-<script type="math/tex; mode=display">
-W_{ij} = e ^{-\frac{||x _i-x _j|| _2}{t}}</script><p>或直接利用邻接矩阵连通性：   </p>
-<script type="math/tex; mode=display">
-W _{ij} = \begin{cases}
-1 \ if\ i\ and\ j\ is\ connected\\\\
-0\ other
-\end{cases}</script><p>通过优化，得到输出空间。</p>
-<script type="math/tex; mode=display">
-min\ arg _{x'} \sum _i \sum _j {||x' _i -x' _j|| ^2}W _{ij} =min\ arg _{X'} trace(X' ^TLX') \\\\
-L = D-W \\\\
-D _{ii} = \sum _{j=1} ^n W _{ij}</script><h3 id="3-2-Network-Embedding和Graph-Embedding区别"><a href="#3-2-Network-Embedding和Graph-Embedding区别" class="headerlink" title="3.2 Network Embedding和Graph Embedding区别"></a>3.2 Network Embedding和Graph Embedding区别</h3><p>区别主要存在于两个方面：目标与假设。<br>目标：<br>Network Embedding的目标在于：重建原始网络+网络推断。<br>Graph embedding主要目标是网络的重建。因此，graph embedding 可以视为一种特殊的Network embedding，只考虑重建网络的network embedding。<br>GE更多的是处理数据特征特征的图结构，在原始特征空间中，图的权重可以被很好定义。而NE大多是处理真实的网络结构，例如社交网络，金融网络等。在这样的网络里，边之间的权重不好定义，可能需要特殊的分析与处理或特殊场景。<br>而现在的研究更注重网络的inference，因此NE也是本文接下来的重点。</p>
+<h4 id="Isomap-28-："><a href="#Isomap-28-：" class="headerlink" title="Isomap[28]："></a>Isomap[28]：</h4><p>Isomap 为经典流行学习方法，假设高维的数据都存在低维的本征结构。<br>Isomap利用流形在局部上与欧氏空间同胚这个性质（一个点的小邻域内，在流形空间的距离与实际空间中的距离近似），对每个点基于欧氏距离找出其近邻点，然后就能建立一个近邻连接图，图中近邻点之间存在连接，而非近邻点之间不存在连接，于是，计算两点之间测地线距离的问题就转变为计算近邻连接图上两点之间的最短路径问题.<br>Isomap通过使用连接线算法（如：knn）构建了一个邻居网络，从而构成流行空间，在近邻连接图上计算两点间的最短路径，从而构建距离矩阵。最终利用MDS的方法得到流行空间的表示(优化如下目标)。<br>$$<br>J(x’) = \sum _i ^ N {|| (||x’ _i - x’ _j|| - d _{ij}} )|| \\<br>$$</p>
+<h4 id="LLE-局部线性嵌入"><a href="#LLE-局部线性嵌入" class="headerlink" title="LLE 局部线性嵌入."></a>LLE 局部线性嵌入.</h4><p>LLE同样使用连接线算法（如：knn）构建了一个邻居网络。Isomap构建网络目的是为了得到距离矩阵，而LLE构建网络则是希望能保证点与其紧邻的关系在变幻前后保持不变。<br>当构建好邻居网络之后，使用邻居节点来对自身点进行线性表示（ \( x _i = \sum _k ^K \omega _ {ij} x _j  \) ）。我们希望在进行流形变换之后的流形空间里，临近点同样保持相应的关系（ \( x’ _i = \sum _k ^K \omega _{ij} x’ _j  \), x’为变换后的x）。这一步，我们使用均方误差作为回归问题损失函数。  </p>
+<p>$$<br>\begin{cases}<br>J(\omega) = \sum _i ^ N {||x’ _i - \sum _{x’ _j \in G(x’ _i)} \omega _{ij} x’ _j || _2 ^2}  \\<br>\sum _{x _j \in G(x _i)} \omega _{ij} =1<br>\end{cases}<br>$$</p>
+<p>利用拉格朗日子乘法来求解这个最优化问题。<br>得到原始空间权重之后。我们反过来求解流形空间的点的表示。同样使用均方误差作为回归问题损失函数。<br>$$<br>J(x’) = \sum _i ^ N {||x’ _i - \sum _{x’ _j \in G(x’ _i)} \omega _{ij} x’ _j || _2 ^2}  \\<br>$$</p>
+<h4 id="Laplacian-Eigenmaps-拉普拉斯特征映射"><a href="#Laplacian-Eigenmaps-拉普拉斯特征映射" class="headerlink" title="Laplacian Eigenmaps 拉普拉斯特征映射"></a>Laplacian Eigenmaps 拉普拉斯特征映射</h4><p>LE方法同样需要构建邻居网络，LE的目标是保证小邻域间的点的距离尽可能保持较小的状态。LE构建好邻居网络之后，利用邻居网络构建邻接矩阵：   </p>
+<p>$$<br>W_{ij} = e ^{-\frac{||x _i-x _j|| _2}{t}}<br>$$</p>
+<p>或直接利用邻接矩阵连通性：   </p>
+<p>$$<br>W _{ij} = \begin{cases}<br>1 \ if\ i\ and\ j\ is\ connected\\<br>0\ other<br>\end{cases}<br>$$</p>
+<p>通过优化，得到输出空间。</p>
+<p>$$<br>min\ arg _{x’} \sum _i \sum _j {||x’ _i -x’ _j|| ^2}W _{ij} =min\ arg _{X’} trace(X’ ^TLX’) \\<br>L = D-W \\<br>D _{ii} = \sum _{j=1} ^n W _{ij}<br>$$</p>
+<h3 id="3-2-Network-Embedding和Graph-Embedding区别"><a href="#3-2-Network-Embedding和Graph-Embedding区别" class="headerlink" title="3.2 Network Embedding和Graph Embedding区别"></a>3.2 Network Embedding和Graph Embedding区别</h3><p>区别主要存在于两个方面：目标与假设。<br>目标：<br>Network Embedding的目标在于：重建原始网络+网络推断。<br>Graph embedding主要目标是网络的重建。因此，graph embedding 可以视为一种特殊的Network embedding，只考虑重建网络的network embedding。<br>GE更多的是处理数据特征特征的图结构，在原始特征空间中，图的权重可以被很好定义。而NE大多是处理真实的网络结构，例如社交网络，金融网络等。在这样的网络里，边之间的权重不好定义，可能需要特殊的分析与处理或特殊场景。<br>而现在的研究更注重网络的inference，因此NE也是本文接下来的重点。</p>
 <h2 id="4-STRUCTURE-AND-PROPERTY-PRESERVING-NETWORK-EMBEDDING"><a href="#4-STRUCTURE-AND-PROPERTY-PRESERVING-NETWORK-EMBEDDING" class="headerlink" title="4 STRUCTURE AND PROPERTY PRESERVING NETWORK EMBEDDING"></a>4 STRUCTURE AND PROPERTY PRESERVING NETWORK EMBEDDING</h2><p>对于NE，最主要的目标就是保留网络结构和捕获网络特征。通常网络结构包括一阶网络特征和高阶网络特征。</p>
 <h3 id="4-1-Structure-Preserving-Network-Embedding"><a href="#4-1-Structure-Preserving-Network-Embedding" class="headerlink" title="4.1 Structure Preserving Network Embedding"></a>4.1 Structure Preserving Network Embedding</h3><p>网络结构根据不同的力度可以分为不同类型。在NE方法中一般来说挖掘网络结构主要包括，邻居结构，高阶节点邻接特性和网络社群发现。   </p>
 <h4 id="DeepWalk-3"><a href="#DeepWalk-3" class="headerlink" title="DeepWalk[3]"></a>DeepWalk[3]</h4><p>是早期影响力较大的图结构embedding方法。它主要是通过在图结构上随机游走，并将游走路径中节点生成序列。在随机游走过程中，利用权重生成转移概率：</p>
-<script type="math/tex; mode=display">
-P(v _j | v _i) =  \begin{cases}
-\frac {M _ij}{\sum _{j \in {N _+(v _i)}} M _{ij}} v _ \in N _{+}(V _i)  \\\\
-0\ e _{ij }\notin \epsilon
-\end{cases}</script><p>其中M矩阵为权重矩阵，若无权重也可设为1.</p>
+<p>$$<br>P(v _j | v _i) =  \begin{cases}<br>\frac {M _ij}{\sum _{j \in {N _+(v _i)}} M _{ij}} v _ \in N _{+}(V _i)  \\<br>0\ e _{ij }\notin \epsilon<br>\end{cases}<br>$$<br>其中M矩阵为权重矩阵，若无权重也可设为1.</p>
 <h4 id="Node2vec-25"><a href="#Node2vec-25" class="headerlink" title="Node2vec[25]"></a>Node2vec[25]</h4><p>在DeepWalk基础上更进一步，他通过调整随机游走的权重的方法，使Embedding的结果可以倾向于同质性（距离相近的节点更相似）或结构性（结构相似的节点更加相似）。Node2vec 主要使用了权衡BFS 和DFS的方法，通过控制节点跳转概率达到调整的目的。其具体转移概率如下：  </p>
-<script type="math/tex; mode=display">
-\alpha _{pq}(t,x) = \begin{cases}
-1/p ,if \ d _{tx} = 0（返回上一节点）\\\\
-1 ,if \ d _{tx} = 1（保持1度关系）\\\\
-1 ,if \ d _{tx} = 2（远离上一节点）
-\end{cases}</script><script type="math/tex; mode=display">
-P(x|v) = \alpha _{pq}(t,x)*\omega _{vx}</script><p>其中d 表示节点间距离，w表示权重，p为返回参数，p越小，随机游走回上一节点概率越大，q为进出参数，q越小，随机游走到远处概率越大。  </p>
+<p>$$<br>\alpha _{pq}(t,x) = \begin{cases}<br>1/p ,if \ d _{tx} = 0（返回上一节点）\\<br>1 ,if \ d _{tx} = 1（保持1度关系）\\<br>1 ,if \ d _{tx} = 2（远离上一节点）<br>\end{cases}<br>$$</p>
+<p>$$<br>P(x|v) = \alpha _{pq}(t,x)*\omega _{vx}<br>$$<br>其中d 表示节点间距离，w表示权重，p为返回参数，p越小，随机游走回上一节点概率越大，q为进出参数，q越小，随机游走到远处概率越大。  </p>
 <h4 id="LINE-10"><a href="#LINE-10" class="headerlink" title="LINE[10]"></a>LINE[10]</h4><p>可以应用于大规模网络中，其考虑网络的一阶和二阶相似性。一阶相似性是联合概率分布，由节点对之间的相似性来度量；二阶相似性是条件概率分布，通过节点生成其上下文节点的概率来度量；  </p>
-<script type="math/tex; mode=display">
-P1(v _i, v _2) = \frac {1}{1+exp(-u _i ^T u _j)}</script><script type="math/tex; mode=display">
-P2(v _i | v _2) = \frac {exp(\overline u _j ^T \overline u _i)}{1+exp(-\overline u _i ^T \overline u _j)}</script><p>利用KL散度对最终结果进行优化（比较概率分布与边权重变化后得到的实际关系重要度）。得到一二阶特征后，可以通过特征拼接的方式组合简单组合在一起。  </p>
+<p>$$<br>P1(v _i, v _2) = \frac {1}{1+exp(-u _i ^T u _j)}<br>$$</p>
+<p>$$<br>P2(v _i | v _2) = \frac {exp(\overline u _j ^T \overline u _i)}{1+exp(-\overline u _i ^T \overline u _j)}<br>$$</p>
+<p>利用KL散度对最终结果进行优化（比较概率分布与边权重变化后得到的实际关系重要度）。得到一二阶特征后，可以通过特征拼接的方式组合简单组合在一起。  </p>
 <h4 id="GraRep-【-Need-dive-deep-】："><a href="#GraRep-【-Need-dive-deep-】：" class="headerlink" title="GraRep 【## Need dive deep ##】："></a>GraRep 【## Need dive deep ##】：</h4><p>LINE只考虑一阶和二阶，GrapRep考虑K阶（K&gt;2）相似性。给定一个邻接矩阵A，k步概率转移矩阵可通过矩阵相乘计算得到。</p>
 <h4 id="M-NMF"><a href="#M-NMF" class="headerlink" title="M-NMF:"></a>M-NMF:</h4><p>之前的NE主要从保留相近节点的关系来做Embedding。M-NMF则从社群划分的角度进行切入。<br>这里M-NMF优化目标可以分为两部分，矩阵相似度特征部分和社群部分。<br>矩阵相似度部分主要衡量了点和点的相似度。M-NMF主要使用了一阶相似度和二阶相似度。其中一阶相似度使用了邻接矩阵，作为相似度矩阵。二阶相似度矩阵则由两点的邻接向量的余弦距离定义。最终相似度矩阵由一阶二阶相似度矩阵加权拼接得到：\(  S = S ^{(1)} + \eta S ^{(2)}  \)    </p>
 <p>社群部分主要使用了Q-Modularity来衡量社群划分水平（见： ）。通过优化：\( Tr(H ^TBH) \)来优化社群。<br>为了得到Embedding向量，M-NMF使用了矩阵分解，目标函数如下：</p>
-<script type="math/tex; mode=display">
-argmin(M,U,H,C)||S - MU ^T|| ^2 _F + \alpha||H - UC ^T|| ^2 _F -\beta Tr(H ^TBH)</script><p>其中U为节点表示矩阵，M为节点-节点偏好矩阵，C为社区特征矩阵。铜鼓轮流更新M、U、H、C来优化方程。</p>
+<p>$$<br>argmin(M,U,H,C)||S - MU ^T|| ^2 _F + \alpha||H - UC ^T|| ^2 _F -\beta Tr(H ^TBH)<br>$$</p>
+<p>其中U为节点表示矩阵，M为节点-节点偏好矩阵，C为社区特征矩阵。铜鼓轮流更新M、U、H、C来优化方程。</p>
 <p>从公式中我们可以看到，作者通过引入一个新的“社区表达矩阵”C，结合“节点表达矩阵”U，通过矩阵分解的方法来结合模块度公式中原有的“社区矩阵”H，这样一来，embedding的过程中使用模块度公式来约束社区结构。但是这种方法引入的假设变量有点多，虽然实验效果不错，但解释起来始终有些牵强。同时，矩阵分解方法需要开的内存太高，难以针对大规模数据。</p>
-<h4 id="SDNE"><a href="#SDNE" class="headerlink" title="SDNE"></a>SDNE</h4><p>SDNE可以看作是基于LINE的扩展，同时也是第一个将深度学习应用于网络表示学习中的方法。SDNE解决高非线性、结构保护和稀疏性问题，SDNE深度自编码器的基础上，优化了自编码器损失函数，同时对表示层也加入了有监督的损失函数。<br>传统自编码器损失函数：  </p>
-<script type="math/tex; mode=display">
-L = \sum _{i=1} ^n||\hat x _i - x _i|| _2 ^2</script><p>我们只能根据已有的连接表示节点之间的相似性,但对它们的差异无法作出比较好的衡量。<br>而且由于网络稀疏,输入实例中0元素的数目远多于非0元素。因此SDNE对损失函数加入了更多罚项：</p>
-<script type="math/tex; mode=display">
-L = \sum _{i=1} ^n||(\hat x _i - x _i)\cdot b _i|| _2 ^2</script><p>其中bi 由邻接矩阵得到，若i j对应到邻接矩阵等于0，则 \( b _{ij} = 1 \) 。否则\( b _{ij}=\beta &gt;1 \) 。通过自编码器,如果两个节点具有相近的邻接点结构,则在表示空间中距离越近（因为损失函数加入了更多邻接信息罚项）。<br>另一方面，对于表示层，SDNE加入了损失函数：  </p>
-<script type="math/tex; mode=display">
-L = \sum _{i,j=1} ^n s _{i,j} ||y _i ^{(K)}-y _j ^{(K)} ||</script><p>其中 \(  y _i ^{(K)} \)为自编码器得到的编码层，s为邻接矩阵。从而在表示层加入了一阶邻接信息。同时为了优化算法，在表示层的学习中加入了Laplacian Eigenmaps的思想，通过构建相似关系图来重构局部特征结构，从而使局部小临域内点更接近。</p>
+<h4 id="SDNE"><a href="#SDNE" class="headerlink" title="SDNE"></a>SDNE</h4><p>SDNE可以看作是基于LINE的扩展，同时也是第一个将深度学习应用于网络表示学习中的方法。SDNE解决高非线性、结构保护和稀疏性问题，SDNE深度自编码器的基础上，优化了自编码器损失函数，同时对表示层也加入了有监督的损失函数。<br>传统自编码器损失函数：<br>$$<br>L = \sum _{i=1} ^n||\hat x _i - x _i|| _2 ^2<br>$$<br>我们只能根据已有的连接表示节点之间的相似性,但对它们的差异无法作出比较好的衡量。<br>而且由于网络稀疏,输入实例中0元素的数目远多于非0元素。因此SDNE对损失函数加入了更多罚项：</p>
+<p>$$<br>L = \sum _{i=1} ^n||(\hat x _i - x _i)\cdot b _i|| _2 ^2<br>$$</p>
+<p>其中bi 由邻接矩阵得到，若i j对应到邻接矩阵等于0，则 \( b _{ij} = 1 \) 。否则\( b _{ij}=\beta &gt;1 \) 。通过自编码器,如果两个节点具有相近的邻接点结构,则在表示空间中距离越近（因为损失函数加入了更多邻接信息罚项）。<br>另一方面，对于表示层，SDNE加入了损失函数：<br>$$<br>L = \sum _{i,j=1} ^n s _{i,j} ||y _i ^{(K)}-y _j ^{(K)} ||<br>$$<br>其中 \(  y _i ^{(K)} \)为自编码器得到的编码层，s为邻接矩阵。从而在表示层加入了一阶邻接信息。同时为了优化算法，在表示层的学习中加入了Laplacian Eigenmaps的思想，通过构建相似关系图来重构局部特征结构，从而使局部小临域内点更接近。</p>
 <h4 id="Cao-2017"><a href="#Cao-2017" class="headerlink" title="Cao 2017"></a>Cao 2017</h4><p>对于Deep Walk模型而言，其长度有限，处于边缘的节点信息没有用全，且参数难调。因此Cao提出了一个深度学习的模型来学习图的顶点表示，借鉴了PageRank，结合加权转移概率矩阵，先用一个随机搜索模型来获取图的结构信息，生成一个共现概率矩阵，和DeepWalk相比是省去了一个采样的过程，然后基于共现概率矩阵计算PPMI矩阵，PPMI矩阵可以看成是稀疏的顶点高维表示，再用堆叠自动编码器从PPMI矩阵中学习到顶点的低维表示。</p>
 <h4 id="GEM-D-2017"><a href="#GEM-D-2017" class="headerlink" title="GEM-D 2017"></a>GEM-D 2017</h4><p>提出一个NE框架，统一之前的算法。包括三个度量 [h(⋅),g(⋅),d(⋅,⋅)]。 分别为邻近度函数，非线性函数，度量h和g差异性的度量函数。</p>
 <h3 id="4-2-Property-Preserving-Network-Embedding"><a href="#4-2-Property-Preserving-Network-Embedding" class="headerlink" title="4.2 Property Preserving Network Embedding"></a>4.2 Property Preserving Network Embedding</h3><p>上文提到的方法，大多focus在网络的结构或者节点间的关系身上，实际上除了结构之外，我们同样也关注节点或边自身的性质。</p>
 <h4 id="Multi-Component-Hashing-Ou-et-al-2015-44"><a href="#Multi-Component-Hashing-Ou-et-al-2015-44" class="headerlink" title="Multi-Component Hashing [Ou et al 2015.[44]]"></a>Multi-Component Hashing [Ou et al 2015.[44]]</h4><p>MuCH的核心是解决网络结构中关系非传递性问题（A与B存在关系，B与C存在关系，A与C不存在关系）。<br>MuCH使用了投影矩阵，通过构建M个投影矩阵\( \{W _i\} ^M \)，将每个个体重新用M个Hash向量表示，在进行目标优化时，使用了实体间真实相似性。这样做的好处是一方面使用投影矩阵压缩了特征表示，同时，也使表示能反应真实的相似性，最后得到的哈希表示，也使目标查询更加方便与快速。（PS：感觉似乎就是一个简单的神经网络，使用一层分M块参数矩阵 \( \{W _i\} ^M \)，激活函数使用sgn，输出使用softmax）</p>
-<h4 id="Max-Margin-DeepWalk-Asymmetric-Transitivity-Preserving-Graph-Embedding-HOPE-2016-8"><a href="#Max-Margin-DeepWalk-Asymmetric-Transitivity-Preserving-Graph-Embedding-HOPE-2016-8" class="headerlink" title="Max-Margin DeepWalk: Asymmetric Transitivity Preserving Graph Embedding [HOPE 2016 [8]]"></a>Max-Margin DeepWalk: Asymmetric Transitivity Preserving Graph Embedding [HOPE 2016 [8]]</h4><p>考虑有向网络的非对称传递性（A-&gt;B B-&gt;C 则有 A-&gt;C （而不是C-&gt;A））。对于每个顶点，该方法的到两个embedding后的向量，一个是source，一个是target。因为是有向图，此顶点可能是一条路径的源头，也有可能是一条路径的终点。方法的目标是优化：</p>
-<script type="math/tex; mode=display">
-min||S - U ^s {U ^t} ^T|| _F ^2</script><p>其中S为相似矩阵，因为是有向图，所以其\( S _{ij} \)表示节点i作为source顶点与节点j作为target顶点的相似度。两个不同的U矩阵分别代表顶点作为source和target的Embedding向量矩阵。</p>
-<p>该方法实际上是希望找到节点作为source和targe的不同embedding表示，同时该表示能还原节点的相似度。即希望：</p>
-<script type="math/tex; mode=display">
-S = \sum _{i} ^N \sigma _i v _i ^s {v _i ^t} ^T \\\\
-U ^s = [\sqrt{\sigma _1}v _1 ^s,\dots,{\sigma _K}v _K ^s] \\\\
-U ^t = [\sqrt{\sigma _1}v _1 ^t,\dots,{\sigma _K}v _K ^t] \\\\
-S = V ^s \Sigma V ^t</script><p>即希望S可通过SVD得到U。</p>
+<h4 id="Max-Margin-DeepWalk-Asymmetric-Transitivity-Preserving-Graph-Embedding-HOPE-2016-8"><a href="#Max-Margin-DeepWalk-Asymmetric-Transitivity-Preserving-Graph-Embedding-HOPE-2016-8" class="headerlink" title="Max-Margin DeepWalk: Asymmetric Transitivity Preserving Graph Embedding [HOPE 2016 [8]]"></a>Max-Margin DeepWalk: Asymmetric Transitivity Preserving Graph Embedding [HOPE 2016 [8]]</h4><p>考虑有向网络的非对称传递性（A-&gt;B B-&gt;C 则有 A-&gt;C （而不是C-&gt;A））。对于每个顶点，该方法的到两个embedding后的向量，一个是source，一个是target。因为是有向图，此顶点可能是一条路径的源头，也有可能是一条路径的终点。方法的目标是优化：<br>$$<br>min||S - U ^s {U ^t} ^T|| _F ^2<br>$$</p>
+<p>其中S为相似矩阵，因为是有向图，所以其\( S _{ij} \)表示节点i作为source顶点与节点j作为target顶点的相似度。两个不同的U矩阵分别代表顶点作为source和target的Embedding向量矩阵。</p>
+<p>该方法实际上是希望找到节点作为source和targe的不同embedding表示，同时该表示能还原节点的相似度。即希望：<br>$$<br>S = \sum _{i} ^N \sigma _i v _i ^s {v _i ^t} ^T \\<br>U ^s = [\sqrt{\sigma _1}v _1 ^s,\dots,{\sigma _K}v _K ^s] \\<br>U ^t = [\sqrt{\sigma _1}v _1 ^t,\dots,{\sigma _K}v _K ^t] \\<br>S = V ^s \Sigma V ^t<br>$$<br>即希望S可通过SVD得到U。</p>
 <p>为了度量S相似性矩阵，HOPE总结了4种度量方法：Katz Index [45], Rooted PageRank [7], Common Neighbors [7], and Adamic-Adar [46]，相关内容可见《<a href>网络节点距离度量</a>》。  </p>
 <p>由于先求S在对S进行SVD对大数据不太友好，因此作者使用了以下方法：</p>
-<h5 id="Katz-Index"><a href="#Katz-Index" class="headerlink" title="Katz Index"></a>Katz Index</h5><script type="math/tex; mode=display">
-M _g = (I -\beta A)   \\\\
-M _l =   \beta A</script><h5 id="Rooted-PageRank-RPR"><a href="#Rooted-PageRank-RPR" class="headerlink" title="Rooted PageRank (RPR)"></a>Rooted PageRank (RPR)</h5><script type="math/tex; mode=display">
-M _g = (1-\alpha P)   \\\\
-M _l =   (1-\alpha) I</script><h5 id="Rooted-PageRank-RPR-1"><a href="#Rooted-PageRank-RPR-1" class="headerlink" title="Rooted PageRank (RPR)"></a>Rooted PageRank (RPR)</h5><script type="math/tex; mode=display">
-M _g = I  \\\\
-M _l = A ^2</script><h5 id="Adamic-Adar-AA）"><a href="#Adamic-Adar-AA）" class="headerlink" title="Adamic-Adar (AA）"></a>Adamic-Adar (AA）</h5><script type="math/tex; mode=display">
-M _g = I  \\\\
-M _l = ADA</script><p>因此s的svd变成了：</p>
-<script type="math/tex; mode=display">
-M _g ^{-1}M _l = V ^s \Sigma{V ^t} ^T \\\\
- = ADA</script><p>将原始SVD转变为通用的SVD问题，也就是可以不求s直接进行SVD。</p>
+<h5 id="Katz-Index"><a href="#Katz-Index" class="headerlink" title="Katz Index"></a>Katz Index</h5><p>$$<br>M _g = (I -\beta A)   \\<br>M _l =   \beta A<br>$$</p>
+<h5 id="Rooted-PageRank-RPR"><a href="#Rooted-PageRank-RPR" class="headerlink" title="Rooted PageRank (RPR)"></a>Rooted PageRank (RPR)</h5><p>$$<br>M _g = (1-\alpha P)   \\<br>M _l =   (1-\alpha) I<br>$$</p>
+<h5 id="Rooted-PageRank-RPR-1"><a href="#Rooted-PageRank-RPR-1" class="headerlink" title="Rooted PageRank (RPR)"></a>Rooted PageRank (RPR)</h5><p>$$<br>M _g = I  \\<br>M _l = A ^2<br>$$</p>
+<h5 id="Adamic-Adar-AA）"><a href="#Adamic-Adar-AA）" class="headerlink" title="Adamic-Adar (AA）"></a>Adamic-Adar (AA）</h5><p>$$<br>M _g = I  \\<br>M _l = ADA<br>$$<br>因此s的svd变成了：<br>$$<br>M _g ^{-1}M _l = V ^s \Sigma{V ^t} ^T \\<br> = ADA<br>$$</p>
+<p>将原始SVD转变为通用的SVD问题，也就是可以不求s直接进行SVD。</p>
 <h4 id="SiNE（2017）"><a href="#SiNE（2017）" class="headerlink" title="SiNE（2017）"></a>SiNE（2017）</h4><p>SiNE主要针对符号网络来进行embedding，考虑正边和负边。SiNE主要参考了结构平衡理论，即符号网络中的用户与朋友的距离比敌人更近（相似度更高）。SiNE假设每一个顶点都存在一个正负边三元组，\((v _i,v _j,v _k)\)，其中ij边为+1，ik边为-1。实际社交网络中，负边样本往往是少数，甚至不存在的，若某一顶点不存在，则为该边添加一个虚拟节点\(v _0 \)，令\( v _k = v _0\)，则由结构平衡理论，我们希望有：</p>
-<script type="math/tex; mode=display">
-f(x _i,x _j) \ge f(x _i,x _k) + \sigma</script><p>其中\( \sigma\)为负边控制参数，\( \sigma\)越大，互斥的变离得越远。SiNE根据三元组设计了一种双路深度神经网络，下图为其为2层时的结构：<br><img src="./A_Survey_on_Network_Embedding/SiNE_architecture.png" alt="这是代替图片的文字，随便写"></p>
+<p>$$<br>f(x _i,x _j) \ge f(x _i,x _k) + \sigma<br>$$<br>其中\( \sigma\)为负边控制参数，\( \sigma\)越大，互斥的变离得越远。SiNE根据三元组设计了一种双路深度神经网络，下图为其为2层时的结构：<br><img src="/draft/【Paper-Reading】A-Survey-on-Network-Embedding/SiNE_architecture.png" alt="这是代替图片的文字，随便写"></p>
 <h2 id="5-Network-Embedding-with-Side-Information"><a href="#5-Network-Embedding-with-Side-Information" class="headerlink" title="5 Network Embedding with Side Information"></a>5 Network Embedding with Side Information</h2><p>除了网络的结构信息之外，网络的侧信息也是NE的另一个重要数据源。在NE中，网络的侧信息可以被分为两种：节点信息和节点与边的类型。</p>
-<h3 id="5-1-Network-Embedding-with-Node-Content"><a href="#5-1-Network-Embedding-with-Node-Content" class="headerlink" title="5.1 Network Embedding with Node Content"></a>5.1 Network Embedding with Node Content</h3><h4 id="MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）"><a href="#MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）" class="headerlink" title="MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）"></a>MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）</h4><p>传统的DeepWalk是一种无监督的方法，如果能够引入label数据，生成的向量对于分类任务会有更好的作用，因此MMDW在此基础上对DeepWalk进行了改进，在embedding的过程中加入了label信息，使用SVM的软间隔思想，使embedding结果更有效的服务于分类算法。<br>Network representation learning with rich text information 一文认为，DeepWalk 等价于对一个矩阵M进行矩阵分解，矩阵中的每一个元素为：</p>
-<script type="math/tex; mode=display">
-M _{ij} = \log \frac {[e _i(A + A ^2 + \cdots + A ^t)] _j} {t}</script><p>其中A为邻接矩阵，\(e _i\)为第i个位置为1其余为0的向量。我们随机游走t步，M矩阵每一个元素可以理解为表示i游走到j的可能性。我们用DeepWalk得到一个表示，实际上可以理解为对M进行类似传统主题模型矩阵分解的操作，即：</p>
-<script type="math/tex; mode=display">
- min _{W,H} L _{DW} = min _{W,H} \sum _{i,j} (M _{ij} - (W ^T H) _{ij}) ^2 + \lambda/2(||W|| _2 ^2 +||H|| _2 ^2)</script><p>另一方面，对于SVM的软间隔方法，我们有：</p>
-<script type="math/tex; mode=display">
-min _{W,\xi} L _{SVM} = min _{W,\xi} 1/2||W|| _2 ^2 +C\sum _i \xi _i \\\\
-s.t \ w _{l _i} ^T x _i - w _{l _j} ^T x _j \ge e _t ^j -\xi _i \\\\
-where \\\\
-e _t ^j  = \begin{cases}
-1, \ if\ l _i \ne j \\\\
-0, \ if\ l _i = j \\\\
-\end{cases}</script><p>其中l表示label，W为svm的参数。<br>将DW和SVM二者融合得到：</p>
-<script type="math/tex; mode=display">
-L _{DW} = \sum _{i,j} (M _{ij} - (X ^T Y) _{ij}) ^2 + \lambda/2(||X|| _2 ^2 +||Y|| _2 ^2)\\\\
-min _{W,\xi,X,Y} L _{SVM} =  min _{W,\xi,X,Y} L _{DW} +  1/2||W|| _2 ^2 +C\sum _i \xi _i \\\\
-s.t \ w _{l _i} ^T x _i - w _{l _j} ^T x _j \ge e _t ^j -\xi _i \\\\</script><p>我们这里将DW的损失函数进行稍微变换，令X为输入节点的表示矩阵，Y为表示矩阵的还原矩阵，SVM的输入为X，即对embeeding结果进行SVM训练。<br>从最终损失函数可以看出，在训练SVM的同时也会调整表示矩阵，从而使表示矩阵加入了label的信息。</p>
+<h3 id="5-1-Network-Embedding-with-Node-Content"><a href="#5-1-Network-Embedding-with-Node-Content" class="headerlink" title="5.1 Network Embedding with Node Content"></a>5.1 Network Embedding with Node Content</h3><h4 id="MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）"><a href="#MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）" class="headerlink" title="MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）"></a>MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）</h4><p>传统的DeepWalk是一种无监督的方法，如果能够引入label数据，生成的向量对于分类任务会有更好的作用，因此MMDW在此基础上对DeepWalk进行了改进，在embedding的过程中加入了label信息，使用SVM的软间隔思想，使embedding结果更有效的服务于分类算法。<br>Network representation learning with rich text information 一文认为，DeepWalk 等价于对一个矩阵M进行矩阵分解，矩阵中的每一个元素为：<br>$$<br>M _{ij} = \log \frac {[e _i(A + A ^2 + \cdots + A ^t)] _j} {t}<br>$$<br>其中A为邻接矩阵，\(e _i\)为第i个位置为1其余为0的向量。我们随机游走t步，M矩阵每一个元素可以理解为表示i游走到j的可能性。我们用DeepWalk得到一个表示，实际上可以理解为对M进行类似传统主题模型矩阵分解的操作，即：</p>
+<p>$$<br> min _{W,H} L _{DW} = min _{W,H} \sum _{i,j} (M _{ij} - (W ^T H) _{ij}) ^2 + \lambda/2(||W|| _2 ^2 +||H|| _2 ^2)<br>$$</p>
+<p>另一方面，对于SVM的软间隔方法，我们有：</p>
+<p>$$<br>min _{W,\xi} L _{SVM} = min _{W,\xi} 1/2||W|| _2 ^2 +C\sum _i \xi _i \\<br>s.t \ w _{l _i} ^T x _i - w _{l _j} ^T x _j \ge e _t ^j -\xi _i \\<br>where \\<br>e _t ^j  = \begin{cases}<br>1, \ if\ l _i \ne j \\<br>0, \ if\ l _i = j \\<br>\end{cases}<br>$$<br>其中l表示label，W为svm的参数。<br>将DW和SVM二者融合得到：<br>$$<br>L _{DW} = \sum _{i,j} (M _{ij} - (X ^T Y) _{ij}) ^2 + \lambda/2(||X|| _2 ^2 +||Y|| _2 ^2)\\<br>min _{W,\xi,X,Y} L _{SVM} =  min _{W,\xi,X,Y} L _{DW} +  1/2||W|| _2 ^2 +C\sum _i \xi _i \\<br>s.t \ w _{l _i} ^T x _i - w _{l _j} ^T x _j \ge e _t ^j -\xi _i \\<br>$$<br>我们这里将DW的损失函数进行稍微变换，令X为输入节点的表示矩阵，Y为表示矩阵的还原矩阵，SVM的输入为X，即对embeeding结果进行SVM训练。<br>从最终损失函数可以看出，在训练SVM的同时也会调整表示矩阵，从而使表示矩阵加入了label的信息。</p>
 <h4 id="Probabilistic-latent-document-network-embedding-Le-et-al-2014-50"><a href="#Probabilistic-latent-document-network-embedding-Le-et-al-2014-50" class="headerlink" title="Probabilistic latent document network embedding[Le et al,2014,[50]]"></a>Probabilistic latent document network embedding[Le et al,2014,[50]]</h4><p>同时考虑每个文档相关的词以及文档之间的关系。对于每个节点，学到低维表示。同时也学习在topic space（基于Relation Topic Model）的表示。作者通过耦合节点表示空间与Topic空间，讲两种表示交织在一起（两点在表示空间越近，他们的topic分布越相似）。在论文中，作者对节点低维表示仅使用了2维，top的表示纬度远高于节点为度。实际上这种表示较弱，但用来可视化似乎比较合适。</p>
-<h4 id="TADW（2015）"><a href="#TADW（2015）" class="headerlink" title="TADW（2015）"></a>TADW（2015）</h4><p>在MMDW中我们提到，DeepWalk等价于一个矩阵M的矩阵分解。而在实际中，一些节点上往往会有其他信息，所以在矩阵分解这个框架中，将节点信息直接以一个子矩阵的方式加入，会使学到的向量包含更丰富的信息。</p>
-<script type="math/tex; mode=display">
- min _{W,H} L = min _{W,H}||M - W ^T HT|| _F ^2 + \lambda/2(||W|| _F ^2 +||H|| _F ^2)</script><p>改进的DW方法中，因为加入了节点的信息T，所以W的embedding具有了更多的信息。<br>然而加入文本信息T后, 计算代价很高高，且节点属性文本无序，失去语义信息。Sun et al. (Sun et al. 2016) 将context视为一种特殊的Node,得到一个更大的network，然后有node-node 和 node-content 的链接,利用负采样和逻辑函数，学习Node在联合目标函数中的表示，从而同时保留Node-content和网络结构。</p>
+<h4 id="TADW（2015）"><a href="#TADW（2015）" class="headerlink" title="TADW（2015）"></a>TADW（2015）</h4><p>在MMDW中我们提到，DeepWalk等价于一个矩阵M的矩阵分解。而在实际中，一些节点上往往会有其他信息，所以在矩阵分解这个框架中，将节点信息直接以一个子矩阵的方式加入，会使学到的向量包含更丰富的信息。<br>$$<br> min _{W,H} L = min _{W,H}||M - W ^T HT|| _F ^2 + \lambda/2(||W|| _F ^2 +||H|| _F ^2)<br>$$<br>改进的DW方法中，因为加入了节点的信息T，所以W的embedding具有了更多的信息。<br>然而加入文本信息T后, 计算代价很高高，且节点属性文本无序，失去语义信息。Sun et al. (Sun et al. 2016) 将context视为一种特殊的Node,得到一个更大的network，然后有node-node 和 node-content 的链接,利用负采样和逻辑函数，学习Node在联合目标函数中的表示，从而同时保留Node-content和网络结构。</p>
 <h4 id="TriDNR-2016"><a href="#TriDNR-2016" class="headerlink" title="TriDNR 2016"></a>TriDNR 2016</h4><p>采用了网络结构+节点属性+节点标签。其思路是在进行embedding使，用节点的embedding向量联立结构与内容两部分表示学习过程。其目标函数为最大化：</p>
-<script type="math/tex; mode=display">
-L = (1-\alpha)\sum _i ^N\sum _{s\in S }\sum _{-b\le j \le b,j\ne0}log P(v _{i+j}|v _i) \\\\
-+ \alpha \sum _i ^N \sum _{-b\le j \le b}log P(w _j|v _i) + \alpha \sum _i ^{|L|} \sum _{-b\le j \le b}log P(w _j|c _i)</script><p>对于每一项概率：</p>
-<script type="math/tex; mode=display">
-P(v _{i+j}|v _i) = \frac {exp(V _{v _i} ^T V' _{v _{i+j} })}{\sum _v ^ N exp(V _{v _i} ^T V _{v })}</script><script type="math/tex; mode=display">
-P(w _j|v _i) = \frac {exp(V _{v _i} ^T V' _{w _j })}{\sum _w ^ N exp(V _{v _i} ^T V' _{w})}</script><script type="math/tex; mode=display">
-P(w _j|c _i)  = \frac {exp(V _{c _i} ^T V' _{w _j })}{\sum _w ^ N exp(V _{c _i} ^T V' _{w})}</script><p>其中V表示输入空间的embedding，V’表示word空间的embeding向量。在L中第1项是Random walk + Skip-gram的概率表达，也就是在当前点vi作为输入时，输出的的到的向量要更大可能的表示他的邻居。第2项是在当前节点的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。第3项是在当前节点的label的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。</p>
+<p>$$<br>L = (1-\alpha)\sum _i ^N\sum _{s\in S }\sum _{-b\le j \le b,j\ne0}log P(v _{i+j}|v _i) \\</p>
+<ul>
+<li>\alpha \sum _i ^N \sum _{-b\le j \le b}log P(w _j|v _i) + \alpha \sum _i ^{|L|} \sum _{-b\le j \le b}log P(w _j|c _i)<br>$$<br>对于每一项概率：<br>$$<br>P(v _{i+j}|v _i) = \frac {exp(V _{v _i} ^T V’ _{v _{i+j} })}{\sum _v ^ N exp(V _{v _i} ^T V _{v })}<br>$$<br>$$<br>P(w _j|v _i) = \frac {exp(V _{v _i} ^T V’ _{w _j })}{\sum _w ^ N exp(V _{v _i} ^T V’ _{w})}<br>$$<br>$$<br>P(w _j|c _i)  = \frac {exp(V _{c _i} ^T V’ _{w _j })}{\sum _w ^ N exp(V _{c _i} ^T V’ _{w})}<br>$$<br>其中V表示输入空间的embedding，V’表示word空间的embeding向量。在L中第1项是Random walk + Skip-gram的概率表达，也就是在当前点vi作为输入时，输出的的到的向量要更大可能的表示他的邻居。第2项是在当前节点的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。第3项是在当前节点的label的输入下，输出的向量要更大可能的表示此节点的论文标题中的单词。</li>
+</ul>
 <h4 id="LANE（2017）"><a href="#LANE（2017）" class="headerlink" title="LANE（2017）"></a>LANE（2017）</h4><p>LANE分别计算了节点的图结构相似度矩阵，节点属性相似度矩阵，节点标签相似度矩阵（利用图结构相似度矩阵平滑）。然后基于谱图理论，根据得到的Laplacian矩阵，将三种不同原映射为三种表示。为建立三种表示之间的联系，LANE将这三种表示投影到一个新的共同空间。学习得到的表示能够捕捉网络的结构邻接性，以及标签属性网络的相关性。</p>
 <h3 id="5-2-Heterogeneous-Information-Network-Embedding"><a href="#5-2-Heterogeneous-Information-Network-Embedding" class="headerlink" title="5.2 Heterogeneous Information Network Embedding"></a>5.2 Heterogeneous Information Network Embedding</h3><p>与带节点内容的网络不通，heterogeneous网络包含了各种不同种类的节点和边。因此如何统一这些不同类型的节点和边，就成为了一个挑战。</p>
-<h4 id="Learning-latent-representations-of-nodes-for-classifying-in-heterogeneous-social-networks-Yann-et-al-2017-58"><a href="#Learning-latent-representations-of-nodes-for-classifying-in-heterogeneous-social-networks-Yann-et-al-2017-58" class="headerlink" title="Learning latent representations of nodes for classifying in heterogeneous social networks [Yann et al,2017,[58]]"></a>Learning latent representations of nodes for classifying in heterogeneous social networks [Yann et al,2017,[58]]</h4><p>Yann将异构的社交网络节点统一到了一个向量空间中，然后根据不同的节点类别，在相同的表示空间上定义不同的分类器,使用 hinge-loss来度量对于标签y的损失：</p>
-<script type="math/tex; mode=display">
-\sum _i ^l \Delta (f _\theta ^{t _i}(u _i),y _i)</script><p>另一方面为了在表示空间保留局部结构，加入了如下正则：</p>
-<script type="math/tex; mode=display">
-\sum _{ij} W _{ij} ||u _i - u _j|| ^2</script><p>从而保证相近的点具，在表示空间中具有更近点距离</p>
+<h4 id="Learning-latent-representations-of-nodes-for-classifying-in-heterogeneous-social-networks-Yann-et-al-2017-58"><a href="#Learning-latent-representations-of-nodes-for-classifying-in-heterogeneous-social-networks-Yann-et-al-2017-58" class="headerlink" title="Learning latent representations of nodes for classifying in heterogeneous social networks [Yann et al,2017,[58]]"></a>Learning latent representations of nodes for classifying in heterogeneous social networks [Yann et al,2017,[58]]</h4><p>Yann将异构的社交网络节点统一到了一个向量空间中，然后根据不同的节点类别，在相同的表示空间上定义不同的分类器,使用 hinge-loss来度量对于标签y的损失：<br>$$<br>\sum _i ^l \Delta (f _\theta ^{t _i}(u _i),y _i)<br>$$</p>
+<p>另一方面为了在表示空间保留局部结构，加入了如下正则：<br>$$<br>\sum _{ij} W _{ij} ||u _i - u _j|| ^2<br>$$<br>从而保证相近的点具，在表示空间中具有更近点距离</p>
 <h4 id="Heterogeneous-network-embedding-via-deep-architectures-Chang-et-al-2015-16"><a href="#Heterogeneous-network-embedding-via-deep-architectures-Chang-et-al-2015-16" class="headerlink" title="Heterogeneous network embedding via deep architectures [Chang et al,2015,[16]]"></a>Heterogeneous network embedding via deep architectures [Chang et al,2015,[16]]</h4><p>Chang目标是Learn representation，且可以保护异构信息网络的特性。在训练时，根据边形成节点对，对与不同类别的节点（如图片或文本）训练各自的CNN（图片）或TF-IDF（文本），然后将两个节点网络输出映射到一个空间中，形成共同表示，一起输入一个全联接层，来学习预测结果。在共同表示空间，加入了表示空间距离的损失函数，若两节点存在边，则其表示应该更加相近。</p>
-<h4 id="Heterogeneous-information-network-embedding-for-meta-path-based-proximity-Huang-and-Mamoulis-2017-59"><a href="#Heterogeneous-information-network-embedding-for-meta-path-based-proximity-Huang-and-Mamoulis-2017-59" class="headerlink" title="Heterogeneous information network embedding for meta path based proximity [Huang and Mamoulis,2017,[59]]"></a>Heterogeneous information network embedding for meta path based proximity [Huang and Mamoulis,2017,[59]]</h4><p>Huang and Mamoulis（2017）使用meta path相似度来计算Embedding结果。所谓Meta path就是一个异构节点序列（如:作者a1、a2共同撰写文章p1，则可以构成序列[a1,p1,a2]，a1-&gt;p1的边类型写，p1-&gt;a2的边的类型是被写）。作者通过利用两个节点之间可能路径的数量计算两点的实际概率，在计算路径数量时，作者使用了动态规划的方法。作者定义了embedding空间两点概率：</p>
-<script type="math/tex; mode=display">
-p(o _i,o _j) = \frac 1 {1 + e ^{-v _i ^T  v _j}}</script><p>其中v为embedding向量。最后利用KL散度作为优化目标，令embeding空间概率尽可能贴近实际两点概率。从而得到embedding向量。</p>
-<h4 id="Embedding-of-embedding-eoe-Joint-embedding-for-coupled-heterogeneous-networks-Xu-et-al-2017-61"><a href="#Embedding-of-embedding-eoe-Joint-embedding-for-coupled-heterogeneous-networks-Xu-et-al-2017-61" class="headerlink" title="Embedding of embedding (eoe):Joint embedding for coupled heterogeneous networks[Xu et al. 2017,[61]]"></a>Embedding of embedding (eoe):Joint embedding for coupled heterogeneous networks[Xu et al. 2017,[61]]</h4><p>Xu et al. (Xu et al. 2017) coupled 异构网络：包含两个不同但有关联的同构网络，对每个同构网络采用Line中的一阶邻近度p1来度量。然后用一个嵌入调和矩阵度量(直接通过优化学到)不同网络中Node的邻近度。其损失函数包括各自网络部分embedding损失，两个网络间的连边损失，加上各自embedding结果和嵌入调和矩阵正则。<br>作者定义了同一网络，Embedding空间两点概率：</p>
-<script type="math/tex; mode=display">
-p(o _i,o _j) = \frac 1 {1 + e ^{-v _i ^T \cdot v _j}}</script><p>不同网络，Embedding空间两点概率：</p>
-<script type="math/tex; mode=display">
-p(o ^v _i,o ^u _j) = \frac 1 {1 + e ^{-v _i ^T M u _j}}</script><p>M为嵌入调和矩阵。</p>
+<h4 id="Heterogeneous-information-network-embedding-for-meta-path-based-proximity-Huang-and-Mamoulis-2017-59"><a href="#Heterogeneous-information-network-embedding-for-meta-path-based-proximity-Huang-and-Mamoulis-2017-59" class="headerlink" title="Heterogeneous information network embedding for meta path based proximity [Huang and Mamoulis,2017,[59]]"></a>Heterogeneous information network embedding for meta path based proximity [Huang and Mamoulis,2017,[59]]</h4><p>Huang and Mamoulis（2017）使用meta path相似度来计算Embedding结果。所谓Meta path就是一个异构节点序列（如:作者a1、a2共同撰写文章p1，则可以构成序列[a1,p1,a2]，a1-&gt;p1的边类型写，p1-&gt;a2的边的类型是被写）。作者通过利用两个节点之间可能路径的数量计算两点的实际概率，在计算路径数量时，作者使用了动态规划的方法。作者定义了embedding空间两点概率：<br>$$<br>p(o _i,o _j) = \frac 1 {1 + e ^{-v _i ^T  v _j}}<br>$$<br>其中v为embedding向量。最后利用KL散度作为优化目标，令embeding空间概率尽可能贴近实际两点概率。从而得到embedding向量。</p>
+<h4 id="Embedding-of-embedding-eoe-Joint-embedding-for-coupled-heterogeneous-networks-Xu-et-al-2017-61"><a href="#Embedding-of-embedding-eoe-Joint-embedding-for-coupled-heterogeneous-networks-Xu-et-al-2017-61" class="headerlink" title="Embedding of embedding (eoe):Joint embedding for coupled heterogeneous networks[Xu et al. 2017,[61]]"></a>Embedding of embedding (eoe):Joint embedding for coupled heterogeneous networks[Xu et al. 2017,[61]]</h4><p>Xu et al. (Xu et al. 2017) coupled 异构网络：包含两个不同但有关联的同构网络，对每个同构网络采用Line中的一阶邻近度p1来度量。然后用一个嵌入调和矩阵度量(直接通过优化学到)不同网络中Node的邻近度。其损失函数包括各自网络部分embedding损失，两个网络间的连边损失，加上各自embedding结果和嵌入调和矩阵正则。<br>作者定义了同一网络，Embedding空间两点概率：<br>$$<br>p(o _i,o _j) = \frac 1 {1 + e ^{-v _i ^T \cdot v _j}}<br>$$<br>不同网络，Embedding空间两点概率：<br>$$<br>p(o ^v _i,o ^u _j) = \frac 1 {1 + e ^{-v _i ^T M u _j}}<br>$$<br>M为嵌入调和矩阵。</p>
 <h2 id="6-ADVANCED-INFORMATION-PRESERVING-NETWORK-EMBEDDING"><a href="#6-ADVANCED-INFORMATION-PRESERVING-NETWORK-EMBEDDING" class="headerlink" title="6 ADVANCED INFORMATION PRESERVING NETWORK EMBEDDING"></a>6 ADVANCED INFORMATION PRESERVING NETWORK EMBEDDING</h2><p>不同于side information，advanced information在具体任务上用监督/伪监督信息。</p>
 <h3 id="6-1-Information-Diffusion"><a href="#6-1-Information-Diffusion" class="headerlink" title="6.1 Information Diffusion"></a>6.1 Information Diffusion</h3><p>信息传播（information diffusion）在很多网络中都存在。</p>
 <h4 id="Learning-social-network-embeddings-for-predicting-information-diffusion-Simon-et-al-63"><a href="#Learning-social-network-embeddings-for-predicting-information-diffusion-Simon-et-al-63" class="headerlink" title="Learning social network embeddings for predicting information diffusion [Simon et al. [63]]"></a>Learning social network embeddings for predicting information diffusion [Simon et al. [63]]</h4><p>Simon et al. (Bourigault et al. 2014)的社会网络嵌入算法来预测information diffusion。将传播过程映射到热传播过程，学习节点的表示，使得扩散核可以解释训练集， 其模型如下：</p>
-<script type="math/tex; mode=display">
-K _Z (t,s ^c,u _i)=(4\pi t)^ {-n/2} e ^{\frac {||z _s c -z _{u _i}|| ^2}{4 t}}</script><p>其中t为时刻，s为热度源头，u为用户，z为对应表示空间向量。则K为热源s在t时刻对用户u的影响。则优化函数：</p>
-<script type="math/tex; mode=display">
-L(Z)=\sum _{c \in C _l} \Delta(K _Z(.,s ^c,.),c)</script><p>其中c为实际观察到的传播值，所以最小化目标为找到最合适的向量使传播值增加最小。其中增量算子可以使用hinge-loss函数</p>
-<h4 id="Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18"><a href="#Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18" class="headerlink" title="Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]"></a>Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]</h4><p>Deepcas提出了一种E2E的深度学习模型，其整体流程为：首先使用类似DeepWalk模型的随机游走方法，得到路径序列，然后使用GRU进行路径的embedding，由于预测时需要较多网络信息，因此想要进行预测需要多条序列，所以Deepcas接着使用Attention机制，来对多条序列进行整合，最终使用MLP来对结果进行预测。其流程图如下：<br><img src="./A_Survey_on_Network_Embedding/Deepcas.png" alt="Deepcas"> </p>
+<p>$$<br>K _Z (t,s ^c,u _i)=(4\pi t)^ {-n/2} e ^{\frac {||z _s c -z _{u _i}|| ^2}{4 t}}<br>$$<br>其中t为时刻，s为热度源头，u为用户，z为对应表示空间向量。则K为热源s在t时刻对用户u的影响。则优化函数：</p>
+<p>$$<br>L(Z)=\sum _{c \in C _l} \Delta(K _Z(.,s ^c,.),c)<br>$$<br>其中c为实际观察到的传播值，所以最小化目标为找到最合适的向量使传播值增加最小。其中增量算子可以使用hinge-loss函数</p>
+<h4 id="Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18"><a href="#Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18" class="headerlink" title="Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]"></a>Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]</h4><p>Deepcas提出了一种E2E的深度学习模型，其整体流程为：首先使用类似DeepWalk模型的随机游走方法，得到路径序列，然后使用GRU进行路径的embedding，由于预测时需要较多网络信息，因此想要进行预测需要多条序列，所以Deepcas接着使用Attention机制，来对多条序列进行整合，最终使用MLP来对结果进行预测。其流程图如下：<br><img src="/draft/【Paper-Reading】A-Survey-on-Network-Embedding/Deepcas.png" alt="Deepcas"> </p>
 <h3 id="6-2-Anomaly-Detection"><a href="#6-2-Anomaly-Detection" class="headerlink" title="6.2 Anomaly Detection"></a>6.2 Anomaly Detection</h3><p>本文中提到的异常检测主要用来检测结构的异常（不一致），比如异常节点连接到各种不同有影响力的社区。如图中的红色节点。</p>
-<p><img src="./A_Survey_on_Network_Embedding/Anomaly_Detection .png" alt="Anomaly_Detection"> </p>
-<h4 id="An-embedding-approach-to-anomaly-detection-Hu-et-al-2016"><a href="#An-embedding-approach-to-anomaly-detection-Hu-et-al-2016" class="headerlink" title="An embedding approach to anomaly detection [Hu et al. 2016]"></a>An embedding approach to anomaly detection [Hu et al. 2016]</h4><p>Hu对网络节点进行embedding，并将embedding向量的每一项看作节点对每一个community的相关度，来对异常点进行检测。其Embedding过程如下：</p>
-<script type="math/tex; mode=display">
-S(\overline X _i,\overline X _j) = \begin{cases}
-||\overline X _i - \overline X _j|| ^2 \quad (i,j) \in E \\\\
-(||\overline X _i - \overline X _j||-1) ^2 \quad (i,j) \in E \\\\
-\end{cases}</script><script type="math/tex; mode=display">
-O = \sum _{(i,j)\in E} S(\overline X _i,\overline X _j) +\alpha\sum _{(i,j) \notin E} S(\overline X _i,\overline X _j)</script><p>其中\(\overline X \) 表示Embedding结果向量，对于S函数，我们用它来衡量节点是否具有连边，若具有则希望\(||\overline X _i - \overline X _j|| ^2 =0 \)，否则为0。这里引入了一些约束条件：<br>1）\(||\overline X _i - \overline X _j|| ^2 \le 1 \)<br>2) X中的每一个表示community的元素应该非负<br>3）\(||\overline X _i|| \le  \sqrt 2/2\)  </p>
+<p>![Anomaly_Detection](./A_Survey_on_Network_Embedding/Anomaly_Detection .png) </p>
+<h4 id="An-embedding-approach-to-anomaly-detection-Hu-et-al-2016"><a href="#An-embedding-approach-to-anomaly-detection-Hu-et-al-2016" class="headerlink" title="An embedding approach to anomaly detection [Hu et al. 2016]"></a>An embedding approach to anomaly detection [Hu et al. 2016]</h4><p>Hu对网络节点进行embedding，并将embedding向量的每一项看作节点对每一个community的相关度，来对异常点进行检测。其Embedding过程如下：<br>$$<br>S(\overline X _i,\overline X _j) = \begin{cases}<br>||\overline X _i - \overline X _j|| ^2 \quad (i,j) \in E \\<br>(||\overline X _i - \overline X _j||-1) ^2 \quad (i,j) \in E \\<br>\end{cases}<br>$$</p>
+<p>$$<br>O = \sum _{(i,j)\in E} S(\overline X _i,\overline X _j) +\alpha\sum _{(i,j) \notin E} S(\overline X _i,\overline X _j)<br>$$<br>其中\(\overline X \) 表示Embedding结果向量，对于S函数，我们用它来衡量节点是否具有连边，若具有则希望\(||\overline X _i - \overline X _j|| ^2 =0 \)，否则为0。这里引入了一些约束条件：<br>1）\(||\overline X _i - \overline X _j|| ^2 \le 1 \)<br>2) X中的每一个表示community的元素应该非负<br>3）\(||\overline X _i|| \le  \sqrt 2/2\)  </p>
 <p>在得到Embedding后，我们希望能比较该节点和邻居节点在community embedding空间上的差异，如果邻居节点的Community 差异很大，则可以认为该节点为异常节点。这里我们通过对邻居节点的加权求和得到该节点的周围节点在Community上的差异：</p>
-<script type="math/tex; mode=display">
-\overline {NB(i)} =(y _i ^1,\cdots,y _i ^d)= \sum _{(j)\in NB(i) } (1-||\overline X _i - \overline X _j||) \cdot \overline X _j</script><p>这里括号里可以理解为当前节点与邻居节点的距离权重，距离越小权重越大。\( \overline {NB(i)}\)表示周围节点在不同社群上的分量和，理论上如果该节点在一个社群内，该值应该在某一个分量上较高，若该节点为异常节点，则说明他联系了多个社群，则应在多个分量上有较高表现。为了降低X某些小分量累加带来的噪声，这里做了一下过滤，将X中低于平均值的分类设为0。<br>为了衡量节点的异常成都，引入指标：</p>
-<script type="math/tex; mode=display">
-AScore(i) = \sum _{k=1} ^d \frac {y _i ^k}{y _i ^*}, \quad y _i ^\* = max\{y _i ^1,\cdots,y _i ^d\}</script><p>因此当Ascore 大于某些阈值，则该节点可能存在异常。<br>对于优化过程，由于在一般的网络中，边都是非常稀疏的，因此作者在优化时还加入了采样的技巧。同时对于embedding向量初始化，作者使用了图分割来事先对社群划分，再进行优化。</p>
+<p>$$<br>\overline {NB(i)} =(y _i ^1,\cdots,y _i ^d)= \sum _{(j)\in NB(i) } (1-||\overline X _i - \overline X _j||) \cdot \overline X _j<br>$$<br>这里括号里可以理解为当前节点与邻居节点的距离权重，距离越小权重越大。\( \overline {NB(i)}\)表示周围节点在不同社群上的分量和，理论上如果该节点在一个社群内，该值应该在某一个分量上较高，若该节点为异常节点，则说明他联系了多个社群，则应在多个分量上有较高表现。为了降低X某些小分量累加带来的噪声，这里做了一下过滤，将X中低于平均值的分类设为0。<br>为了衡量节点的异常成都，引入指标：<br>$$<br>AScore(i) = \sum _{k=1} ^d \frac {y _i ^k}{y _i ^*}, \quad y _i ^* = max{y _i ^1,\cdots,y _i ^d}<br>$$<br>因此当Ascore 大于某些阈值，则该节点可能存在异常。<br>对于优化过程，由于在一般的网络中，边都是非常稀疏的，因此作者在优化时还加入了采样的技巧。同时对于embedding向量初始化，作者使用了图分割来事先对社群划分，再进行优化。</p>
 <h3 id="6-3-Network-Alignment"><a href="#6-3-Network-Alignment" class="headerlink" title="6.3 Network Alignment"></a>6.3 Network Alignment</h3><p>网络对齐（network alignment）的目标是建立两个网络节点之间的对应关系。Man et al. 2016提出了network embedding 算法来预测anchor links across social networks。这些链接是不同network之间的桥梁。</p>
 <h3 id="6-4-Summary"><a href="#6-4-Summary" class="headerlink" title="6.4 Summary"></a>6.4 Summary</h3><p>保留高级信息的NE方法通常包含两个部分，已是保留网络结构，以学习节点的表示。二是建立节点表示和目标任务之间的链接。</p>
 <h2 id="7-NETWORK-EMBEDDING-IN-PRACTICE"><a href="#7-NETWORK-EMBEDDING-IN-PRACTICE" class="headerlink" title="7 NETWORK EMBEDDING IN PRACTICE"></a>7 NETWORK EMBEDDING IN PRACTICE</h2><h3 id="7-1-Real-World-Data-Sets"><a href="#7-1-Real-World-Data-Sets" class="headerlink" title="7.1 Real World Data Sets"></a>7.1 Real World Data Sets</h3><p>社交网络（BLOGCATALOG、FLICKR、YOUTUBE、Twitter）<br>引用网络（DBLP、Cora、Citeseer、ArXiv）<br>语言网络（Wikipedia）<br>生物网络（PPI）</p>
@@ -456,13 +381,10 @@ AScore(i) = \sum _{k=1} ^d \frac {y _i ^k}{y _i ^*}, \quad y _i ^\* = max\{y _i 
 <li>然后，使用已知标签的节点作为训练集。</li>
 <li>最后，一个分类器，如Liblinear (Fan et al. 2008)，从训练集中学习。使用经过训练的分类器，我们可以推断出其他节点的标签。</li>
 </ol>
-<h3 id="7-3-Link-Prediction"><a href="#7-3-Link-Prediction" class="headerlink" title="7.3 Link Prediction"></a>7.3 Link Prediction</h3><p>链接预测也是网络分析的重要问题。其目标为，在观察的网络中估计两个节点存在边的概率。两个节点的相似性越高表明其链接的可能性越高。为了度量边的预测结果，作者提到了两种度量方式precision@k 和 Mean Average Precision (MAP)。<br>precision@k：  </p>
-<script type="math/tex; mode=display">
-precision@k(i) = \frac {|\\{j|i,j \in V, index(j) \le k,A _{ij} = 1 \\}|}{k}</script><p>V是节点的集合，其中index(j)是按照预测i的连边结果概率排序后第j个节点的index。即看预测后前k个结果有多少真实连边存在。<br>MAP：  </p>
-<script type="math/tex; mode=display">
-AP(i) = \frac {\sum _j precision@j(i)*A _{ij}}{|\\{A _{ij} = 1 \\}|}\\\\</script><script type="math/tex; mode=display">
-MAP =  \frac {\sum _{j \in Q} AP(i)}{|Q|}\\\\
-Where\ Q\ is\ the\ query\ set</script><p>链接预测分类常用的网络：引用网络、社会网络、生物网络。</p>
+<h3 id="7-3-Link-Prediction"><a href="#7-3-Link-Prediction" class="headerlink" title="7.3 Link Prediction"></a>7.3 Link Prediction</h3><p>链接预测也是网络分析的重要问题。其目标为，在观察的网络中估计两个节点存在边的概率。两个节点的相似性越高表明其链接的可能性越高。为了度量边的预测结果，作者提到了两种度量方式precision@k 和 Mean Average Precision (MAP)。<br>precision@k：<br>$$<br>precision@k(i) = \frac {|\{j|i,j \in V, index(j) \le k,A _{ij} = 1 \}|}{k}<br>$$</p>
+<p>V是节点的集合，其中index(j)是按照预测i的连边结果概率排序后第j个节点的index。即看预测后前k个结果有多少真实连边存在。<br>MAP：<br>$$<br>AP(i) = \frac {\sum _j precision@j(i)*A _{ij}}{|\{A _{ij} = 1 \}|}\\<br>$$</p>
+<p>$$<br>MAP =  \frac {\sum _{j \in Q} AP(i)}{|Q|}\\<br>Where\ Q\ is\ the\ query\ set<br>$$</p>
+<p>链接预测分类常用的网络：引用网络、社会网络、生物网络。</p>
 <p>网络嵌入能够捕获固有的网络结构，因此很自然地适合于链接预测应用。各种网络的广泛实验表明，网络嵌入可以有效地解决链路预测问题。</p>
 <h3 id="7-4-Node-Clustering"><a href="#7-4-Node-Clustering" class="headerlink" title="7.4 Node Clustering"></a>7.4 Node Clustering</h3><p>节点聚类是将节点划分到不同的类别中，从而使相似的类别节点更加相近。通过使用NE将节点的高维表示投影到低位，因此很多经典的聚类算法都可以很容易的被使用。</p>
 <h3 id="7-5-Network-Visualization"><a href="#7-5-Network-Visualization" class="headerlink" title="7.5 Network Visualization"></a>7.5 Network Visualization</h3><p>通过将Embedding向量维度降低到2维，我们可以很容易的将网络投影到2维平面上从而可视化。这种可视化方法根据不同的Embedding目标，从而使最后可视化的图结构保留某一方面特征。如经典的投影方法t-SNE，即保证投影前后，相近的点同样相近。</p>

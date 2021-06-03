@@ -273,46 +273,17 @@
 
 <h1 id="社交网络距节点离度量方法"><a href="#社交网络距节点离度量方法" class="headerlink" title="社交网络距节点离度量方法"></a>社交网络距节点离度量方法</h1><h2 id="Path-based-Methods"><a href="#Path-based-Methods" class="headerlink" title="Path-based Methods"></a>Path-based Methods</h2><h3 id="Graph-Distance"><a href="#Graph-Distance" class="headerlink" title="Graph Distance"></a>Graph Distance</h3><p>直接度量两个节点间距离，例如使用Dijkstra。但对于大规模网络而言Dijkstra算法较为时间复杂度太高。<br>可以引入六度关系理论（Small-World Phenomenon），比如说要计算x，y两点距离，我们先初始化两个集合 S={x}、D={y}。然后开始扩展S和D的集合，扩展的方法就是不断地把集合里面元素的邻居放进去，比如一开始就是把x的邻居放进集合S中，y的邻居放进D中。放入时，除了邻居节点，还应加入当放入节点距起始节点距离（邻居节点距起始节点距离+1），重复放入时，节点距离取最小的距离。一直循环，直到S和D出现相同的元素为止，此时xy的距离为各自到相同元素的距离之和。<br>根据small world phenomenon来说，扩展的次数不会太多。另外效率起见，我们一般选择元素数量较少的那个来扩展。</p>
 <h3 id="Hitting-Time"><a href="#Hitting-Time" class="headerlink" title="Hitting Time"></a>Hitting Time</h3><p>为了加快计算速度，可以使用蒙特卡洛的技术来估计x，y的路径的数量。从x出发，在附近随机的跳转，如果到达y，则记录下这次到达y的所需跳转次数。最后我们用总跳转次数除以到达y的次数来表示距离。</p>
-<h3 id="Rooted-PageRank"><a href="#Rooted-PageRank" class="headerlink" title="Rooted PageRank"></a>Rooted PageRank</h3><p>然而，如果y是一个非常有影响力的人，那么很多人都能在非常少的跳转次数下到达y，为了减轻这效应，我们增加一个随机”reset”以及继续游走的机制。当到达y时，以概率α继续向邻居跳转，以1−α返回上一节点。根据pageRank的理论，当转移矩阵趋于平稳时，有：</p>
-<script type="math/tex; mode=display">
-S = \alpha SP+(1-\alpha)I\\\\
-\sum _{ij} P  _{ij}   = 1</script><p>其中P为转移概率矩阵，元素均大于0，可通过归一化A得到。等式整理可得：</p>
-<script type="math/tex; mode=display">
-S=(1-\alpha)\cdot (1-\alpha P) ^ {-1}</script><p>该方法的时间复杂度为\(O(v ^{3})\) （v为点数）。因为实际过程为迭代过程，为了加快计算，我们采用Rooted PageRank的蒙特卡洛方法来近似计算相似度矩阵。基本思想：以c为停止概率，从点v出发独立随机采样N条路径，那么u相对于v的相似度就可以认为是能到达u的路径占N条路径的比。</p>
+<h3 id="Rooted-PageRank"><a href="#Rooted-PageRank" class="headerlink" title="Rooted PageRank"></a>Rooted PageRank</h3><p>然而，如果y是一个非常有影响力的人，那么很多人都能在非常少的跳转次数下到达y，为了减轻这效应，我们增加一个随机”reset”以及继续游走的机制。当到达y时，以概率α继续向邻居跳转，以1−α返回上一节点。根据pageRank的理论，当转移矩阵趋于平稳时，有：<br>$$<br>S = \alpha SP+(1-\alpha)I\\<br>\sum _{ij} P  _{ij}   = 1<br>$$<br>其中P为转移概率矩阵，元素均大于0，可通过归一化A得到。等式整理可得：<br>$$<br>S=(1-\alpha)\cdot (1-\alpha P) ^ {-1}<br>$$</p>
+<p>该方法的时间复杂度为\(O(v ^{3})\) （v为点数）。因为实际过程为迭代过程，为了加快计算，我们采用Rooted PageRank的蒙特卡洛方法来近似计算相似度矩阵。基本思想：以c为停止概率，从点v出发独立随机采样N条路径，那么u相对于v的相似度就可以认为是能到达u的路径占N条路径的比。</p>
 <h3 id="Katz-指标（Katz-Index-KI）"><a href="#Katz-指标（Katz-Index-KI）" class="headerlink" title="Katz 指标（Katz Index,KI）"></a>Katz 指标（Katz Index,KI）</h3><p>Katz 指标可以区分不同的邻居节点不同的影响力。Katz 指标给邻居节点赋予不同的权重, 对于短路径赋予较大的权重, 而长路径赋予较小的权重。</p>
-<p>两个节点之间的相似度定义为：</p>
-<script type="math/tex; mode=display">
-s(x,y) = \sum _l ^ \infty \beta ^l |Paths _{xy} ^l|=\sum _l ^ \infty \beta ^l (A ^l) _{xy}</script><p>其中Paths表示从x到y长度为l的路径数量，A为邻接矩阵，A的l次幂每一项相当于从x到y路径长度为l的个数。\(\beta\)为权重衰减因子，衡量重要度时，l越大，l阶对最终相似度的影响应该越小。为保证数列收敛，\(\beta\)应小于邻接矩阵A的最大特征值的倒数。<br>从上式我们可以推到出其矩阵表示：</p>
-<script type="math/tex; mode=display">
-S = \beta A + \beta ^2 A ^2 + \dots = (I -\beta A) ^{-1} - I</script><p>推导过程：</p>
-<script type="math/tex; mode=display">
-\beta AS = S - \beta A\\\\
-(I -\beta A)(I + S) =I+S-\beta A -\beta AS =I</script><p>所以：</p>
-<script type="math/tex; mode=display">
-(I -\beta A) ^{-1} = (I + S)\\\\
-S  = (I -\beta A) ^{-1} - I \\\\
-S =  (I -\beta A) ^{-1} \cdot \beta A</script><p>Katz 指标的时间复杂度为\(O(vk+v ^{3}+v)\)，矩阵的减法和乘法是\(O(vk)\)，矩阵的逆运算是\(O(v ^{3})\)，减法是\(O(v)\)。故该方法的时间复杂度为\(O(v ^{3})\)。该方法的权重衰减因子的最优值只能通过大量的实验验证获得, 因此具有一定的局限性。</p>
-<h2 id="Neighbor-based-Methods"><a href="#Neighbor-based-Methods" class="headerlink" title="Neighbor-based Methods"></a>Neighbor-based Methods</h2><h3 id="Common-Neighbors"><a href="#Common-Neighbors" class="headerlink" title="Common Neighbors"></a>Common Neighbors</h3><p>当两个用户有着很多个相同的邻居，我们就认为这两个用户很有可能建立联系。所以两个用户的相似性就用他们相同邻居的数量表示：</p>
-<script type="math/tex; mode=display">
-Score(x,y)=|\tau(x) \cap \tau(y)|</script><p>对于邻接矩阵A来说，有相似度矩阵：</p>
-<script type="math/tex; mode=display">
-S=A ^2</script><h3 id="Jaccard’s-Coefficient"><a href="#Jaccard’s-Coefficient" class="headerlink" title="Jaccard’s Coefficient"></a>Jaccard’s Coefficient</h3><p>然而Common Neighbors有一个很大的问题，假设有一个人有非常多的邻居，那么所有人都会倾向于预测跟他产生互动，为此，我们还要把他们邻居的数量考虑进去，于是我们认为，如果两个人共同邻居的数量在他们所有好友数量中占比越大，就认为可能建立联系。即</p>
-<script type="math/tex; mode=display">
-Score(x,y)= \frac {|\tau(x) \cap \tau(y)|}{|\tau(x) \cup \tau(y)|}</script><h3 id="Adamic-Adar-Frequency-Weighted-Common-Neighbors"><a href="#Adamic-Adar-Frequency-Weighted-Common-Neighbors" class="headerlink" title="Adamic/Adar (Frequency-Weighted Common Neighbors)"></a>Adamic/Adar (Frequency-Weighted Common Neighbors)</h3><p>这个方法同样是对Common Neighbors的改进，当我们计算两个相同邻居的数量的时候，其实每个邻居的“重要程度”都是不一样的，我们认为这个邻居的邻居数量越少，就越凸显它作为“中间人”的重要性，毕竟一共只认识那么少人，却恰好是x，y的好朋友，因此引入邻居的权重：</p>
-<script type="math/tex; mode=display">
-Score(x,y)=\sum _{z \in \tau(x) \cap \tau(y) } \frac 1 {\log|\tau (z)|}</script><p>这里权重引入了log衰减，也可以直接用和来表示权重。<br>若定义邻接矩阵为A，则我们可以引出矩阵表示：</p>
-<script type="math/tex; mode=display">
-S=ADA</script><p>其中D为：</p>
-<script type="math/tex; mode=display">
-D _{ii}=\frac 1 {\log\sum {(A _{ij}+A _{ji}})}</script><h3 id="Friendes-mearsure"><a href="#Friendes-mearsure" class="headerlink" title="Friendes-mearsure"></a>Friendes-mearsure</h3><p>既然两个人有相同的好友可以表达他们间的距离，那么我们可以把这一个思想推广，我们认为，他们的好友之间很有可能互为好友。我们就计算他们好友之间互为好友的数量作为评价标准。</p>
-<script type="math/tex; mode=display">
-Score(x,y)=\sum _{u \in \tau(x) } \sum _{v \in \tau(y) } \delta(x,y) \\\\
-\delta(x,y) =  \begin{cases}
-1 \ if\ u=v\ or\ A _{uv}=1\ or\ A _{uv}=1\\\\
-0\ other
-\end{cases}</script><h3 id="Preferential-Attachment"><a href="#Preferential-Attachment" class="headerlink" title="Preferential Attachment"></a>Preferential Attachment</h3><p>另外，如果两个用户拥有的好友数量越多，那么就越有可能更愿意去建立联系。也就是“富人越富”原则，基于这思想,用他们两个用户的好友数量的乘积作为评分。</p>
-<script type="math/tex; mode=display">
-Score(x,y)=|\tau(x)||\tau(y)|</script><hr>
+<p>两个节点之间的相似度定义为：<br>$$<br>s(x,y) = \sum _l ^ \infty \beta ^l |Paths _{xy} ^l|=\sum _l ^ \infty \beta ^l (A ^l) _{xy}<br>$$<br>其中Paths表示从x到y长度为l的路径数量，A为邻接矩阵，A的l次幂每一项相当于从x到y路径长度为l的个数。\(\beta\)为权重衰减因子，衡量重要度时，l越大，l阶对最终相似度的影响应该越小。为保证数列收敛，\(\beta\)应小于邻接矩阵A的最大特征值的倒数。<br>从上式我们可以推到出其矩阵表示：<br>$$<br>S = \beta A + \beta ^2 A ^2 + \dots = (I -\beta A) ^{-1} - I<br>$$<br>推导过程：<br>$$<br>\beta AS = S - \beta A\\<br>(I -\beta A)(I + S) =I+S-\beta A -\beta AS =I<br>$$<br>所以：<br>$$<br>(I -\beta A) ^{-1} = (I + S)\\<br>S  = (I -\beta A) ^{-1} - I \\<br>S =  (I -\beta A) ^{-1} \cdot \beta A<br>$$<br>Katz 指标的时间复杂度为\(O(vk+v ^{3}+v)\)，矩阵的减法和乘法是\(O(vk)\)，矩阵的逆运算是\(O(v ^{3})\)，减法是\(O(v)\)。故该方法的时间复杂度为\(O(v ^{3})\)。该方法的权重衰减因子的最优值只能通过大量的实验验证获得, 因此具有一定的局限性。</p>
+<h2 id="Neighbor-based-Methods"><a href="#Neighbor-based-Methods" class="headerlink" title="Neighbor-based Methods"></a>Neighbor-based Methods</h2><h3 id="Common-Neighbors"><a href="#Common-Neighbors" class="headerlink" title="Common Neighbors"></a>Common Neighbors</h3><p>当两个用户有着很多个相同的邻居，我们就认为这两个用户很有可能建立联系。所以两个用户的相似性就用他们相同邻居的数量表示：<br>$$<br>Score(x,y)=|\tau(x) \cap \tau(y)|<br>$$<br>对于邻接矩阵A来说，有相似度矩阵：</p>
+<p>$$<br>S=A ^2<br>$$</p>
+<h3 id="Jaccard’s-Coefficient"><a href="#Jaccard’s-Coefficient" class="headerlink" title="Jaccard’s Coefficient"></a>Jaccard’s Coefficient</h3><p>然而Common Neighbors有一个很大的问题，假设有一个人有非常多的邻居，那么所有人都会倾向于预测跟他产生互动，为此，我们还要把他们邻居的数量考虑进去，于是我们认为，如果两个人共同邻居的数量在他们所有好友数量中占比越大，就认为可能建立联系。即<br>$$<br>Score(x,y)= \frac {|\tau(x) \cap \tau(y)|}{|\tau(x) \cup \tau(y)|}<br>$$</p>
+<h3 id="Adamic-Adar-Frequency-Weighted-Common-Neighbors"><a href="#Adamic-Adar-Frequency-Weighted-Common-Neighbors" class="headerlink" title="Adamic/Adar (Frequency-Weighted Common Neighbors)"></a>Adamic/Adar (Frequency-Weighted Common Neighbors)</h3><p>这个方法同样是对Common Neighbors的改进，当我们计算两个相同邻居的数量的时候，其实每个邻居的“重要程度”都是不一样的，我们认为这个邻居的邻居数量越少，就越凸显它作为“中间人”的重要性，毕竟一共只认识那么少人，却恰好是x，y的好朋友，因此引入邻居的权重：<br>$$<br>Score(x,y)=\sum _{z \in \tau(x) \cap \tau(y) } \frac 1 {\log|\tau (z)|}<br>$$<br>这里权重引入了log衰减，也可以直接用和来表示权重。<br>若定义邻接矩阵为A，则我们可以引出矩阵表示：<br>$$<br>S=ADA<br>$$<br>其中D为：<br>$$<br>D _{ii}=\frac 1 {\log\sum {(A _{ij}+A _{ji}})}<br>$$</p>
+<h3 id="Friendes-mearsure"><a href="#Friendes-mearsure" class="headerlink" title="Friendes-mearsure"></a>Friendes-mearsure</h3><p>既然两个人有相同的好友可以表达他们间的距离，那么我们可以把这一个思想推广，我们认为，他们的好友之间很有可能互为好友。我们就计算他们好友之间互为好友的数量作为评价标准。<br>$$<br>Score(x,y)=\sum _{u \in \tau(x) } \sum _{v \in \tau(y) } \delta(x,y) \\<br>\delta(x,y) =  \begin{cases}<br>1 \ if\ u=v\ or\ A _{uv}=1\ or\ A _{uv}=1\\<br>0\ other<br>\end{cases}<br>$$</p>
+<h3 id="Preferential-Attachment"><a href="#Preferential-Attachment" class="headerlink" title="Preferential Attachment"></a>Preferential Attachment</h3><p>另外，如果两个用户拥有的好友数量越多，那么就越有可能更愿意去建立联系。也就是“富人越富”原则，基于这思想,用他们两个用户的好友数量的乘积作为评分。<br>$$<br>Score(x,y)=|\tau(x)||\tau(y)|<br>$$</p>
+<hr>
 <p><a href="https://blog.csdn.net/a358463121/article/details/79350292" target="_blank" rel="noopener">https://blog.csdn.net/a358463121/article/details/79350292</a></p>
 <p><a href="https://blog.csdn.net/chuhang123/article/details/103289413" target="_blank" rel="noopener">https://blog.csdn.net/chuhang123/article/details/103289413</a></p>
 

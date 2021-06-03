@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="hard attention 极大似然 做梯度下降 Internal Covariate Shift  Internal Covariate Shift与Normalization  Batch normalization:     Batch size 要足够大（否则均值方差误差较大） 好处： 1）Normalization带来的降低covariate shift，可以使用更大的学习率 2）降">
+<meta name="description" content="hard attention 极大似然 做梯度下降 Internal Covariate Shift  Internal Covariate Shift与Normalization3. Batch normalization:    1. Batch size 要足够大（否则均值方差误差较大） 2. 好处：     1）Normalization带来的降低covariate shift，可以使用">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zhiqi Liu">
 <meta property="og:url" content="https://liuzhiqi.github.io/draft/ReadingList.html">
 <meta property="og:site_name" content="Zhiqi Liu">
-<meta property="og:description" content="hard attention 极大似然 做梯度下降 Internal Covariate Shift  Internal Covariate Shift与Normalization  Batch normalization:     Batch size 要足够大（否则均值方差误差较大） 好处： 1）Normalization带来的降低covariate shift，可以使用更大的学习率 2）降">
+<meta property="og:description" content="hard attention 极大似然 做梯度下降 Internal Covariate Shift  Internal Covariate Shift与Normalization3. Batch normalization:    1. Batch size 要足够大（否则均值方差误差较大） 2. 好处：     1）Normalization带来的降低covariate shift，可以使用">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2021-06-02T08:14:31.241Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zhiqi Liu">
-<meta name="twitter:description" content="hard attention 极大似然 做梯度下降 Internal Covariate Shift  Internal Covariate Shift与Normalization  Batch normalization:     Batch size 要足够大（否则均值方差误差较大） 好处： 1）Normalization带来的降低covariate shift，可以使用更大的学习率 2）降">
+<meta name="twitter:description" content="hard attention 极大似然 做梯度下降 Internal Covariate Shift  Internal Covariate Shift与Normalization3. Batch normalization:    1. Batch size 要足够大（否则均值方差误差较大） 2. 好处：     1）Normalization带来的降低covariate shift，可以使用">
 
 
 
@@ -271,16 +271,16 @@
 <li>hard attention 极大似然 做梯度下降</li>
 <li>Internal Covariate Shift</li>
 </ol>
-<p><a href="https://blog.csdn.net/sinat_33741547/article/details/87158830" target="_blank" rel="noopener">Internal Covariate Shift与Normalization</a></p>
-<ol>
-<li><p>Batch normalization:   </p>
-<ol>
-<li>Batch size 要足够大（否则均值方差误差较大）</li>
-<li>好处：<br> 1）Normalization带来的降低covariate shift，可以使用更大的学习率<br> 2）降低梯度爆炸或梯度小时（尤其是sigmoid和tanh）<br> 3）一定程度降低模型对参数初始化的敏感程度<br> 4）一定程度增加泛化（一定程度上说是增加了正则，对噪声也进行了normalization）</li>
-</ol>
-</li>
-<li><p>Transformer </p>
-</li>
+<p><a href="https://blog.csdn.net/sinat_33741547/article/details/87158830" target="_blank" rel="noopener">Internal Covariate Shift与Normalization</a><br>3. Batch normalization:   </p>
+<pre><code>1. Batch size 要足够大（否则均值方差误差较大）
+2. 好处：
+    1）Normalization带来的降低covariate shift，可以使用更大的学习率
+    2）降低梯度爆炸或梯度小时（尤其是sigmoid和tanh） 
+    3）一定程度降低模型对参数初始化的敏感程度
+    4）一定程度增加泛化（一定程度上说是增加了正则，对噪声也进行了normalization）
+</code></pre>
+<ol start="3">
+<li>Transformer </li>
 <li>位置编码的技术</li>
 </ol>
 <p>面试相关：  </p>
