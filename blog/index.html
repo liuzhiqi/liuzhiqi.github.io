@@ -188,7 +188,7 @@
       
         
         <li class="menu-item menu-item-articles">
-          <a href="/articles" rel="section">
+          <a href="/categories/articles" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-book"></i> <br>
             
@@ -254,12 +254,12 @@
   
   
 
-  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-articles" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiqi Liu">
@@ -278,7 +278,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2021/04/02/ATTENTION-PLEASE/" itemprop="url">【Paper-Reading】《Attention, please! A survey of Neural Attention Models in Deep Learning》</a></h1>
+                <a class="post-title-link" href="/blog/2021/05/02/ATTENTION-PLEASE/" itemprop="url">【Paper-Reading】《Attention, please! A survey of Neural Attention Models in Deep Learning》</a></h1>
         
 
         <div class="post-meta">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-02T22:13:11+08:00">
-                2021-04-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-05-02T22:13:11+08:00">
+                2021-05-02
               </time>
             
 
@@ -313,8 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Notes</span>
+                  <a href="/categories/Articles/" itemprop="url" rel="index">
+                    <span itemprop="name">Articles</span>
                   </a>
                 </span>
 
@@ -364,95 +364,95 @@
 
 <p>论文原文是从6000多的文章中，找到并着重分析了650篇文章。本文则着重从其中挑选了作者详细提及或个人认为有可取之处的文章进行了略微详细的介绍。其中引用编号保留了原文的编号，详细提及的文章后面link了相应paper的超链接，想仔细了解的同学可以自行下载。</p>
 <h1 id="2-Overview"><a href="#2-Overview" class="headerlink" title="2 Overview"></a>2 Overview</h1><p>在一切开始前，首先放一张，Attention相关的，根据论文引用情况得到的Bubble Chart：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/cite_bubble.png" alt="bubble"><br>可以看到引用最多的为：RNNSearch [2015, 44], Transformer [37], Memory Networks [38], “show, attend and tell” [45] 和 RAM [46]。<br>而在这其中，RNNSearch应该是Attention在NlP领域最先提出，或者说在最初阶段最有名的文章，因此首先介绍一下RNNSearch：</p>
-<h5 id="RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115"><a href="#RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115" class="headerlink" title="RNNSearch： Neural machine translation by jointly learning to align and translate [2019, 115]"></a>RNNSearch： Neural machine translation by jointly learning to align and translate <a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="noopener">[2019, 115]</a></h5><p>经典的Encoder-Decoder框架的瓶颈问题驱动了Attention的发展。最主要的问题是NN需要将原句中所有信息压缩到一个固定大小的向量，Choetal. [47]指出，经典Encoder-Decoder框架效果，会随着句子的长度变长而快速恶化。因此Bahdanau et al. [44] 提出了RNNSearch，将输入向量转化成一些列的内容向量，在预测某一个词时，利用attention机制对Encode出的向量序列进行加权求和。如图：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/RNNSearch.png" alt="bubble"><br>其中，加权求和时，权重与:<br>$$<br>a _{ij} = \frac {e _{ij}}{\sum _{k=1} ^{T _x} exp(e _{ik})} \\<br>e _{ij} = a(s _{i-1},h _j)<br>$$</p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/cite_bubble.png" alt="bubble"><br>可以看到引用最多的为：RNNSearch [2015, 44], Transformer [37], Memory Networks [38], “show, attend and tell” [45] 和 RAM [46]。<br>而在这其中，RNNSearch应该是Attention在NlP领域最先提出，或者说在最初阶段最有名的文章，因此首先介绍一下RNNSearch：</p>
+<h5 id="RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115"><a href="#RNNSearch：-Neural-machine-translation-by-jointly-learning-to-align-and-translate-2019-115" class="headerlink" title="RNNSearch： Neural machine translation by jointly learning to align and translate [2019, 115]"></a>RNNSearch： Neural machine translation by jointly learning to align and translate <a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="noopener">[2019, 115]</a></h5><p>经典的Encoder-Decoder框架的瓶颈问题驱动了Attention的发展。最主要的问题是NN需要将原句中所有信息压缩到一个固定大小的向量，Choetal. [47]指出，经典Encoder-Decoder框架效果，会随着句子的长度变长而快速恶化。因此Bahdanau et al. [44] 提出了RNNSearch，将输入向量转化成一些列的内容向量，在预测某一个词时，利用attention机制对Encode出的向量序列进行加权求和。如图：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/RNNSearch.png" alt="bubble"><br>其中，加权求和时，权重与:<br>$$<br>a _{ij} = \frac {e _{ij}}{\sum _{k=1} ^{T _x} exp(e _{ik})} \\<br>e _{ij} = a(s _{i-1},h _j)<br>$$</p>
 <p>RNNSearch是一种soft attention方法，基于RNNSearch在NN上有很多的尝试，其中比较有代表性的两个方面的工作为：attentional interfaces 和 end-to-end attention。<br><strong>Attentional interfaces</strong>将attention视作一个模块，因此可以很容易的将其插入经典深度学习网络中，如RNNSearch。<br><strong>End-to-end attention</strong>则是一个比较新的研究方向，其将主要用attention层作为主要层，替换了传统神经网络连接层，将attention覆盖到了整个神经网络。而这种基于attention 的End-to-end模型也因此成为了一种新的神经网络类型。</p>
 <h2 id="2-1-Attentional-interfaces"><a href="#2-1-Attentional-interfaces" class="headerlink" title="2.1 Attentional interfaces"></a>2.1 Attentional interfaces</h2><p>RNNSearch是Attentional interfaces研究的基础，在其之上有很多扩展。  </p>
 <h3 id="2-1-1-Attentional-interfaces-in-NLP"><a href="#2-1-1-Attentional-interfaces-in-NLP" class="headerlink" title="2.1.1 Attentional interfaces in NLP"></a>2.1.1 Attentional interfaces in NLP</h3><h5 id="Listen-Attend-and-Spell-2015-48"><a href="#Listen-Attend-and-Spell-2015-48" class="headerlink" title="Listen, Attend and Spell [2015, 48]:"></a>Listen, Attend and Spell <a href="pdfs.semanticscholar.org/45f2/c264c496296b6600fafc340b8f0dbc4ac52f.pdf">[2015, 48]</a>:</h5><p>采用了类似RNNSearch的模型，将RNN+Attention扩展到了语音识别上（Encode编码语音，Decode解码成文本），RNN部分使用，Attention部分和RNNSearch类似，其中\(e _{ij} = &lt;\phi(s _i),\psi(h _u)&gt;\)，其使用MLP将语音编码和文本状态映射到同一空间上，用内积计算相似度。</p>
 <h5 id="Grammar-as-a-Foreign-Language-2015-49"><a href="#Grammar-as-a-Foreign-Language-2015-49" class="headerlink" title="Grammar as a Foreign Language [2015, 49]:"></a>Grammar as a Foreign Language <a href="http://de.arxiv.org/pdf/1412.7449" target="_blank" rel="noopener">[2015, 49]</a>:</h5><p>文本分析领域，同样是用LSTM+S2S，输入文本输出语法节点，使用深度优先遍历将语法树变换为序列。Attention部分使用\(e _{ij} = v ^T tanh(W _h ^T h _i + W _s ^T s _t)\)，其中v与W均为学习参数。</p>
-<h5 id="BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51"><a href="#BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51" class="headerlink" title="BiDAF：Bidirectional attention flow for machine comprehension[2016, 51]:"></a>BiDAF：Bidirectional attention flow for machine comprehension<a href="arxiv.org/pdf/1611.01603">[2016, 51]</a>:</h5><p>面向问答场景，输入是文字段落+相关问题，输出是问题的答案。BiDAF设计了分层的多阶段体系结构，其结构如下图。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/BiDAF.png" alt="bubble"></p>
+<h5 id="BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51"><a href="#BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-51" class="headerlink" title="BiDAF：Bidirectional attention flow for machine comprehension[2016, 51]:"></a>BiDAF：Bidirectional attention flow for machine comprehension<a href="arxiv.org/pdf/1611.01603">[2016, 51]</a>:</h5><p>面向问答场景，输入是文字段落+相关问题，输出是问题的答案。BiDAF设计了分层的多阶段体系结构，其结构如下图。<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/BiDAF.png" alt="bubble"></p>
 <p>对于输入文字段落与相关问题，BiDAF设计了word embedding层(GLOVE)和Character embedding层(Char-CNN)，然后输入到Contextual结合上下文进行进一步embedding聚合，从而得到ContextEmbedding结果和QueryEmbedding结果。<br>在得到Embedding结果后，与RNNSearch的attention不同，BiDAF使用了双向attention，根据Context对Query进行加权求和得到Query-Context表示(C2Q)（哪个Query词汇对当前Context更相关），根据Query对Context进行加权求和得到Context-Query(Q2C)表示（哪个Context词汇对当前Query更相关）。其具体attention过程为：</p>
 <p>$$<br>S _{ij} = w ^T[h;u;h \cdot u] \\<br>a _{t} = softmax(S _{t:}) \\<br>\hat U _{:t} = \sum _j a _{tj}U _{:j} \\<br>b = softmax(max _{col}S ) \\<br>\hat h = \sum _t b _t H _{:t}<br>$$</p>
 <p>其中S可以看作Query与Context的相关矩阵。<br>\(\hat U \in R ^{2d \times T}\)，即对每一个Context都对应一个Query Embedding空间的结果（理解为，当前context表征了问题哪一方面）。<br>对于Context-Query，因为对于Query的每一个词找到相应的Context似乎意义不大，切可能因为Context过多导致冗余信息累加后Attention趋于平均，因此我们使用了max函数，找到context与query中词最大的相似度作为分量。这一步骤个人理解为，query整体应该反应的context某一个方面，而不是query每一个词反映了context某个方面。因此没有像Query-Context一样形成矩阵。由于Context-Query是单个向量，为了拉齐，我们duplicate该向量T次，构成\(\hat H \in R ^{2d \times T}\)<br>我们汇总所有表示：<br>$$<br>G _{:t}=[H _{:t};\hat U _{:t} ;\hat U _{:t} \cdot H _{:t};\hat H _{:t} \cdot H _{:t}] \in R ^{8d\times T}<br>$$<br>G为输入到下一层的数据，其由context embedding结果，C2Q结果以及context embedding与C2Q、Q2C特征交叉得到。<br>之后的ModelingLayer 采用了普通的双向LSTM，而OutputLayer则根据不同任务目标设定了不同模块。</p>
-<h5 id="BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-52"><a href="#BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-52" class="headerlink" title="BiDAF：Bidirectional attention flow for machine comprehension[2016, 52]:"></a>BiDAF：Bidirectional attention flow for machine comprehension<a href="arxiv.org/pdf/1707.00896">[2016, 52]</a>:</h5><p>HAN方法针对文本分类问题，其采用了双层GRU，一层编码Word，一层编码sentence。在word层和sentence层输出分别加入attention，希望使用attention使分类问题更聚焦与关键词和关键句。如下图：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/HAN.png" alt="bubble"><br>其Attention部分的特殊之处在于，并没有对两个状态进行相似度计算，而是引入了一个参数\(u _w\)与状态计算相似度，即query向量是未知的，希望优化能计算出这个参数。其Attention部分如下：<br>$$<br>e _{ij} = u _w ^T tanh(Wh _{ij} + b)<br>$$</p>
+<h5 id="BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-52"><a href="#BiDAF：Bidirectional-attention-flow-for-machine-comprehension-2016-52" class="headerlink" title="BiDAF：Bidirectional attention flow for machine comprehension[2016, 52]:"></a>BiDAF：Bidirectional attention flow for machine comprehension<a href="arxiv.org/pdf/1707.00896">[2016, 52]</a>:</h5><p>HAN方法针对文本分类问题，其采用了双层GRU，一层编码Word，一层编码sentence。在word层和sentence层输出分别加入attention，希望使用attention使分类问题更聚焦与关键词和关键句。如下图：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/HAN.png" alt="bubble"><br>其Attention部分的特殊之处在于，并没有对两个状态进行相似度计算，而是引入了一个参数\(u _w\)与状态计算相似度，即query向量是未知的，希望优化能计算出这个参数。其Attention部分如下：<br>$$<br>e _{ij} = u _w ^T tanh(Wh _{ij} + b)<br>$$</p>
 <h5 id="Dynamic-coattention-networks-for-question-answering-2016-53"><a href="#Dynamic-coattention-networks-for-question-answering-2016-53" class="headerlink" title="Dynamic coattention networks for question answering[2016, 53]:"></a>Dynamic coattention networks for question answering<a href="arxiv.org/pdf/1611.01604">[2016, 53]</a>:</h5><p>目标也为文档问答，输入为文档与问题，输出为文档中文本起止位置。使用该方法使用attention来对文档和问题embedding进行交叉，经过交叉合并得到Embedding向量，其思路与BiDAF类似，也是通过不同方向的attention对D和Q进行交叉。</p>
 <p><a name="Pointer"> </a></p>
 <h5 id="Ptr-Net：Pointer-Networks-NIPS2015-54"><a href="#Ptr-Net：Pointer-Networks-NIPS2015-54" class="headerlink" title="Ptr-Net：Pointer Networks[NIPS2015, 54]:"></a>Ptr-Net：Pointer Networks<a href="https://arxiv.org/abs/1506.03134v1" target="_blank" rel="noopener">[NIPS2015, 54]</a>:</h5><p>解决了输出序列词汇表和输入序列有关的问题（如从输入序列选词，这也是Pointer一词的由来），即输出词汇表可变问题。Ptr-Net主要是在decode输出端，将decode向量与encode向量结合，引入attention机制，利用attention权重从输入中挑选输出。</p>
 <p><a name="Pointer+"> </a></p>
 <h5 id="Ptr-Net：Pointer-Networks-ACL2017-55"><a href="#Ptr-Net：Pointer-Networks-ACL2017-55" class="headerlink" title="Ptr-Net：Pointer Networks[ACL2017, 55]:"></a>Ptr-Net：Pointer Networks<a href="arxiv.org/pdf/1704.04368">[ACL2017, 55]</a>:</h5><p>在生成文本摘要时，有两种方式extractive（从原文获得）和abstractive（新生成词汇）。利用Ptr-Net，我们可以得到extractive方式，本文则通过融合Ptr-Net和S2S方法，是摘要生成时词汇即可以从原文生成也可以使用新词汇。通过学习得到一个概率Pgen，来判断是使用S2S生成新词还是使用Ptr-Net从现有词汇中选择，同时在计算Pgen时，还加入了计算文本重复度的分量，从而降低重复。</p>
-<h5 id="Fusionnet-Fusing-via-fully-aware-attention-with-application-to-machine-comprehension-2017-56"><a href="#Fusionnet-Fusing-via-fully-aware-attention-with-application-to-machine-comprehension-2017-56" class="headerlink" title="Fusionnet: Fusing via fully-aware attention with application to machine comprehension[2017, 56]:"></a>Fusionnet: Fusing via fully-aware attention with application to machine comprehension<a href="https://www.microsoft.com/en-us/research/uploads/prod/2018/02/b0b85ca188da6371c069c82afa71ec9e928da098.pdf" target="_blank" rel="noopener">[2017, 56]</a>:</h5><p>目标仍为文档问答，作者将之前的问答问题框架总结成如下架构：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/FusionNet.png" alt="bubble"><br>其中：<br>(1)Word-level fusion：即在word层面对文档D和问题Q进行融合，但是当单词在不同场景下具有不同语义时，无法正确学到。<br>(2)High-level fusion：是对D和Q进行语义抽取之后再进行融合，容易失去细节<br>(2’)High-level fusion (Alternative)：将High-level的Q信息与Word-level的D进行融合<br>(3)Self-boosted fusion？：在model阶段，将D抽象出的context与自身融合，从而获得上下文信息，这一阶段往往在融合了Q之后。<br>(3’)Self-boosted fusion (Alternative)？：将文档信息融合进Q中（根据文档内容提炼Q的重点？作者举例了BiDAF）<br>因为先前工作，大多只使用了上述框架2-3点，因此作者提出了一个复杂的融合模型，并设计填充了上述框架的每一步。</p>
-<p>对于输入D，FusionNet使用了五个embedding特征：<br>300-dim word-level embedding<a href="https://zhuanlan.zhihu.com/p/42073620" target="_blank" rel="noopener">Glove</a>（LSA全局共现矩阵做svd，word2vec基于滑动窗口可以encodeing上下文，Glove结合两者，生成共现矩阵时使用滑动窗口只计算局部共现）<br>600-dim contextualized vector<a href="https://arxiv.org/pdf/1708.00107.pdf" target="_blank" rel="noopener">CoVe</a>(Glove输入LSTM Encoder-Decoder得到Encoder表示)<br>12-dim POS embedding<br>8-dim NER embedding<br>1-dim 归一化的词频<br>对于输入Q，使用300-dim Glove与600-dim CoVe。<br>具体流程如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/FusionNet2.png" alt="bubble"></p>
+<h5 id="Fusionnet-Fusing-via-fully-aware-attention-with-application-to-machine-comprehension-2017-56"><a href="#Fusionnet-Fusing-via-fully-aware-attention-with-application-to-machine-comprehension-2017-56" class="headerlink" title="Fusionnet: Fusing via fully-aware attention with application to machine comprehension[2017, 56]:"></a>Fusionnet: Fusing via fully-aware attention with application to machine comprehension<a href="https://www.microsoft.com/en-us/research/uploads/prod/2018/02/b0b85ca188da6371c069c82afa71ec9e928da098.pdf" target="_blank" rel="noopener">[2017, 56]</a>:</h5><p>目标仍为文档问答，作者将之前的问答问题框架总结成如下架构：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/FusionNet.png" alt="bubble"><br>其中：<br>(1)Word-level fusion：即在word层面对文档D和问题Q进行融合，但是当单词在不同场景下具有不同语义时，无法正确学到。<br>(2)High-level fusion：是对D和Q进行语义抽取之后再进行融合，容易失去细节<br>(2’)High-level fusion (Alternative)：将High-level的Q信息与Word-level的D进行融合<br>(3)Self-boosted fusion？：在model阶段，将D抽象出的context与自身融合，从而获得上下文信息，这一阶段往往在融合了Q之后。<br>(3’)Self-boosted fusion (Alternative)？：将文档信息融合进Q中（根据文档内容提炼Q的重点？作者举例了BiDAF）<br>因为先前工作，大多只使用了上述框架2-3点，因此作者提出了一个复杂的融合模型，并设计填充了上述框架的每一步。</p>
+<p>对于输入D，FusionNet使用了五个embedding特征：<br>300-dim word-level embedding<a href="https://zhuanlan.zhihu.com/p/42073620" target="_blank" rel="noopener">Glove</a>（LSA全局共现矩阵做svd，word2vec基于滑动窗口可以encodeing上下文，Glove结合两者，生成共现矩阵时使用滑动窗口只计算局部共现）<br>600-dim contextualized vector<a href="https://arxiv.org/pdf/1708.00107.pdf" target="_blank" rel="noopener">CoVe</a>(Glove输入LSTM Encoder-Decoder得到Encoder表示)<br>12-dim POS embedding<br>8-dim NER embedding<br>1-dim 归一化的词频<br>对于输入Q，使用300-dim Glove与600-dim CoVe。<br>具体流程如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/FusionNet2.png" alt="bubble"></p>
 <p>其中Word-level fusion：\(\hat w ^C _i = [w ^C _i ; em _i; \hat g ^C _i ]\)，其中em为判断C是否在Q中存在向量，g为300-dim Glove，引入attention：<br>$$<br>\hat g ^C _i =\sum _j \alpha _{ij}g􏰄 ^Q _j, α _{ij}∝exp(S(g ^C _i ,g ^Q _j)), S(x,y)=ReLU(Wx) ^TReLU(Wy)<br>$$<br>其余过程已在图中补完。FusionNet总结了过去问答过程对文档和问题处理融合的流程，并设计了一套复杂的流程，将使用了流程中全部融合思路，以确保信息最大化保持与抽象。同时提出了一个history-of-word概念，即将各个level的context拼接到了一起，在最上层形成一个超大向量。</p>
 <h5 id="Effective-Approaches-to-Attention-based-Neural-Machine-Translation-2015-57"><a href="#Effective-Approaches-to-Attention-based-Neural-Machine-Translation-2015-57" class="headerlink" title="Effective Approaches to Attention-based Neural Machine Translation[2015, 57]:"></a>Effective Approaches to Attention-based Neural Machine Translation<a href="https://arxiv.org/pdf/1508.04025.pdf" target="_blank" rel="noopener">[2015, 57]</a>:</h5><p>RNNSearch是在S2S中间插入attention，使decode部分能融合更多encode的上下文。而本文则是在decode输出时融入attention，作者提出两种方式，一种全局方法，其中所有源词都被关注，一个局部方法，其中一次只考虑源词的一个子集。使用局部方法，主要是因为在机器翻译时，翻译的语序往往和被翻译的文本某一块局部对应。局部翻译的方法框架因此如下图：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Rocktaschel_et_al_%5B57%5D.png" alt="bubble"></p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Rocktaschel_et_al_%5B57%5D.png" alt="bubble"></p>
 <p>其中pt是根据当前ht学习出的位置，然后pt为中心基于正态分布，对attention的权重进行调整。由于被翻译过的词不用再翻译，在上图基础上，作者还将上一步attention的输出接入decode的当前步中，以避免重复。该模型<a href="#BLEU">BLEU</a>好于RNNSearch6.5个点。</p>
 <h3 id="2-1-2-Attentional-interfaces-in-Computer-Vision"><a href="#2-1-2-Attentional-interfaces-in-Computer-Vision" class="headerlink" title="2.1.2 Attentional interfaces in Computer Vision"></a>2.1.2 Attentional interfaces in Computer Vision</h3><p>事实上，人的视觉在识别图像事物时，为了区分图像，人的眼睛往往会聚焦到事物的某一些特征，因此CV领域使用attention机制也是非常reasonable的。对于CNNs来说，首先CNNs的参数会随着图片大小的增长而增长。其次，如果识别目标的两个特征距离很远，CNNs需要很高的层词才能捕捉到长距离依赖。而实际上，人眼识别场景时，其实往往具有扫过或余光这样的，长距离快速定位的能力，我们不需要理解场景的每一个细节，再建立联系。</p>
 <h5 id="RAM：Recurrent-models-of-visual-attention-2014-46"><a href="#RAM：Recurrent-models-of-visual-attention-2014-46" class="headerlink" title="RAM：Recurrent models of visual attention[2014, 46]:"></a>RAM：Recurrent models of visual attention<a href="https://arxiv.org/abs/1406.6247" target="_blank" rel="noopener">[2014, 46]</a>:</h5><p>RAM使用了RNN，并借鉴了人类Glimpse行为，其核心思想是，根据当前状态计算出下一块聚焦图片块的位置。作者使用了基于强化学习方法的注意力机制，使用收益函数来进行模型训练。其过程如下图：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/RAM.png" alt="bubble"><br>图A说明RAM是从原始图片中根据位置l来得到不同尺寸大小的图片块。图B是得到图C中RNN输入的过程，其将位置信息与根据位置得到的图片块进行融合。对于C中RNN，我们根据状态得到两个输出，输出action与位置信息l。其中位置信息作为下一轮RNN的输入，而输出action根据各自不同的任务，可以take不同的action，如分类任务可以作为分类softmax的输入。RAM与之前加权平均的attention不同，他通过位置生成的方式从而形成一种类似hard attention的过程。</p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/RAM.png" alt="bubble"><br>图A说明RAM是从原始图片中根据位置l来得到不同尺寸大小的图片块。图B是得到图C中RNN输入的过程，其将位置信息与根据位置得到的图片块进行融合。对于C中RNN，我们根据状态得到两个输出，输出action与位置信息l。其中位置信息作为下一轮RNN的输入，而输出action根据各自不同的任务，可以take不同的action，如分类任务可以作为分类softmax的输入。RAM与之前加权平均的attention不同，他通过位置生成的方式从而形成一种类似hard attention的过程。</p>
 <h5 id="STN：Spatial-Transformer-Networks-2015-59"><a href="#STN：Spatial-Transformer-Networks-2015-59" class="headerlink" title="STN：Spatial Transformer Networks[2015, 59]:"></a>STN：Spatial Transformer Networks<a href="https://arxiv.org/abs/1506.02025" target="_blank" rel="noopener">[2015, 59]</a>:</h5><p>传统CNN网络的池化层具有小尺度平移不变性，而对于实际图片，我们希望学习对于图片具有空间变换不变性（将平移、旋转、缩放及裁剪不变性）。为了使网络对放射变换后的图片仍能很好的学习，STN提出可以输入的图片或者特征进行仿射变换，来使其能变换成容易学习的角度或样子。因为每个图片可能需要的变换方式不同，因此，作者希望通过对输入图片进行学习，从而学到放射变换矩阵A，在对输入进行变换（self-attention），变换后，由于无法和原输入网格对齐，因此STN采用双线性插值得到新块。在学习A的过程可以使用一个子网络或其他方法，如全链接或卷机网络。由于整个过程是一个模块化的，因此可以插入神经网络的任何部分（如CNN的某一层间）。</p>
-<h5 id="Draw-A-recurrent-neural-network-for-image-generation-2015-36"><a href="#Draw-A-recurrent-neural-network-for-image-generation-2015-36" class="headerlink" title="Draw: A recurrent neural network for image generation[2015, 36]:"></a>Draw: A recurrent neural network for image generation<a href="http://proceedings.mlr.press/v37/gregor15.pdf" target="_blank" rel="noopener">[2015, 36]</a>:</h5><p>DRAW主要用于图像生成，在RAM基础上进行了改进。整个生成模型，由RNN的encoder和decoder组成。DRAW采用了迭代patch图像的方法，其思路类似油画绘画时一层一层涂色，每次完成一个局部的一部分，最终成画。其结构如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/DRAW.png" alt="DRAW"><br>图中左边是普通的auto-encoder，右边是DRAW。对于整个网络Read部分使用了attention机制，其输入为图像x、上一步decode的状态h^dec，上一步生成的图像与输入差（error image hat_x）。这里使用了高斯滤波，使用h^dec计算出滤波中心、方差等参数，然后使用该滤波器对输入x和图像差hat_x上进行滤波得到结果输入Encoder。Encoder对图像信息进行压缩，输出经过采样得到decoder输入（这里没有很理解，采样后如何进行反向传导??）。decoder输出进入write，这里write使用和reader相同的方法得到滤波器参数（滤波器应该是和reader对称的），然后将图像还原并且patch到生成图像中。</p>
+<h5 id="Draw-A-recurrent-neural-network-for-image-generation-2015-36"><a href="#Draw-A-recurrent-neural-network-for-image-generation-2015-36" class="headerlink" title="Draw: A recurrent neural network for image generation[2015, 36]:"></a>Draw: A recurrent neural network for image generation<a href="http://proceedings.mlr.press/v37/gregor15.pdf" target="_blank" rel="noopener">[2015, 36]</a>:</h5><p>DRAW主要用于图像生成，在RAM基础上进行了改进。整个生成模型，由RNN的encoder和decoder组成。DRAW采用了迭代patch图像的方法，其思路类似油画绘画时一层一层涂色，每次完成一个局部的一部分，最终成画。其结构如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/DRAW.png" alt="DRAW"><br>图中左边是普通的auto-encoder，右边是DRAW。对于整个网络Read部分使用了attention机制，其输入为图像x、上一步decode的状态h^dec，上一步生成的图像与输入差（error image hat_x）。这里使用了高斯滤波，使用h^dec计算出滤波中心、方差等参数，然后使用该滤波器对输入x和图像差hat_x上进行滤波得到结果输入Encoder。Encoder对图像信息进行压缩，输出经过采样得到decoder输入（这里没有很理解，采样后如何进行反向传导??）。decoder输出进入write，这里write使用和reader相同的方法得到滤波器参数（滤波器应该是和reader对称的），然后将图像还原并且patch到生成图像中。</p>
 <h2 id="2-2-Multimodality"><a href="#2-2-Multimodality" class="headerlink" title="2.2 Multimodality"></a>2.2 Multimodality</h2><p>过去Attention Inferface仅仅被适用于单个模型或单一任务，如翻译问题，图像识别问题。而如今，attention<br>Inferface逐渐作为一个链接多模型的工具而被广泛使用。</p>
 <h3 id="2-2-1-图像到文本"><a href="#2-2-1-图像到文本" class="headerlink" title="2.2.1 图像到文本"></a>2.2.1 图像到文本</h3><h5 id="Show-attend-and-tell-Neural-image-caption-generation-with-visual-attention-ICML2015-45"><a href="#Show-attend-and-tell-Neural-image-caption-generation-with-visual-attention-ICML2015-45" class="headerlink" title="Show, attend and tell: Neural image caption generation with visual attention[ICML2015, 45]:"></a>Show, attend and tell: Neural image caption generation with visual attention<a href="arxiv.org/pdf/1502.03044">[ICML2015, 45]</a>:</h5><p>作为第一个使用attention 在多模型问题的文章，它解决的主要问题是从图片中生成文字标题（Image Captioning），其主要融合了CNN与LSTM。实际上[45]是将RNNSearch encoding层替换成了CNN，用CNN来抽象图片特征，并将特征输入Decode网络，这里CNN使用了浅层，即使用较为局部信息。Decode部分作者仍使用LSTM，对于每一步输入[45]使用Attention机制，利用上一步RNN状态计算出图像特征attention权重（使用MLP计算权重），然后加权图像特征， 作为RNN输入。对于attention部分，作者提出了两种方式，一种是加权方式的soft attention，另一种是基于统计的hard attention，其中hard attention使用One-hot，在attention步只从图片特征中只取其中一个，但因为其过程基于概率，优化时采用极大似然估计，因此加入网络后不太容易使用通常的方式进行优化。  </p>
 <p>基于[45]的思路，有很多加以改进，或应用于不同领域上的研究，例如：<br>视频到文本数据<br>**Describing Videos by Exploiting Temporal Structure[ICCV2015, 62]**：简单的将<a href="#RNNSearch">RNNSearch[45]</a>的思路用于视频，对视频每一帧用CNN抽取特征，使用soft attention+LSTM学习文本摘要，attention部分使用\(e _{ij} = v ^T tanh(W _h ^T h _i + W _s ^T s _t)\)。<br>**Hierarchical Attention-based Multimodal Fusion for video captioning<a href="https://www.sci-hub.ren/10.1016/j.neucom.2018.07.029" target="_blank" rel="noopener">[2018, 63]</a>**：使用了<a href="#RNNSearch">RNNSearch[45]</a>的思想，作者将视频分为视频特征（时序图像特征、运动特征等）、音频特征、情感特征等不同模块，用各自模块的网络分开训练表示特征。其中，对于使用RNN的模型，模型输出下部分网络前和[RNNSearch[45]]一样一律加入attention融合过去状态，对于不同模块间特征融合，也使用attention，加权个部分特征。最后汇总特征到一个向量中，并在encoder层前加入attention，最终训练出视频的描述。<br>**Memory-augmented attention modelling for videos [2016, 64]**：针对视频，Encoder部分不在使用CNN，而是使用LSTM，CNN抽取的特征作为Encoder LSTM的输入，同时encoder和decoder之间采用attention链接，attention部分使用\(e _{ij} = v ^T tanh(W _h ^T h _i + W _s ^T s _t)\)。<br>图像到文本数据<br>**A diagnostic report generator from ct volumes on liver tumor with semi-supervised attention mechanism[65]**：FCN对CT中肝脏和肿瘤进行图像分割，输入CNN抽取特征，LSTM学习语义CNN之后过程与与<a href="#RNNSearch">RNNSearch[45]</a>保持一致。<br>**Adaptive feature abstraction for translating video to text[AAAI2018 , 66]**：对视频使用3D的CNN作为encoder其余与<a href="#RNNSearch">RNNSearch[45]</a>保持一致。</p>
 <p><a name="Q67"> </a></p>
-<h5 id="monocular-RGB-D-images-Global-context-aware-attention-lstm-networks-for-3d-action-recognition-CVPR2017-67"><a href="#monocular-RGB-D-images-Global-context-aware-attention-lstm-networks-for-3d-action-recognition-CVPR2017-67" class="headerlink" title="monocular/RGB-D images Global context-aware attention lstm networks for 3d action recognition[CVPR2017, 67]:"></a>monocular/RGB-D images Global context-aware attention lstm networks for 3d action recognition<a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_Global_Context-Aware_Attention_CVPR_2017_paper.pdf" target="_blank" rel="noopener">[CVPR2017, 67]</a>:</h5><p>运动捕捉主要是捕捉关节点，这里作者将关节点根据连接性构成序列，每一个时间点下每一个关节点对应一个LSTM，该方法是对ST-LSTM进行了改进，其结构如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/GCA-LSTM.png" alt="bubble"><br>与过去的LSTM不同，这里使用了一种参数共享的迭代方式的多层2D LSTM，其中一层LSTM有J*T个LSTM Cell。若迭代N轮则相当于N层，每层J*T个cell，且不同迭代层同位置参数相同的深层(N层)2D LSTM。<br>对于每一个LSTM节点，输入为：当前t下第j个关节x _{t,j}，上一时间t-1下j关节状态h_{t-1,j}，当前t下第j-1个关节h _{t,j-1}。在对每一步LSTM进行求解时，引入全局迭代的2D attention机制。对时间和空间上进行全局attention：<br>$$<br>e _{j,t} ^{(n)} = W _{e _1}(tanh(W _{e _2}(h _{j,t};F ^{(n-1)})))\\<br>r _{j,t} ^{(n)} = \frac {exp(e _{i,j} ^{(n)})}{\sum _p \sum _q exp(e _{p,q} ^{(n)})}<br>$$<br>其中，F为上一层迭代轮的全局上下文信息，h为上一层迭代轮同位置LSTM输出，attention计算相当于根据上一轮学到的全局信息+上一轮该位置的信息一起判断该位置的重要性权重。对于求得的attention权重r，将其融入到LSTM中，对于输入乘r，对于状态信息乘(1-r)。即若当前部分不重要，则使用更多历史或周围的状态信息。<br>对于每一轮迭代（或说对于每一层的Global Context初的attention）应具有不同的参数。其迭代公式如下：<br>$$<br>F ^{(n)} =ReLu(W _{F}(h ^{(n-1)} _{J,T};F ^{(n-1)}))\\<br>$$<br>其中h为上一轮最后一个cell输出状态，F仍为上一层迭代轮的全局上下文信息。<br>当全部层完成学习，我们得到了最终的F，若我们执行的任务为分类任务，则：<br>$$<br>\hat y =  softmat(W _c(F ^{(n)}))<br>$$<br>这里可以理解为，通过N轮迭代后，F可以encoding出全局的信息。<br>原文里，对于这种深层RNN结构，作者没有描述如何训练，但其后续文章（Skeleton-Based Human Action Recognition With Global Context-Aware Attention LSTM Networks, TIP2018）中有详细描述，这里附加一张后续文章中对训练部分对描述图，同时通过该图，也方便大家对整个网络结构进行理解：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/GCA-LSTM_train.png" alt="bubble"><br>可以看到作者使用了贪心逐步调优的方式，对整个网络进行优化。<br>对于整个文章，作者没有使用传统的LSTM对信息进行抽象，而是使用了attention的全局信息，同时这种参数共享的多层LSTM+迭代式更新的Attention也有一些借鉴意义。</p>
-<h5 id="Attention-in-convolutional-lstm-for-gesture-recognition-NIPS2018-68"><a href="#Attention-in-convolutional-lstm-for-gesture-recognition-NIPS2018-68" class="headerlink" title="Attention in convolutional lstm for gesture recognition[NIPS2018, 68]:"></a>Attention in convolutional lstm for gesture recognition<a href="https://core.ac.uk/download/pdf/224778032.pdf" target="_blank" rel="noopener">[NIPS2018, 68]</a>:</h5><p>作者对ConvLSTM进行了优化由于ConvLSTM中使用了大量卷积操作，因此计算量较高。作者提出了四种不同的结构，来对ConvLSTM进行优化：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/AConvLSTM.png" alt="bubble"><br>其中，a）将所有门中卷积结构替换成了Pooling+全链接，因此每一个feature对应门为一维数值（使用卷积为K*K矩阵），b）对a进行改进，对输入加入attention（attention中X与H参与计算），这时改变后的输入对所有门和计算都产生影响。c）对a进行改进，对输入门加入attention（wtanh(wh+wx)型式其中全部为卷积，attention中X与H(t-1)参与计算，仍使用卷积），输入门输出不再使用sigmoid转而使用attention权重，这里attention计算权重时分母不是sum而是max（防止用sum平均之后门值过小）。d）对c进行改进，不重建输入门，而对输出门加入attention。<br>作者试验结果表明，b效果低于ConvLSTM，acd三个效果好于ConvLSTM，且a效果好于cd。说明门中使用卷积以及对输入、输入门、输出门嵌入注意力机制并不能促进特征融合。（这里作者只验证了wtanh(wh+wx)一种方式的注意力机制，且因为注意力机制是建立在卷积上的，本身卷积对融合就没有帮助(按照作者的论证)，因此只能论证注意力机制对ConvLSTM这样使用卷积的网络没有帮助）</p>
+<h5 id="monocular-RGB-D-images-Global-context-aware-attention-lstm-networks-for-3d-action-recognition-CVPR2017-67"><a href="#monocular-RGB-D-images-Global-context-aware-attention-lstm-networks-for-3d-action-recognition-CVPR2017-67" class="headerlink" title="monocular/RGB-D images Global context-aware attention lstm networks for 3d action recognition[CVPR2017, 67]:"></a>monocular/RGB-D images Global context-aware attention lstm networks for 3d action recognition<a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_Global_Context-Aware_Attention_CVPR_2017_paper.pdf" target="_blank" rel="noopener">[CVPR2017, 67]</a>:</h5><p>运动捕捉主要是捕捉关节点，这里作者将关节点根据连接性构成序列，每一个时间点下每一个关节点对应一个LSTM，该方法是对ST-LSTM进行了改进，其结构如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/GCA-LSTM.png" alt="bubble"><br>与过去的LSTM不同，这里使用了一种参数共享的迭代方式的多层2D LSTM，其中一层LSTM有J*T个LSTM Cell。若迭代N轮则相当于N层，每层J*T个cell，且不同迭代层同位置参数相同的深层(N层)2D LSTM。<br>对于每一个LSTM节点，输入为：当前t下第j个关节x _{t,j}，上一时间t-1下j关节状态h_{t-1,j}，当前t下第j-1个关节h _{t,j-1}。在对每一步LSTM进行求解时，引入全局迭代的2D attention机制。对时间和空间上进行全局attention：<br>$$<br>e _{j,t} ^{(n)} = W _{e _1}(tanh(W _{e _2}(h _{j,t};F ^{(n-1)})))\\<br>r _{j,t} ^{(n)} = \frac {exp(e _{i,j} ^{(n)})}{\sum _p \sum _q exp(e _{p,q} ^{(n)})}<br>$$<br>其中，F为上一层迭代轮的全局上下文信息，h为上一层迭代轮同位置LSTM输出，attention计算相当于根据上一轮学到的全局信息+上一轮该位置的信息一起判断该位置的重要性权重。对于求得的attention权重r，将其融入到LSTM中，对于输入乘r，对于状态信息乘(1-r)。即若当前部分不重要，则使用更多历史或周围的状态信息。<br>对于每一轮迭代（或说对于每一层的Global Context初的attention）应具有不同的参数。其迭代公式如下：<br>$$<br>F ^{(n)} =ReLu(W _{F}(h ^{(n-1)} _{J,T};F ^{(n-1)}))\\<br>$$<br>其中h为上一轮最后一个cell输出状态，F仍为上一层迭代轮的全局上下文信息。<br>当全部层完成学习，我们得到了最终的F，若我们执行的任务为分类任务，则：<br>$$<br>\hat y =  softmat(W _c(F ^{(n)}))<br>$$<br>这里可以理解为，通过N轮迭代后，F可以encoding出全局的信息。<br>原文里，对于这种深层RNN结构，作者没有描述如何训练，但其后续文章（Skeleton-Based Human Action Recognition With Global Context-Aware Attention LSTM Networks, TIP2018）中有详细描述，这里附加一张后续文章中对训练部分对描述图，同时通过该图，也方便大家对整个网络结构进行理解：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/GCA-LSTM_train.png" alt="bubble"><br>可以看到作者使用了贪心逐步调优的方式，对整个网络进行优化。<br>对于整个文章，作者没有使用传统的LSTM对信息进行抽象，而是使用了attention的全局信息，同时这种参数共享的多层LSTM+迭代式更新的Attention也有一些借鉴意义。</p>
+<h5 id="Attention-in-convolutional-lstm-for-gesture-recognition-NIPS2018-68"><a href="#Attention-in-convolutional-lstm-for-gesture-recognition-NIPS2018-68" class="headerlink" title="Attention in convolutional lstm for gesture recognition[NIPS2018, 68]:"></a>Attention in convolutional lstm for gesture recognition<a href="https://core.ac.uk/download/pdf/224778032.pdf" target="_blank" rel="noopener">[NIPS2018, 68]</a>:</h5><p>作者对ConvLSTM进行了优化由于ConvLSTM中使用了大量卷积操作，因此计算量较高。作者提出了四种不同的结构，来对ConvLSTM进行优化：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/AConvLSTM.png" alt="bubble"><br>其中，a）将所有门中卷积结构替换成了Pooling+全链接，因此每一个feature对应门为一维数值（使用卷积为K*K矩阵），b）对a进行改进，对输入加入attention（attention中X与H参与计算），这时改变后的输入对所有门和计算都产生影响。c）对a进行改进，对输入门加入attention（wtanh(wh+wx)型式其中全部为卷积，attention中X与H(t-1)参与计算，仍使用卷积），输入门输出不再使用sigmoid转而使用attention权重，这里attention计算权重时分母不是sum而是max（防止用sum平均之后门值过小）。d）对c进行改进，不重建输入门，而对输出门加入attention。<br>作者试验结果表明，b效果低于ConvLSTM，acd三个效果好于ConvLSTM，且a效果好于cd。说明门中使用卷积以及对输入、输入门、输出门嵌入注意力机制并不能促进特征融合。（这里作者只验证了wtanh(wh+wx)一种方式的注意力机制，且因为注意力机制是建立在卷积上的，本身卷积对融合就没有帮助(按照作者的论证)，因此只能论证注意力机制对ConvLSTM这样使用卷积的网络没有帮助）</p>
 <h5 id="Attention-in-convolutional-lstm-for-gesture-recognition-ECCV2018-69"><a href="#Attention-in-convolutional-lstm-for-gesture-recognition-ECCV2018-69" class="headerlink" title="Attention in convolutional lstm for gesture recognition[ECCV2018, 69]:"></a>Attention in convolutional lstm for gesture recognition<a href="https://core.ac.uk/download/pdf/224778032.pdf" target="_blank" rel="noopener">[ECCV2018, 69]</a>:</h5><p>作者使用sigmoid(wh+wx+b)作为attention参数，根据h(t-1)与x对输入进行了重构（sigmoid(~)·x），并用这种增强方式，对普通RNN、LSTM、GRU，三种不同的RNN进行了测试，结果表明这种对输入使用attention重构的方法，效果比没有重构要好（疑惑，这不就是相当于在RNN外给输入加了个门吗？）。</p>
 <p>**remote sensing data<br>Description generation for remote sensing images using attribute attention mechanism[2019, 70]**：Image Captioning，与<a href="#RNNSearch">RNNSearch[45]</a>近乎一致的结构，其中CNN浅层与深层的特征同时被使用，attention部分由MLP学出。</p>
 <h5 id="Hyperspectral-images-classification-based-on-dense-convolutional-networks-with-spectral-wise-attention-mechanism-2019-71"><a href="#Hyperspectral-images-classification-based-on-dense-convolutional-networks-with-spectral-wise-attention-mechanism-2019-71" class="headerlink" title="Hyperspectral images classification based on dense convolutional networks with spectral-wise attention mechanism[2019, 71]:"></a>Hyperspectral images classification based on dense convolutional networks with spectral-wise attention mechanism<a href="https://www.mdpi.com/2072-4292/11/2/159/pdf" target="_blank" rel="noopener">[2019, 71]</a>:</h5><p>Hyperspectral images（HSI）高光谱图像，是一种三维图像，相比于普通图片，其通道数极多，为了更好的对图像中各部分进行聚类，作者结合Attention、空洞卷积、残差网络，对传统CNN进行改进。首先，由于对图像内部各个像素进行聚类，是一种稠密预测，因此作者使用了Dilated Convolution代替传统CNN卷积与Pooling，保证稠密。同时由于CNN由浅到深，逐层抽象，而进行聚类时，作者希望能同时关注到细节与上层抽象表达，因此使用残差网络思路，每一层输出连接之后的所有层。因为引入残差网络+HSI数据本身通道就很多，残差网络融合时，作者希望引入attention，对残差融合进行加权优化，这里使用SE Block 计算Attention权重。最终输出使用softmax生成map图对图像内部进行分类。</p>
 <h5 id="Scene-classification-with-recurrent-attention-of-vhr-remote-sensing-images-2018-72"><a href="#Scene-classification-with-recurrent-attention-of-vhr-remote-sensing-images-2018-72" class="headerlink" title="Scene classification with recurrent attention of vhr remote sensing images[2018, 72]:"></a>Scene classification with recurrent attention of vhr remote sensing images<a href="https://sci-hub.se//https://ieeexplore.ieee.org/abstract/document/8454883/" target="_blank" rel="noopener">[2018, 72]</a>:</h5><p>5层CNN，用最后一层作为图片抽象特征。用3层LSTM尝试学习图像特征表达，所有特征反复输入到每一轮LSTM，用最后一层LSTM输出计算softmax作为attention参数，加权输入，进行下一轮迭代。整个过程可以理解为使用LSTM机制学习对特征的attention，类似人类观察图片，不断聚焦不同特征，最终作出判断，同时人在关注不同特征时，之前的观察结果也会给予一定参考，整个过程与LSTM机制类似，因此这里使用LSTM是恰当的，作者实验结果1层LSTM和3层准确率相近，3层略好，更多的层反而降低了准确率，同时RNN迭代轮数来看从1到30轮准确率逐轮递增。</p>
 <p>**Spectral-spatial attention networks for hyperspectral image classification [2019, 73]**：对高光谱数据，作者将特征分为两部分，一个频域一个空域。频域是对每个像素位置不同频段看作一个序列，利用Bi-RNN输出计算Attention权重，利用权重重构频域得到特征。空域使用Attention先对小像素片不同频段进行attention叠加，然后2层CNN抽象空域特征。频域特征和空域特征共同输入到MLP中进行融合学习分类</p>
-<h5 id="audio-video-Attention-based-multimodal-fusion-for-video-description-ICCV2017-74"><a href="#audio-video-Attention-based-multimodal-fusion-for-video-description-ICCV2017-74" class="headerlink" title="audio-video Attention-based multimodal fusion for video description[ICCV2017, 74]:"></a>audio-video Attention-based multimodal fusion for video description<a href="https://openaccess.thecvf.com/content_ICCV_2017/papers/Hori_Attention-Based_Multimodal_Fusion_ICCV_2017_paper.pdf" target="_blank" rel="noopener">[ICCV2017, 74]</a>:</h5><p>和<a href="#RNNSearch">RNNSearch[45]</a>在输入前attention融合不同，本文在decoder的输出端进行融合。首先对每一帧图像用CNN抽象出的特征，利用RNN上一轮状态计算图像特征attention，对全部帧加权求和，attention的结果和decoder的LSTM输出进行融合(状态和图像结果各自加权求和+softmax)，共同预测最终结果，对于decoder输入为上一轮状态和上一轮输出（即上一轮和图像融合后的输出）。  其过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Hori_Attention-Based_Multimodal_Fusion_ICCV_2017.png" alt="bubble"></p>
+<h5 id="audio-video-Attention-based-multimodal-fusion-for-video-description-ICCV2017-74"><a href="#audio-video-Attention-based-multimodal-fusion-for-video-description-ICCV2017-74" class="headerlink" title="audio-video Attention-based multimodal fusion for video description[ICCV2017, 74]:"></a>audio-video Attention-based multimodal fusion for video description<a href="https://openaccess.thecvf.com/content_ICCV_2017/papers/Hori_Attention-Based_Multimodal_Fusion_ICCV_2017_paper.pdf" target="_blank" rel="noopener">[ICCV2017, 74]</a>:</h5><p>和<a href="#RNNSearch">RNNSearch[45]</a>在输入前attention融合不同，本文在decoder的输出端进行融合。首先对每一帧图像用CNN抽象出的特征，利用RNN上一轮状态计算图像特征attention，对全部帧加权求和，attention的结果和decoder的LSTM输出进行融合(状态和图像结果各自加权求和+softmax)，共同预测最终结果，对于decoder输入为上一轮状态和上一轮输出（即上一轮和图像融合后的输出）。  其过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Hori_Attention-Based_Multimodal_Fusion_ICCV_2017.png" alt="bubble"></p>
 <p>**An attention guided factorized bilinear pooling for audio-video emotion recognition[IJCNN2019, 75]**：对音频视频分别CNN，然后特征使用矩阵投影到同一空间进行相乘融合。融合后MLP学习情感分类。</p>
-<p>**diverse sensors<br>Memory fusion network for multi-view sequential learning <a href>[AAAI2018, 76]</a>**：<br>针对多视图或多通道含有时序概念的数据，对每个通道的数据单独训练一条LSTM网络。<br>在每一轮LSTM迭代时，将相邻时间轮状态输入到旁路网络进行融合，旁路网络首先使用attention融合两个相邻时间点的数据得到\(c _t ^{[t-1,t]}\)（实际上是使用MLP训练attention参数，然后参数叠加到各通道进行通道调整）。<br>然后将融合后的结果输入到一个类似门控RNN的网络里进行再次融合。该网络将融合特征输入到三个神经网络里，其中一个根据融合特征学习特征状态u，一个学习历史状态门r1，一个学习当前特征门r2。最后将当前特征门r2与学好的特征状态u相乘，上一轮状态与状态门r1相乘，二者相加得到新的状态（即类似门控RNN，融合了多通道）。最终输出特征分为各自通道LSTM训练出的单通道特征与融合RNN学习出的融合特征两部分。<br>整个文章思路为LSTM训练各通道表达，同时设计旁路网络融合各通道各自状态，得到融合特征。其架构如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/AAAI2018_77.png" alt="bubble"></p>
+<p>**diverse sensors<br>Memory fusion network for multi-view sequential learning <a href>[AAAI2018, 76]</a>**：<br>针对多视图或多通道含有时序概念的数据，对每个通道的数据单独训练一条LSTM网络。<br>在每一轮LSTM迭代时，将相邻时间轮状态输入到旁路网络进行融合，旁路网络首先使用attention融合两个相邻时间点的数据得到\(c _t ^{[t-1,t]}\)（实际上是使用MLP训练attention参数，然后参数叠加到各通道进行通道调整）。<br>然后将融合后的结果输入到一个类似门控RNN的网络里进行再次融合。该网络将融合特征输入到三个神经网络里，其中一个根据融合特征学习特征状态u，一个学习历史状态门r1，一个学习当前特征门r2。最后将当前特征门r2与学好的特征状态u相乘，上一轮状态与状态门r1相乘，二者相加得到新的状态（即类似门控RNN，融合了多通道）。最终输出特征分为各自通道LSTM训练出的单通道特征与融合RNN学习出的融合特征两部分。<br>整个文章思路为LSTM训练各通道表达，同时设计旁路网络融合各通道各自状态，得到融合特征。其架构如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/AAAI2018_77.png" alt="bubble"></p>
 <h5 id="Multiattention-recurrent-network-for-human-communication-comprehension-AAAI2018-77"><a href="#Multiattention-recurrent-network-for-human-communication-comprehension-AAAI2018-77" class="headerlink" title="Multiattention recurrent network for human communication comprehension[AAAI2018, 77]:"></a>Multiattention recurrent network for human communication comprehension<a href="https://arxiv.org/pdf/1802.00923.pdf" target="_blank" rel="noopener">[AAAI2018, 77]</a>:</h5><p>作者对LSTM的结构进行了改进，首先每个通道拥有各自的LSTM，对于各个通道的状态输入到Multi-attention Block中得到融合的状态z _t，该融合状态输入到各自通道LSTM中参与迭代(即各自LSTM输入包含各自输入，各自状态，融合状态三个部分，各自部分有各自参数矩阵)。Multi-attention Block部分作者以各自LSTM结果h作为输入，使用DNN学习出K*M’维attention融合系数（M’为M个通道各自特征数之和），然后乘以各自的h得到K*M’维特征矩阵，然后对各个通道的特征矩阵进行各自降维，得到各自降维聚合特征后再输入DNN，还原回M’维特征向量作为融合后的输出。（这里有一些疑问，首先使用DNN对特征进行融合输出扩展了K倍的特征，为什么这样做、好处是什么、不同K效果如何作者没有给出解释，其次对于降维、和两次DNN具体过程作者没有详细阐明。因此整个MAB部分令人迷惑，为什么要先DNN扩张K倍，再降维，再DNN还原回原大小，为什么不直接使用DNN作为attention过程，是本文令人疑惑的地方。）</p>
 <h5 id="Relational-recurrent-neural-networks-NIPS2018-78-："><a href="#Relational-recurrent-neural-networks-NIPS2018-78-：" class="headerlink" title="Relational recurrent neural networks [NIPS2018, 78]："></a>Relational recurrent neural networks <a href="https://proceedings.neurips.cc/paper/2018/file/e2eabaf96372e20a9e3d4b5f83723a61-Paper.pdf" target="_blank" rel="noopener">[NIPS2018, 78]</a>：</h5><p>传统的LSTM状态为一维向量，表达历史信息较少，本文通过引入Self-attention机制，将状态转化为记忆矩阵，从而能容纳更多的历史信息。其具体流程如下：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Relational_recurrent_neural_networks.png" alt="bubble"></p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Relational_recurrent_neural_networks.png" alt="bubble"></p>
 <p>其中Self-attention部分，引入了记忆矩阵M，M融合了Query、Key、Value的信息。对于输入x，我们通过线性投影得到：查询\(Q=MW ^q\)，键\(K=MW ^k\)和值 \(V= MW ^v\)。我们有查询结果：<br>$$<br>A(Q,K,V) = softmax(\frac {QK ^T}{\sqrt{d _k}})V<br>$$</p>
 <p>其中dk为key向量的维数，用作比例因子。<br>当有了新的输入x，我们需要更新记忆矩阵M：<br>$$<br>M’  = softmax(\frac {Q([M;x]W ^k) ^T}{\sqrt{d _k}})[M;x]W ^v<br>$$<br>通过将该方法嵌入到现有的2D-RNN中，得到本文提出的方法，如下图引入2D-LSTM。</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Relational_recurrent_neural_networks_eq.png" alt="bubble"></p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Relational_recurrent_neural_networks_eq.png" alt="bubble"></p>
 <p>其中使用了逐行计算的表示方法，输入门控制的部分通过融合更新的M得到（与传统的x与h加权融合不太相同）</p>
-<h5 id="Neural-Multimodal-Belief-Tracker-with-Adaptive-Attention-for-Dialogue-Systems-WWW2019-79-："><a href="#Neural-Multimodal-Belief-Tracker-with-Adaptive-Attention-for-Dialogue-Systems-WWW2019-79-：" class="headerlink" title="Neural Multimodal Belief Tracker with Adaptive Attention for Dialogue Systems [WWW2019, 79]："></a>Neural Multimodal Belief Tracker with Adaptive Attention for Dialogue Systems <a href="https://www.sci-hub.ren/10.1145/3308558.3313598" target="_blank" rel="noopener">[WWW2019, 79]</a>：</h5><p>本文主要设计了一种可以识别图片和文本的AI对话系统，其主要应用在时装零售的场景（例如针对用户提问推荐图片，或者用户对某一张图片提出疑问，基于解答或类似推荐）。作者认为，对于这样的对话系统而言，系统对话图片，用户文本，用户对话图片，对于对话而言是有用的。在这种场景下，对图片特征，作者使用了ResNet50，抽取图片局部特征（零售场景的图片，商品往往占图片中一小部分）。针对文本Encoder，使用了两路LSTM分别encode用户文本与系统文本。对于输出MLP网络的输入，作者只只用了用户图片、系统图片、用户文本信息，使用attention对这三个特征进行融合，其中attention需要参考当前文本encoder的状态信息。其整个过程如下图，可以看书该方法是针对图文混合问答系统特殊构造的网络。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/NMBT.png" alt="bubble"></p>
-<h5 id="Dual-attention-networks-for-multimodal-reasoning-and-matching-CVPR2017-80-："><a href="#Dual-attention-networks-for-multimodal-reasoning-and-matching-CVPR2017-80-：" class="headerlink" title="Dual attention networks for multimodal reasoning and matching [CVPR2017, 80]："></a>Dual attention networks for multimodal reasoning and matching <a href="http://arxiv.org/pdf/1611.00471" target="_blank" rel="noopener">[CVPR2017, 80]</a>：</h5><p>DAN解决图片文本多模态问题，对于图片，作者仍使用CNN，抽取高层次多个特征片，对于文本使用Bi-RNN抽取出文本特征序列。其融合过程类似<a href="#Q67">[67]</a>，通过对特征多次attention反复迭代，不断转移注意力到新的区域，最终融合每一步结果得到想要的推断。<br>图片部分Attention公式如下，v为图片特征矩阵，m为attention记忆矩阵<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/DAN_eq_p.png" alt="bubble"><br>文字部分Attention公式如下，u为文字特征矩阵，m为attention记忆矩阵<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/DAN_eq_t.png" alt="bubble"><br>可以看到文字和图片不同之处在于少了一层投影矩阵P+tanh，其主要目的是将视觉特征投影到文本特征空间。<br>对于attention是如何使用，视频文本又是如何融合的，根据不同应用场景，作者给出了不同的框架。作者设计r-DAN用于视觉文本问答场景，m-DAN用作视觉文本匹配场景，两个不同场景在于，视觉文本问答场景，要求文本和图片共同作用，希望回答能融合文本和图片的信息，而视觉文本匹配问题文本和视觉两个通道相对独立，最终输出是对两个通道进行比较。因此，作者分别设计框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/DAN.png" alt="bubble"><br>从图中可以看出，不同点主要是attention结果是如何传递的，对于r-DAN视觉和文本部分分别维护各自的记忆矩阵m，每一轮对m的更新是直接将输出的v或u叠加在上一轮m中。对于m-DAN，为了融合视觉和文本信息，对于m的更新使用了v和u逐元素各自相乘（element-wise multiplication）叠加到m中，达到混合的目的。同时对于输出r-DAN是将最终的attention记忆矩阵m乘以输出矩阵并Softmax得到结果，而m-DAN则是每一步对u和v内积，最终讲每一轮迭代的内积叠加，得到最终相似度。<br>本文使用了迭代的attention，其整体思路和<a href="#Q67">[67]</a>较为相似，通过将数据扩展到多模态，并根据不同任务设计不同网络结构。但和<a href="#Q67">[67]</a>的融合不同每次attention记忆矩阵进行融合时只采用了直接叠加方式，而<a href="#Q67">[67]</a>的叠加方式更加复杂一些，因此本文attention每次使用记忆矩阵计算attention时，attention区域可能变化不太大。同时使用叠加而不是融合投影的方式，记忆矩阵每次叠加后没有归一化，可能导致记忆矩阵特征值越来越大，当K较大时，对训练可能也会产生影响（个人感觉）。</p>
-<h5 id="Bi-directional-Spatial-Semantic-Attention-Networks-for-Image-Text-Matching-TIP2018-81-："><a href="#Bi-directional-Spatial-Semantic-Attention-Networks-for-Image-Text-Matching-TIP2018-81-：" class="headerlink" title="Bi-directional Spatial-Semantic Attention Networks for Image-Text Matching[TIP2018, 81]："></a>Bi-directional Spatial-Semantic Attention Networks for Image-Text Matching<a href="https://www.sci-hub.ren/10.1109/TIP.2018.2882225" target="_blank" rel="noopener">[TIP2018, 81]</a>：</h5><p>本文主要面向文本图片匹配问题，作者设计了一种Bi-directional attention模型。<br>对于文本图片匹配问题，作者认为可以从两个角度考虑，一方面是使用文本，找到图片中可能相关的区域，另一方面是使用图片，找到文本中相关的词汇。对于这两方面，作者分别训练了两路网络，使用CNN抽取图片特征，然后分别根据图片特征对文本特征进行attention聚合，根据文本特征对图片特征进行聚合，从而得到了2路不同的特征表示。最后将2路特征分别输入到各自LSTM+MLP网络计算相似度。<br>其整体过程如下图，在学习过程中，2路相对独立，最终相似度，使用各自输出加权求和。这篇文章的设计思路实际上就是利用多特征通道之间相互attention的不同query与value的组合，得到多路孪生网络。然后分别学习，最终简单对结果进行汇总。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Bi-directional_attention.png" alt="bubble"></p>
+<h5 id="Neural-Multimodal-Belief-Tracker-with-Adaptive-Attention-for-Dialogue-Systems-WWW2019-79-："><a href="#Neural-Multimodal-Belief-Tracker-with-Adaptive-Attention-for-Dialogue-Systems-WWW2019-79-：" class="headerlink" title="Neural Multimodal Belief Tracker with Adaptive Attention for Dialogue Systems [WWW2019, 79]："></a>Neural Multimodal Belief Tracker with Adaptive Attention for Dialogue Systems <a href="https://www.sci-hub.ren/10.1145/3308558.3313598" target="_blank" rel="noopener">[WWW2019, 79]</a>：</h5><p>本文主要设计了一种可以识别图片和文本的AI对话系统，其主要应用在时装零售的场景（例如针对用户提问推荐图片，或者用户对某一张图片提出疑问，基于解答或类似推荐）。作者认为，对于这样的对话系统而言，系统对话图片，用户文本，用户对话图片，对于对话而言是有用的。在这种场景下，对图片特征，作者使用了ResNet50，抽取图片局部特征（零售场景的图片，商品往往占图片中一小部分）。针对文本Encoder，使用了两路LSTM分别encode用户文本与系统文本。对于输出MLP网络的输入，作者只只用了用户图片、系统图片、用户文本信息，使用attention对这三个特征进行融合，其中attention需要参考当前文本encoder的状态信息。其整个过程如下图，可以看书该方法是针对图文混合问答系统特殊构造的网络。<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/NMBT.png" alt="bubble"></p>
+<h5 id="Dual-attention-networks-for-multimodal-reasoning-and-matching-CVPR2017-80-："><a href="#Dual-attention-networks-for-multimodal-reasoning-and-matching-CVPR2017-80-：" class="headerlink" title="Dual attention networks for multimodal reasoning and matching [CVPR2017, 80]："></a>Dual attention networks for multimodal reasoning and matching <a href="http://arxiv.org/pdf/1611.00471" target="_blank" rel="noopener">[CVPR2017, 80]</a>：</h5><p>DAN解决图片文本多模态问题，对于图片，作者仍使用CNN，抽取高层次多个特征片，对于文本使用Bi-RNN抽取出文本特征序列。其融合过程类似<a href="#Q67">[67]</a>，通过对特征多次attention反复迭代，不断转移注意力到新的区域，最终融合每一步结果得到想要的推断。<br>图片部分Attention公式如下，v为图片特征矩阵，m为attention记忆矩阵<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/DAN_eq_p.png" alt="bubble"><br>文字部分Attention公式如下，u为文字特征矩阵，m为attention记忆矩阵<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/DAN_eq_t.png" alt="bubble"><br>可以看到文字和图片不同之处在于少了一层投影矩阵P+tanh，其主要目的是将视觉特征投影到文本特征空间。<br>对于attention是如何使用，视频文本又是如何融合的，根据不同应用场景，作者给出了不同的框架。作者设计r-DAN用于视觉文本问答场景，m-DAN用作视觉文本匹配场景，两个不同场景在于，视觉文本问答场景，要求文本和图片共同作用，希望回答能融合文本和图片的信息，而视觉文本匹配问题文本和视觉两个通道相对独立，最终输出是对两个通道进行比较。因此，作者分别设计框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/DAN.png" alt="bubble"><br>从图中可以看出，不同点主要是attention结果是如何传递的，对于r-DAN视觉和文本部分分别维护各自的记忆矩阵m，每一轮对m的更新是直接将输出的v或u叠加在上一轮m中。对于m-DAN，为了融合视觉和文本信息，对于m的更新使用了v和u逐元素各自相乘（element-wise multiplication）叠加到m中，达到混合的目的。同时对于输出r-DAN是将最终的attention记忆矩阵m乘以输出矩阵并Softmax得到结果，而m-DAN则是每一步对u和v内积，最终讲每一轮迭代的内积叠加，得到最终相似度。<br>本文使用了迭代的attention，其整体思路和<a href="#Q67">[67]</a>较为相似，通过将数据扩展到多模态，并根据不同任务设计不同网络结构。但和<a href="#Q67">[67]</a>的融合不同每次attention记忆矩阵进行融合时只采用了直接叠加方式，而<a href="#Q67">[67]</a>的叠加方式更加复杂一些，因此本文attention每次使用记忆矩阵计算attention时，attention区域可能变化不太大。同时使用叠加而不是融合投影的方式，记忆矩阵每次叠加后没有归一化，可能导致记忆矩阵特征值越来越大，当K较大时，对训练可能也会产生影响（个人感觉）。</p>
+<h5 id="Bi-directional-Spatial-Semantic-Attention-Networks-for-Image-Text-Matching-TIP2018-81-："><a href="#Bi-directional-Spatial-Semantic-Attention-Networks-for-Image-Text-Matching-TIP2018-81-：" class="headerlink" title="Bi-directional Spatial-Semantic Attention Networks for Image-Text Matching[TIP2018, 81]："></a>Bi-directional Spatial-Semantic Attention Networks for Image-Text Matching<a href="https://www.sci-hub.ren/10.1109/TIP.2018.2882225" target="_blank" rel="noopener">[TIP2018, 81]</a>：</h5><p>本文主要面向文本图片匹配问题，作者设计了一种Bi-directional attention模型。<br>对于文本图片匹配问题，作者认为可以从两个角度考虑，一方面是使用文本，找到图片中可能相关的区域，另一方面是使用图片，找到文本中相关的词汇。对于这两方面，作者分别训练了两路网络，使用CNN抽取图片特征，然后分别根据图片特征对文本特征进行attention聚合，根据文本特征对图片特征进行聚合，从而得到了2路不同的特征表示。最后将2路特征分别输入到各自LSTM+MLP网络计算相似度。<br>其整体过程如下图，在学习过程中，2路相对独立，最终相似度，使用各自输出加权求和。这篇文章的设计思路实际上就是利用多特征通道之间相互attention的不同query与value的组合，得到多路孪生网络。然后分别学习，最终简单对结果进行汇总。<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Bi-directional_attention.png" alt="bubble"></p>
 <h5 id="Pointing-novel-objects-in-image-captioning-CVPR2019-82-："><a href="#Pointing-novel-objects-in-image-captioning-CVPR2019-82-：" class="headerlink" title="Pointing novel objects in image captioning[CVPR2019, 82]："></a>Pointing novel objects in image captioning<a href="https://arxiv.org/pdf/1904.11251.pdf" target="_blank" rel="noopener">[CVPR2019, 82]</a>：</h5><p>之前的image captioning问题主要是用CNN做特征提取，然后送入LSTM中，这些模型是建立在大量的训练集中的image-caption对数据，只具有in-domain视野，当学习图片和训练集内容差别较大时候，模型效果就会很不好。本文通过使用在其他数据集上训练好的目标检测模型与image-caption训练的LSTM进行融合，从而扩充了词汇库，其过程如下图：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/LSTM-P.png" alt="bubble"><br>整个流程主要部分是Pointing mechine部分，其公式如下：<br>$$<br>Pr ^t _d (w _{t+1}) = \mathbf w ^T _{t+1} M _dh ^t \\<br>Pr ^t _c (w _{t+1}) = \mathbf w ^T _{t+1} M _c ^{(1)}(I _c \cdot \sigma(M _c ^{(2)} h ^t)) \\<br>P _t = \sigma (G _s \mathbf w _t + G _h h ^t + b _p)\\<br>P _r ^t = (1-p _t) \cdot \phi(Pr ^t _d (w _{t+1})) + P _t \cdot (Pr ^t _c (w _{t+1}))<br>$$</p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/LSTM-P.png" alt="bubble"><br>整个流程主要部分是Pointing mechine部分，其公式如下：<br>$$<br>Pr ^t _d (w _{t+1}) = \mathbf w ^T _{t+1} M _dh ^t \\<br>Pr ^t _c (w _{t+1}) = \mathbf w ^T _{t+1} M _c ^{(1)}(I _c \cdot \sigma(M _c ^{(2)} h ^t)) \\<br>P _t = \sigma (G _s \mathbf w _t + G _h h ^t + b _p)\\<br>P _r ^t = (1-p _t) \cdot \phi(Pr ^t _d (w _{t+1})) + P _t \cdot (Pr ^t _c (w _{t+1}))<br>$$</p>
 <p>可以看到作者使用LSTM状态来计算图片生成词的分布，对于物体识别部分词分布计算同样融合了当前图片生成词汇的状态h，最终融合二者分布的输出词分布使用了一个根据LSTM状态h和上一轮词分布计算出的概率P_t，来对图片生成和物体识别两个分布进行融合。输出的融合思路和<a href="#Pointer+">改进的Pointer Network[55]</a>有相似之处。<br>整体思路创新在于引入已经训练好的物体识别模型来扩充词库，同时设计了一个比较Make sense的融合方法对两个模型进行融合。</p>
 <h5 id="Improving-referring-expression-grounding-with-cross-modal-attention-guided-erasing-CVPR2019-84-："><a href="#Improving-referring-expression-grounding-with-cross-modal-attention-guided-erasing-CVPR2019-84-：" class="headerlink" title="Improving referring expression grounding with cross-modal attention-guided erasing[CVPR2019, 84]："></a>Improving referring expression grounding with cross-modal attention-guided erasing<a href="https://arxiv.org/pdf/1903.00839.pdf" target="_blank" rel="noopener">[CVPR2019, 84]</a>：</h5><p>解决Referring Expression问题（or Visual Grounding），作者在<a href="#mattnet">MattNet[462]</a>的基础上进行了改进提出了一种基于attention机制的跨模型擦除输入特征的方法，从而解决了之前算法只关注图像和文本占据主导地位特征，而忽视了可能存在的潜在联系的问题，其做法是通过擦除对于算法而言图像和文本最重要的部分，从而生成不同的训练集，再用这些训练集学习出更多潜在联系。其做法为，对于文本利用算法中的attention参数来做为文本重要性依据，从而选出最高重要性文本进行擦除。对于图片对MattNet方法进行了改进，对于Subject、location、relationship三部分，引入attention机制，不在对一个固定的frame进行判断而是使用attention融合所有proposal frame来进行match，而因为引入了attention，所以frame的重要程度就可以利用其参数评估，因此可以找到最重要的frame对其擦除。</p>
-<p>**Pay attention! robustifying a deep visuomotor policy through task-focused visual attention<a href="https://arxiv.org/pdf/1809.10093.pdf" target="_blank" rel="noopener">[CVPR2019, 85]</a>**：<br>解决问题：根据文本指令对视频中的机械臂进行操控（如：讲红盒推到左边）。对于文本，作者使用LSTM进行embedding，对于视频，作者将图像进行分区使用VGG19对每一块进行特征抽取。整个方法流程如下图，为了增加模型抗噪能力，作者使用了VAE-GAN框架，对于真实图片作者使用图片特征+文本的表示进行attention融合，得到每一块权重后，叠加到每一块特征中，从而达到根据文本质量“高亮”相关区域的目的（生成mask）。对于生成虚假图片，作者使用Encoder+Generator生成mask+图片。然后输入Discriminator进行网络调优。这样调优出的Encoder具有一定的抗噪能力。对于指令生成作者对Encoder输出进行三层LSTM生成指令。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/CVPR2019_85.png" alt="bubble"></p>
+<p>**Pay attention! robustifying a deep visuomotor policy through task-focused visual attention<a href="https://arxiv.org/pdf/1809.10093.pdf" target="_blank" rel="noopener">[CVPR2019, 85]</a>**：<br>解决问题：根据文本指令对视频中的机械臂进行操控（如：讲红盒推到左边）。对于文本，作者使用LSTM进行embedding，对于视频，作者将图像进行分区使用VGG19对每一块进行特征抽取。整个方法流程如下图，为了增加模型抗噪能力，作者使用了VAE-GAN框架，对于真实图片作者使用图片特征+文本的表示进行attention融合，得到每一块权重后，叠加到每一块特征中，从而达到根据文本质量“高亮”相关区域的目的（生成mask）。对于生成虚假图片，作者使用Encoder+Generator生成mask+图片。然后输入Discriminator进行网络调优。这样调优出的Encoder具有一定的抗噪能力。对于指令生成作者对Encoder输出进行三层LSTM生成指令。<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/CVPR2019_85.png" alt="bubble"></p>
 <h2 id="2-3-Attention-augmented-memory"><a href="#2-3-Attention-augmented-memory" class="headerlink" title="2.3 Attention-augmented memory"></a>2.3 Attention-augmented memory</h2><p>传统的RNN因为很难进行长期记忆，为了弥补这一点，很多改进引入了记忆机制，其中比较典型的为Neural Turing Machine (NTM)和Networks (MemNN)。其原理都是使用额外的内存将每一步的特征存储起来，然后定义Query机制，利用当前表示从存储空间查询到相应的特征表示进行融合，这和attention机制有共通之处。其中比较基础的两种为：Neural Turing Machine (NTM) 和Networks (MemNN) 。</p>
-<h5 id="Neural-Turing-Machine-NTM-GoogleDeepMind2014-86-："><a href="#Neural-Turing-Machine-NTM-GoogleDeepMind2014-86-：" class="headerlink" title="Neural Turing Machine (NTM)[GoogleDeepMind2014, 86]："></a>Neural Turing Machine (NTM)<a href="https://arxiv.org/pdf/1410.5401.pdf" target="_blank" rel="noopener">[GoogleDeepMind2014, 86]</a>：</h5><p>NTM是端到端可微的，可以被梯度下降算法训练。NTM memory更倾向于short-term的存储（因为查询时仍使用t-1步的一些状态，但因为引入了Mem因此可以保存更长时间的信息。），使用查询与Mem内容相似度来度量，来快速定位Mem位置。其具体框架和过程如下图（更多细节可见：<a href="https://blog.csdn.net/rtygbwwwerr/article/details/50548311" target="_blank" rel="noopener">《Neural Turing Machines-NTM系列》</a>）：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/NTM.png" alt="bubble"></p>
+<h5 id="Neural-Turing-Machine-NTM-GoogleDeepMind2014-86-："><a href="#Neural-Turing-Machine-NTM-GoogleDeepMind2014-86-：" class="headerlink" title="Neural Turing Machine (NTM)[GoogleDeepMind2014, 86]："></a>Neural Turing Machine (NTM)<a href="https://arxiv.org/pdf/1410.5401.pdf" target="_blank" rel="noopener">[GoogleDeepMind2014, 86]</a>：</h5><p>NTM是端到端可微的，可以被梯度下降算法训练。NTM memory更倾向于short-term的存储（因为查询时仍使用t-1步的一些状态，但因为引入了Mem因此可以保存更长时间的信息。），使用查询与Mem内容相似度来度量，来快速定位Mem位置。其具体框架和过程如下图（更多细节可见：<a href="https://blog.csdn.net/rtygbwwwerr/article/details/50548311" target="_blank" rel="noopener">《Neural Turing Machines-NTM系列》</a>）：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/NTM.png" alt="bubble"></p>
 <h5 id="Memory-Networks-Facebook2014-38-："><a href="#Memory-Networks-Facebook2014-38-：" class="headerlink" title="Memory Networks[Facebook2014, 38]："></a>Memory Networks<a href="http://arxiv.org/pdf/1410.3916" target="_blank" rel="noopener">[Facebook2014, 38]</a>：</h5><p>MemNN提出了一种通过使用额外的存储空间，将输入表示向量进行存储，评分时取出存储空间中与匹配向量最相似的两个向量，共同学习的模型。其过程大致分为：输入向量表示层I，内存更新层G，内存查询层O，推断层R。文中涉及到的模型主要针对对于QA问题，对于文档，将输入句子X通过I层（如矩阵投影到表示空间）得到表示向量，然后将每一句子进行存储，对于问题同样表示学习映射到表示空间，然后简单使用COSIN距离匹配最相近的两个词，然后输入浅层NN进行推断。整个过程需要训练的参数为表示投影矩阵和推断层。作者使用了类似SVM的margin ranking loss 和随机梯度下降 SGD进行优化。由于这种方法受限于存储空间大小，如果存储空间足够大，则可以对 long-term memory 可以有较好表示，因此往往用于QA task中。<br>基于Memory Networks有很多研究，如下图：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Memory_Networks.png" alt="bubble"></p>
-<h5 id="End-to-end-Memory-Networks-NIPS2015-91-："><a href="#End-to-end-Memory-Networks-NIPS2015-91-：" class="headerlink" title="End-to-end Memory Networks[NIPS2015, 91]："></a>End-to-end Memory Networks<a href="https://arxiv.org/pdf/1503.08895v4.pdf" target="_blank" rel="noopener">[NIPS2015, 91]</a>：</h5><p>在MemNN基础上进行了改进，对于输入文档和输入问题，分别用Embedding矩阵A和B投影到统一表示空间，Mem匹配部分从过去的取Top2改进成类似attention方式，与经典Attention不同的是，这里根据问题表示u学习出的每个记忆slot的权重p没有直接与记忆表示m相乘，而是乘以文档对应的输出表示c（通过投影矩阵C）得到输出o，然后将o与u相加输入浅层神经网络进行分类。其具体过程如下图左边。同时问了增强表示，作者还扩展了多层MemNN，如下图右侧。可见一层E2E MemNet 需要训练的参数为四个矩阵A、B、C、W，整体方法更容易优化。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/E2EMemNet.png" alt="bubble"></p>
-<h5 id="Video-Object-Segmentation-using-Space-Time-Memory-Networks-ICCV2019-92-："><a href="#Video-Object-Segmentation-using-Space-Time-Memory-Networks-ICCV2019-92-：" class="headerlink" title="Video Object Segmentation using Space-Time Memory Networks[ICCV2019, 92]："></a>Video Object Segmentation using Space-Time Memory Networks<a href="https://arxiv.org/pdf/1904.00607.pdf" target="_blank" rel="noopener">[ICCV2019, 92]</a>：</h5><p>对视频每一帧使用两路CNN分别得到Key（小规模，用于联合memory快速计算attention权重）和Value（detail feature）特征。对于Mem部分，Mem的特征输入为原始图片与Mask，经过两路CNN得到KV（模型可使用图片库做参数预训练，对新的视频第一桢输入可随机生成或用预训练mask模型），对于Query桢使用原始桢做输入，得到KV。通过Query的key联合Mem的Key进行attention加权记忆value得到记忆特征。然后送入Docoder输出mask。具体过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Space-Time_Memory_Networks.png" alt="bubble"><br>该方法发具有两个encoder，且不共享参数，同时，新学到的桢可以存入Mem，作者每隔N桢存入一次Mem。模型不假设桢间平滑，因此可以使用静态图片先预训练。</p>
-<h5 id="Ask-me-anything-Dynamic-memory-networks-for-natural-language-processing（DMN）-ICML2016-93-："><a href="#Ask-me-anything-Dynamic-memory-networks-for-natural-language-processing（DMN）-ICML2016-93-：" class="headerlink" title="Ask me anything: Dynamic memory networks for natural language processing（DMN）[ICML2016, 93]："></a>Ask me anything: Dynamic memory networks for natural language processing（DMN）<a href="http://proceedings.mlr.press/v48/kumar16.pdf" target="_blank" rel="noopener">[ICML2016, 93]</a>：</h5><p>作者在MemNet框架基础上结合RNN设计了一套网络。从输入到Mem部分到输出推断，均使用GRU进行状态学习。对于Imput部分，文档和Query均使用GRU学习表示，Mem部分作者结合MemNet的思想设计了双层GRU来对输入进行二次推断，和传统直接使用Mem信息不同，作者将Mem的信息、Query表示与上一时间RNN状态进行特征融合，然后将输出和上一轮输出加权融合（相当于利用mem、query和信息给GRU增加了一个输出门），注意这episodic memory双层和传统双层RNN不同，输入都为x的表示，第一层前attention query输入为Question表示，第二层则为第一层输出，因此可以达到二次推断的效果（二次推断，如：D. John出门带上了篮球。John去了学校。Q. 篮球在哪。第一轮推断学出了John和篮球关联，第二轮推断学出john去了学校，因此得出篮球在学校）其具体结构如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/DMN.png" alt="bubble"></p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Memory_Networks.png" alt="bubble"></p>
+<h5 id="End-to-end-Memory-Networks-NIPS2015-91-："><a href="#End-to-end-Memory-Networks-NIPS2015-91-：" class="headerlink" title="End-to-end Memory Networks[NIPS2015, 91]："></a>End-to-end Memory Networks<a href="https://arxiv.org/pdf/1503.08895v4.pdf" target="_blank" rel="noopener">[NIPS2015, 91]</a>：</h5><p>在MemNN基础上进行了改进，对于输入文档和输入问题，分别用Embedding矩阵A和B投影到统一表示空间，Mem匹配部分从过去的取Top2改进成类似attention方式，与经典Attention不同的是，这里根据问题表示u学习出的每个记忆slot的权重p没有直接与记忆表示m相乘，而是乘以文档对应的输出表示c（通过投影矩阵C）得到输出o，然后将o与u相加输入浅层神经网络进行分类。其具体过程如下图左边。同时问了增强表示，作者还扩展了多层MemNN，如下图右侧。可见一层E2E MemNet 需要训练的参数为四个矩阵A、B、C、W，整体方法更容易优化。<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/E2EMemNet.png" alt="bubble"></p>
+<h5 id="Video-Object-Segmentation-using-Space-Time-Memory-Networks-ICCV2019-92-："><a href="#Video-Object-Segmentation-using-Space-Time-Memory-Networks-ICCV2019-92-：" class="headerlink" title="Video Object Segmentation using Space-Time Memory Networks[ICCV2019, 92]："></a>Video Object Segmentation using Space-Time Memory Networks<a href="https://arxiv.org/pdf/1904.00607.pdf" target="_blank" rel="noopener">[ICCV2019, 92]</a>：</h5><p>对视频每一帧使用两路CNN分别得到Key（小规模，用于联合memory快速计算attention权重）和Value（detail feature）特征。对于Mem部分，Mem的特征输入为原始图片与Mask，经过两路CNN得到KV（模型可使用图片库做参数预训练，对新的视频第一桢输入可随机生成或用预训练mask模型），对于Query桢使用原始桢做输入，得到KV。通过Query的key联合Mem的Key进行attention加权记忆value得到记忆特征。然后送入Docoder输出mask。具体过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Space-Time_Memory_Networks.png" alt="bubble"><br>该方法发具有两个encoder，且不共享参数，同时，新学到的桢可以存入Mem，作者每隔N桢存入一次Mem。模型不假设桢间平滑，因此可以使用静态图片先预训练。</p>
+<h5 id="Ask-me-anything-Dynamic-memory-networks-for-natural-language-processing（DMN）-ICML2016-93-："><a href="#Ask-me-anything-Dynamic-memory-networks-for-natural-language-processing（DMN）-ICML2016-93-：" class="headerlink" title="Ask me anything: Dynamic memory networks for natural language processing（DMN）[ICML2016, 93]："></a>Ask me anything: Dynamic memory networks for natural language processing（DMN）<a href="http://proceedings.mlr.press/v48/kumar16.pdf" target="_blank" rel="noopener">[ICML2016, 93]</a>：</h5><p>作者在MemNet框架基础上结合RNN设计了一套网络。从输入到Mem部分到输出推断，均使用GRU进行状态学习。对于Imput部分，文档和Query均使用GRU学习表示，Mem部分作者结合MemNet的思想设计了双层GRU来对输入进行二次推断，和传统直接使用Mem信息不同，作者将Mem的信息、Query表示与上一时间RNN状态进行特征融合，然后将输出和上一轮输出加权融合（相当于利用mem、query和信息给GRU增加了一个输出门），注意这episodic memory双层和传统双层RNN不同，输入都为x的表示，第一层前attention query输入为Question表示，第二层则为第一层输出，因此可以达到二次推断的效果（二次推断，如：D. John出门带上了篮球。John去了学校。Q. 篮球在哪。第一轮推断学出了John和篮球关联，第二轮推断学出john去了学校，因此得出篮球在学校）其具体结构如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/DMN.png" alt="bubble"></p>
 <h5 id="Dynamic-memory-networks-for-visual-and-textual-question-answering（DMN-）-ICML2016-88-："><a href="#Dynamic-memory-networks-for-visual-and-textual-question-answering（DMN-）-ICML2016-88-：" class="headerlink" title="Dynamic memory networks for visual and textual question answering（DMN+）[ICML2016, 88]："></a>Dynamic memory networks for visual and textual question answering（DMN+）<a href="http://proceedings.mlr.press/v48/kumar16.pdf" target="_blank" rel="noopener">[ICML2016, 88]</a>：</h5><p>DMN+在DMN基础上加入了改进，受限对于DMN的Input部分，使用了双向GRU，增加反向关联。Attention部分精简了特征交叉，减少了两项交叉项，与上一层状态同时刻状态输入项，对于上一层状态，只选用最后一层，然后在RNN最后使用简单NN将上一层最终输出与本层最终输出融合。同时不在对episodic memory部分GRU增加输出门，而是提出两种方法，直接对历史状态soft attention，或将attention参数直接融合到GRU内部更新门。</p>
 <h5 id="Key-Value-Memory-Networks-for-Directly-Reading-Documents-ACL2016-95-："><a href="#Key-Value-Memory-Networks-for-Directly-Reading-Documents-ACL2016-95-：" class="headerlink" title="Key-Value Memory Networks for Directly Reading Documents[ACL2016, 95]："></a>Key-Value Memory Networks for Directly Reading Documents<a href="https://arxiv.org/pdf/1606.03126.pdf" target="_blank" rel="noopener">[ACL2016, 95]</a>：</h5><p>KV-MemNN设计了一种基于KV的循环MemNN。和之前Mem使用全部embedding表征不同，KV-MemNN部分是根据question 在source中选择key至少与x有一个单词相同的N个组成子集(倒排索引)，得到memory subset。得到Mem后作者对question和Mem使用embedding得到query出的Mem的value值0，然后将q与q进行融合生成新的再重新进行KV查询。整个算法流程中，需要训练的为输入空间投影矩阵A，答案投影矩阵B，和一系列q的投影矩阵R。算法对于文本的特征抽取（\(\Phi\)过程）使用了较为简单的方法（如：KB triple或bag-of-words），对特征可能缺乏一定表征能力。</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/KV-MemNN.png" alt="bubble"></p>
-<h5 id="Memory-based-graph-networks-ICLR2020-87-："><a href="#Memory-based-graph-networks-ICLR2020-87-：" class="headerlink" title="Memory-based graph networks[ICLR2020, 87]："></a>Memory-based graph networks<a href="https://arxiv.org/pdf/2002.09518.pdf" target="_blank" rel="noopener">[ICLR2020, 87]</a>：</h5><p>作者在图神经网络中设计了Mem结构。和之前的Mem结构不同，因为图节点很多，无法使用全部节点信息，这里作者引入了聚类的思想，将聚类中心用作Mem的slot，其聚类中心是通过优化学到的（定义距离，并使用KL散度做损失）。每一层MemLayer，作者使用了多路聚类+多路多头attention+1x1Con来丰富学习到的特征，学到的参数是节点对类别的贡献度，然后乘以输入矩阵，得到每一类别当前特征值（相当于从原来的节点数的N行输入，降到类别数的K行输出），然后输入到1层NN得到降维（对一行表示纬度降维）输出。其算法框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/MemGNN.png" alt="bubble"><br>对于输入，作者设计了两种方法：<br>GMN：使用随机游走做网络关系信息嵌入，使用双层NN最终得到Query的表达<br>MemGNN：使用GAT模型的改进版，利用多路多头attention计算邻居权重，然后加权形成网络结构的嵌入，得到Query表达。<br>个人感觉，作者在GNN中引入聚类+Mem机制，主要是为了达到表示对节点数的降维以及能从同类型的图中学到一种该类型网络通用的规则的目的。</p>
-<h5 id="Video-Object-Segmentation-with-Episodic-Graph-Memory-Networks-ECCV2020-89-："><a href="#Video-Object-Segmentation-with-Episodic-Graph-Memory-Networks-ECCV2020-89-：" class="headerlink" title="Video Object Segmentation with Episodic Graph Memory Networks[ECCV2020, 89]："></a>Video Object Segmentation with Episodic Graph Memory Networks<a href="https://arxiv.org/pdf/2007.07020.pdf" target="_blank" rel="noopener">[ECCV2020, 89]</a>：</h5><p>解决的问题主要是视频目标检测任务（VOS，video object segmentation），VOS又可分为O-VOS和Z-VOS（one-shot与zero-shot，即有无第一桢标注）。传统的方法主要基于匹配，而基于匹配的方法要么不容易对第一桢正确目标信息加以利用，要么在场景或目标发生外貌变化时很难进行线上调整。因此，作者引入了Graph Mem的结构，其中Mem Slot以网络形式进行组织，每一个slot以全联接的方式构成网络。其框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Episodic_Graph_Mem_Net.jpg" alt="bubble"><br>可以看到整个流程需要经过K轮迭代，在训练过程中，我们从整个视频中抽样N桢做Mem Slot初始化，在学习过程中，则使用前N桢进行初始化，然后推断N+1帧。对于之后的帧，每次推断使用第一桢（绝对正确的标注）+ 随机抽取N-2桢之前桢 + 上一桢，然后K步迭代，最终生成推断前表示。</p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/KV-MemNN.png" alt="bubble"></p>
+<h5 id="Memory-based-graph-networks-ICLR2020-87-："><a href="#Memory-based-graph-networks-ICLR2020-87-：" class="headerlink" title="Memory-based graph networks[ICLR2020, 87]："></a>Memory-based graph networks<a href="https://arxiv.org/pdf/2002.09518.pdf" target="_blank" rel="noopener">[ICLR2020, 87]</a>：</h5><p>作者在图神经网络中设计了Mem结构。和之前的Mem结构不同，因为图节点很多，无法使用全部节点信息，这里作者引入了聚类的思想，将聚类中心用作Mem的slot，其聚类中心是通过优化学到的（定义距离，并使用KL散度做损失）。每一层MemLayer，作者使用了多路聚类+多路多头attention+1x1Con来丰富学习到的特征，学到的参数是节点对类别的贡献度，然后乘以输入矩阵，得到每一类别当前特征值（相当于从原来的节点数的N行输入，降到类别数的K行输出），然后输入到1层NN得到降维（对一行表示纬度降维）输出。其算法框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/MemGNN.png" alt="bubble"><br>对于输入，作者设计了两种方法：<br>GMN：使用随机游走做网络关系信息嵌入，使用双层NN最终得到Query的表达<br>MemGNN：使用GAT模型的改进版，利用多路多头attention计算邻居权重，然后加权形成网络结构的嵌入，得到Query表达。<br>个人感觉，作者在GNN中引入聚类+Mem机制，主要是为了达到表示对节点数的降维以及能从同类型的图中学到一种该类型网络通用的规则的目的。</p>
+<h5 id="Video-Object-Segmentation-with-Episodic-Graph-Memory-Networks-ECCV2020-89-："><a href="#Video-Object-Segmentation-with-Episodic-Graph-Memory-Networks-ECCV2020-89-：" class="headerlink" title="Video Object Segmentation with Episodic Graph Memory Networks[ECCV2020, 89]："></a>Video Object Segmentation with Episodic Graph Memory Networks<a href="https://arxiv.org/pdf/2007.07020.pdf" target="_blank" rel="noopener">[ECCV2020, 89]</a>：</h5><p>解决的问题主要是视频目标检测任务（VOS，video object segmentation），VOS又可分为O-VOS和Z-VOS（one-shot与zero-shot，即有无第一桢标注）。传统的方法主要基于匹配，而基于匹配的方法要么不容易对第一桢正确目标信息加以利用，要么在场景或目标发生外貌变化时很难进行线上调整。因此，作者引入了Graph Mem的结构，其中Mem Slot以网络形式进行组织，每一个slot以全联接的方式构成网络。其框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Episodic_Graph_Mem_Net.jpg" alt="bubble"><br>可以看到整个流程需要经过K轮迭代，在训练过程中，我们从整个视频中抽样N桢做Mem Slot初始化，在学习过程中，则使用前N桢进行初始化，然后推断N+1帧。对于之后的帧，每次推断使用第一桢（绝对正确的标注）+ 随机抽取N-2桢之前桢 + 上一桢，然后K步迭代，最终生成推断前表示。</p>
 <h5 id="Episodic-camn-Contextual-attention-based-memory-networks-with-iterative-feedback-for-scene-labeling-CVPR2017-90-："><a href="#Episodic-camn-Contextual-attention-based-memory-networks-with-iterative-feedback-for-scene-labeling-CVPR2017-90-：" class="headerlink" title="Episodic camn: Contextual attention-based memory networks with iterative feedback for scene labeling[CVPR2017, 90]："></a>Episodic camn: Contextual attention-based memory networks with iterative feedback for scene labeling<a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Abdulnabi_Episodic_CAMN_Contextual_CVPR_2017_paper.pdf" target="_blank" rel="noopener">[CVPR2017, 90]</a>：</h5><p>对图像进行分块，然后每一块CNN学习出特征，初始化Memslot，对于每一个patch，利用attention融合其他相似块表达，输入rnn迭代生成该patch的新表达，迭代T轮。RNN迭代生成新的patch 表达，并更新Mem slot。</p>
 <h2 id="2-4-End-to-end-attention-models"><a href="#2-4-End-to-end-attention-models" class="headerlink" title="2.4 End-to-end attention models"></a>2.4 End-to-end attention models</h2><p>从2017年中，更多的研究开始关注与End-to-end的attention模型，如<a href="#Transformer">Neural Transformer [37]</a>与<a href="#GATs">Graph Attention Networks (GATs)[97]</a>。与之前仅将attention作为工具加入网络的一部分不同，这两种方法都是纯attention框架，这为attention成为深度学习中的重要元素提供了一些理论保证。</p>
-<h3 id="2-4-1-Transformer-Based"><a href="#2-4-1-Transformer-Based" class="headerlink" title="2.4.1 Transformer Based"></a>2.4.1 Transformer Based</h3><p><a name="Transformer"> </a><br>首先我们来介绍一下基础的Transformer，Transformer源于Google2017的文章：<strong>Attention is all you need</strong><a href="https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="noopener">[Google2017, 37]</a>。作者提出了Neural Transformer的模型，Neural Transformer是第一个仅使用attention和全联接神将网络来学习序列数据的模型。其主要解决的也是机器翻译问题，和其他翻译模型一样，Transformer也使用了Encoder-Decoder框架，其具体架构如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Transformer.jpg" alt="bubble"><br>我们从下而上从左到右开始分析：<br><strong>Positional Encoding</strong>：对于Transformer模型，由于输入是同时送入网络，所以丢失了序列的位置信息，因此对于模型输入需要选择好的位置信息的表达，并融合进输入。对于好的Positional Encoding首先其值不能发散，如用0、1、2这样的位置信息编码，过大的值的位置会导致学习时产生数值倾斜。同时，像Transformer这样使用位置信息叠加到Embedding结果这种潜入方式，过大的值容易掩埋Embedding信息。其次，好的位置编码最好不能受到文本长度的影响，如除以文本长度均匀映射到[0,1]之间这种做法，对于不同长度的文本，编码后距离相同的两个词，短文本的真正间隔可能要远小于长文本，这样会导致位置编码的相对次序缺失。具体位置编码规则如下：  </p>
+<h3 id="2-4-1-Transformer-Based"><a href="#2-4-1-Transformer-Based" class="headerlink" title="2.4.1 Transformer Based"></a>2.4.1 Transformer Based</h3><p><a name="Transformer"> </a><br>首先我们来介绍一下基础的Transformer，Transformer源于Google2017的文章：<strong>Attention is all you need</strong><a href="https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="noopener">[Google2017, 37]</a>。作者提出了Neural Transformer的模型，Neural Transformer是第一个仅使用attention和全联接神将网络来学习序列数据的模型。其主要解决的也是机器翻译问题，和其他翻译模型一样，Transformer也使用了Encoder-Decoder框架，其具体架构如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Transformer.jpg" alt="bubble"><br>我们从下而上从左到右开始分析：<br><strong>Positional Encoding</strong>：对于Transformer模型，由于输入是同时送入网络，所以丢失了序列的位置信息，因此对于模型输入需要选择好的位置信息的表达，并融合进输入。对于好的Positional Encoding首先其值不能发散，如用0、1、2这样的位置信息编码，过大的值的位置会导致学习时产生数值倾斜。同时，像Transformer这样使用位置信息叠加到Embedding结果这种潜入方式，过大的值容易掩埋Embedding信息。其次，好的位置编码最好不能受到文本长度的影响，如除以文本长度均匀映射到[0,1]之间这种做法，对于不同长度的文本，编码后距离相同的两个词，短文本的真正间隔可能要远小于长文本，这样会导致位置编码的相对次序缺失。具体位置编码规则如下：  </p>
 <p>$$<br>PE(pos,2i)=sin(\frac {pos}{10000 ^{2i/d _{model}}}) \\<br>PE(pos,2i+1)=cos(\frac {pos}{10000 ^{2i/d _{model}}}) \\<br>$$<br>可以看出，这里作者是将位置信息在频域做了近似分解，而选择这种分解方式的好处是PE(pos+k, 2i)可表示为PE(pos, 2i)的线形表示（根据三角函数公式）：<br>$$<br>PE(pos+k,2i)= PE(pos,2i)\times PE(k,2i+1)+PE(pos,2i+1)\times PE(k,2i)\\<br>PE(pos+k,2i+1)= PE(pos,2i+1)\times PE(k,2i+1)-PE(pos,2i)\times PE(k,2i)\\<br>$$<br>因为PE(k, 2i+1)是常量, 所以就有固定的系数. 也就是某种意义上的相对位置编码.    </p>
 <p><strong>Multi-Head Attention</strong>：首先Transformer模型使用了Scaled Dot-Product Attention，即使用内积计算query向量与每一个key的相关性，并将其Softmax做为权重，为了方便表示，我们将query向量复制表示成如下矩阵形式：<br>$$<br>Attention(Q,K,V)=softmax(\frac {QK ^T}{\sqrt{d _k}})V \\<br>Q = [q ,\dots,q ]^T<br>$$<br>注意这里除以d的开方，是因为内积之后方差扩大了d倍，为了弥补这一问题，因此除以方差倍数（个人感觉其原理类似Normalization）<br>其次，Attention为Self-Attention，即Q=K=V。<br>为了学习更多表达，作者引入了Multi-Head Attention，即将Q、K、V投影到不同的潜空间，希望能用这种方式学到数据更多方面的表示：<br>$$<br>MutiHead(Q,K,V)=Concat(head _1,\dots,head _h)W ^O\\<br>head _i= Attention(QW _i ^Q,KW _i ^K,VW _i ^V)<br>$$<br>这里作者设置h=8，各W矩阵将原向量投影到d/h=64维，通过降维投影来表达不同方面，最后将各个表达加权聚合。同时值得注意的是，虽然使用self-attention，QKV实际意义是相同的，但不能使用相同的投影矩阵，尤其是QK的参数矩阵，因为如果使用相同参数矩阵，则attention进行相关性计算时，得到的相关性矩阵会成为对称矩阵，实际上对query和key来说，(词1在query，词2在Key)与(词2在query，词1在Key)这两个重要性得分应该是不同的，因此共享参数矩阵会降低表达。</p>
 <p><strong>Add&amp;Norm</strong>：从框架图中也可看出，Transformer使用了残差网络，同时加入了LayerNorm，即输出为LayerNorm(x+sublayer(x))。这里使用LayerNorm主要是为了将中间层输出分布还原回均值为0方差为1的分布，从而降低ICS，防止梯度消失等问题。更多讨论如为什么使用LN而不是BN（<a href="https://www.zhihu.com/question/395811291" target="_blank" rel="noopener">讨论</a>）等，可以参考Transformer与Normalization相关文章。</p>
 <p><strong>Feed-Forward</strong>：在进行了Attention操作之后，encoder和decoder中的每一层都包含了一个全连接前向网络，对每个position的向量分别进行相同的操作，包括两个线性变换和一个ReLU激活输出。<br>$$<br>FFN(x)=max(0,xW _1 +b _1)W _2 +b _2<br>$$</p>
 <p><strong>Masked Multi-Head Attention</strong>：序列模型在decoder部分加入Masked，更多程度上是一种工程上的保证，主要是为了增加模型并行程度。在训练时，首先训练数据往往是batch输入并以长度相同向量表示，而对于句子由于句长不同，因此短句需要补齐mask padding。同时在训练位置T时，T后的数据属于需要预测的部分，因此不能加入attention，所以用mask将其掩盖。Mask主要是通过乘以Mask矩阵，将多余部分替换成一个很大的负值，从而使其attention权重为0。这样的操作更多是工程上的考虑，当然也可以在前向后向训练中加入逻辑判断，不过这样code会变得复杂。</p>
-<p>基于Transformer模型，有很多改进方法，如下图：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Transformer_evo.png" alt="bubble"><br>接下来我们根据年份顺序对各种改进进行简单讲解。</p>
+<p>基于Transformer模型，有很多改进方法，如下图：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Transformer_evo.png" alt="bubble"><br>接下来我们根据年份顺序对各种改进进行简单讲解。</p>
 <h4 id="2-4-1-1-Transformer方法的改进"><a href="#2-4-1-1-Transformer方法的改进" class="headerlink" title="2.4.1.1 Transformer方法的改进"></a>2.4.1.1 Transformer方法的改进</h4><h5 id="Weighted-Transformer-：Weighted-transformer-network-for-machine-translation-2017-102"><a href="#Weighted-Transformer-：Weighted-transformer-network-for-machine-translation-2017-102" class="headerlink" title="Weighted Transformer ：Weighted transformer network for machine translation[2017, 102])"></a>Weighted Transformer ：Weighted transformer network for machine translation<a href="https://arxiv.org/pdf/1711.02132.pdf" target="_blank" rel="noopener">[2017, 102]</a>)</h5><p>在基础Transformer上对muti-attention进行了调整对每一个head加入了权重。Base Transformer认为，每个head是平权的，因此直接concat所有header然后使用投影矩阵W^O，投影到表示空间。而Weighted Transformer认为每一个head有各自的表达，有各自的权重，因此每一个head，各自直接投影到表示空间然后乘以head权重k，然后各自输入到FFN进行学习，最终学出的结果乘以权重alpha累加合并到最终表示空间，从而在FFN后融合多个Branch 的head。可以看出Weighted Transformer 实际上是形成了多个Branch，权重k和alpha均是本文新增的要学习的参数，这里k的和与alpha的和均为1。</p>
 <p><a name="Star-transformer"> </a></p>
-<h5 id="Star-transformer-NAACL2019-103"><a href="#Star-transformer-NAACL2019-103" class="headerlink" title="Star-transformer[NAACL2019, 103])"></a>Star-transformer<a href="https://arxiv.org/pdf/1902.09113.pdf" target="_blank" rel="noopener">[NAACL2019, 103]</a>)</h5><p>对输入长度为N的序列，transformer使用了全联接的attention这样做一方面使得参数量过大（N^2的参数量），训练需要大量样本，另一方面，若序列存在局部相关的先验知识时，对于局部相关的先验几乎没有利用。为此Star-transformer简化了transformer全联接的模型，采用了星型的连接结构，使训练既能捕捉局部相关先验，又能捕获全局或者说长期信息。其具体改进过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Star-transformer.jpg" alt="bubble"><br>其中外围节点h对应序列每一项，h只与其前后项和全局项s有关，因此在更新h时，只需要对上一轮前后两项、上一轮当前项、上一轮全局项进行attention即可，同时可以看到attention还加入了输入项e，这里可以看作保留了原transformer残差网络的思路。对于全局项s，在更新完全部h后，使用attention融合上一轮s和全部h。可以看到，在h和s的更新时，作者去掉了transformer输出时的两层全联接网络，仅使用ReLU，从而对网络进行了再次简化。<br>Star-transformer最终输出的是s和H，可以将其输入MLP进行分类或作为特征输出到其他任务网络。</p>
+<h5 id="Star-transformer-NAACL2019-103"><a href="#Star-transformer-NAACL2019-103" class="headerlink" title="Star-transformer[NAACL2019, 103])"></a>Star-transformer<a href="https://arxiv.org/pdf/1902.09113.pdf" target="_blank" rel="noopener">[NAACL2019, 103]</a>)</h5><p>对输入长度为N的序列，transformer使用了全联接的attention这样做一方面使得参数量过大（N^2的参数量），训练需要大量样本，另一方面，若序列存在局部相关的先验知识时，对于局部相关的先验几乎没有利用。为此Star-transformer简化了transformer全联接的模型，采用了星型的连接结构，使训练既能捕捉局部相关先验，又能捕获全局或者说长期信息。其具体改进过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Star-transformer.jpg" alt="bubble"><br>其中外围节点h对应序列每一项，h只与其前后项和全局项s有关，因此在更新h时，只需要对上一轮前后两项、上一轮当前项、上一轮全局项进行attention即可，同时可以看到attention还加入了输入项e，这里可以看作保留了原transformer残差网络的思路。对于全局项s，在更新完全部h后，使用attention融合上一轮s和全部h。可以看到，在h和s的更新时，作者去掉了transformer输出时的两层全联接网络，仅使用ReLU，从而对网络进行了再次简化。<br>Star-transformer最终输出的是s和H，可以将其输入MLP进行分类或作为特征输出到其他任务网络。</p>
 <h5 id="Self-Attention-with-Relative-Position-Representations-NAACL2018-174"><a href="#Self-Attention-with-Relative-Position-Representations-NAACL2018-174" class="headerlink" title="Self-Attention with Relative Position Representations[NAACL2018, 174])"></a>Self-Attention with Relative Position Representations<a href="https://arxiv.org/pdf/1803.02155.pdf" target="_blank" rel="noopener">[NAACL2018, 174]</a>)</h5><p>基础transformer对于序列每一项的位置信息仅在输入时使用正弦位置编码来提供，这种方式编码了位置的绝对信息，而本文作者提出一个self-attention的扩展来考虑元素之间的成对关系。对于序列每一项，作者构建了一个全联接图，且令\(a _{ij} ^v,a _{ij} ^k \in R ^{d _a}\)为i和j之间的边（作者将key空间和value空间的边分开进行了表示）。则Attention公式融合边的信息修改为：   </p>
 <p>$$<br>clip(x,k) = max(-k,min(k,x)) \\<br>a _{ij} ^K = w _{clip(j-i,k)} ^K \\<br>a _{ij} ^V = w _{clip(j-i,k)} ^V \\<br>e _{ij} = \frac {(x _i W ^Q)(x _jW ^K + a _{ij} ^K) ^T}{\sqrt {d _z}}\\<br>z _i = \sum _{j=1} ^n {\alpha _{ij}(x _j W ^V + \alpha _{ij} ^v)}<br>$$</p>
 <p>首先对于序列的成对关系，作者给出了限制，其认为只有距离为k的点对值得考虑，超出k则两点间影响可以固定（既clip函数裁剪下标）。从而构成了从-k到k一共2k+1个相对位置表示，将这些表示作为要学习的参数，按上式融入attention中，最终学到不同空间固定的位置表示。同时文中提到，问了减少学习参数，每个head的位置表示可以共享参数。</p>
 <h5 id="Sparse-Transformers-：Generating-Long-Sequences-with-Sparse-Transformers-OpenAl2019-103"><a href="#Sparse-Transformers-：Generating-Long-Sequences-with-Sparse-Transformers-OpenAl2019-103" class="headerlink" title="Sparse Transformers ：Generating Long Sequences with Sparse Transformers[OpenAl2019, 103])"></a>Sparse Transformers ：Generating Long Sequences with Sparse Transformers<a href="https://arxiv.org/pdf/1904.10509.pdf" target="_blank" rel="noopener">[OpenAl2019, 103]</a>)</h5><p>当序列过长时，基础Transformers的attention计算将非常耗时，为了降低计算量和存储， Sparse Transformers从局部相关和全局相关两个角度来进行attention，对于局部相关，Sparse Transformers设计了一个范围k，对前后相邻k个元素进行attention。对于全局信息，Sparse Transformers则参考膨胀卷积的思路，隔l位进行抽样，因为attention迭代了很多轮，所以高层attention会逐渐融合全局信息。最终attention关注位置如下（蓝色部分）：</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Sparse_Transformers.png" alt="bubble"><br>从而极大的减少了计算时间和存储，使很长的输入序列也有很好的效果。</p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Sparse_Transformers.png" alt="bubble"><br>从而极大的减少了计算时间和存储，使很长的输入序列也有很好的效果。</p>
 <h5 id="Set-transformer-A-framework-for-attention-based-permutation-invariant-neural-networks-ICML2019-106"><a href="#Set-transformer-A-framework-for-attention-based-permutation-invariant-neural-networks-ICML2019-106" class="headerlink" title="Set transformer: A framework for attention-based permutation-invariant neural networks.[ICML2019, 106])"></a>Set transformer: A framework for attention-based permutation-invariant neural networks.<a href="http://proceedings.mlr.press/v97/lee19d/lee19d.pdf" target="_blank" rel="noopener">[ICML2019, 106]</a>)</h5><p>针对输入不是序列而是set（顺序无关），作者提出了一种另一种减少self-attention计算复杂度的思路。其中，有趣的点是设计了Inducing point。传统Attention输入一般为Q、K、V三部分，而这三部分往往来自于真实数据或特征，本文设计了Inducing point，即将query向量变成参数，从而学出要查询的特征。通俗来讲，例如：想利用attention从众多图片中识别猫，则Inducing query可能就会学出猫的特征。这一思路扩展了attention应用的方式，很有借鉴意义。</p>
 <h4 id="2-4-1-2-Transformer方法的应用"><a href="#2-4-1-2-Transformer方法的应用" class="headerlink" title="2.4.1.2 Transformer方法的应用"></a>2.4.1.2 Transformer方法的应用</h4><h5 id="Doubly-attentive-transformer-machine-translation-2018-107"><a href="#Doubly-attentive-transformer-machine-translation-2018-107" class="headerlink" title="Doubly attentive transformer machine translation.[2018, 107])"></a>Doubly attentive transformer machine translation.<a href="https://arxiv.org/pdf/1807.11605.pdf" target="_blank" rel="noopener">[2018, 107]</a>)</h5><p>对Transformer的简单推广，将输入扩展到图文混合，图片用CNN抽取特征，文本仍用Transformer encoder 对与decoder attention部分使用文本和图片特征一起做attention。</p>
 <h5 id="Input-Combination-Strategies-for-Multi-Source-Transformer-Decoder-2018-106"><a href="#Input-Combination-Strategies-for-Multi-Source-Transformer-Decoder-2018-106" class="headerlink" title="Input Combination Strategies for Multi-Source Transformer Decoder[2018, 106])"></a>Input Combination Strategies for Multi-Source Transformer Decoder<a href="https://www.aclweb.org/anthology/W18-6326.pdf" target="_blank" rel="noopener">[2018, 106]</a>)</h5><p>总结了Transformer融合多模型特征的方法，主要分成四种：serial、parallel、flat、hierarchical。serial为顺序融合，即依次对不同特征进行attention，结果作为下一个Attention query。parallel是各自做attention然后叠加到一起。flat使用concat叠加特征KV向量，然后一起做attention。Hierarchical则个字attention，然后再用attention对每个模型输出汇总。以下为不同方法试验结果。</p>
-<p><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/Input-Combination-Strategies-for-Multi-Source-Transformer-Decoder.png" alt="bubble">  </p>
+<p><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/Input-Combination-Strategies-for-Multi-Source-Transformer-Decoder.png" alt="bubble">  </p>
 <h5 id="Input-Combination-Strategies-for-Multi-Source-Transformer-Decoder-2019-106"><a href="#Input-Combination-Strategies-for-Multi-Source-Transformer-Decoder-2019-106" class="headerlink" title="Input Combination Strategies for Multi-Source Transformer Decoder[2019, 106])"></a>Input Combination Strategies for Multi-Source Transformer Decoder<a href="https://www.aclweb.org/anthology/P19-1601.pdf" target="_blank" rel="noopener">[2019, 106]</a>)</h5><p>充分利用Transformer的encoder和decoder结构，来解决文本风格切换的问题。对于输入假设有k种风格，则对于每个风格有各自的语料库，由于不同风格之间文本缺少对应关系，因此作者对Transformer进行改进设计了一种类似GAN的结构。作者将风格迁移这个任务进行分解，其实他有三个子任务，一是语言本身，即语言流利； 二是语义的保留；三是风格的迁移。      </p>
 <ol>
 <li>对于语言本身的流利，采用了原文句子输入到输入的auto encoder-decoder的方式，即对输入编码，再解码，loss 则是生成句子和原来句子的差别的交叉熵。区别于其他的工作，这里采用了transformer, 其本身就是堆叠的自编码器和解码器。  </li>
@@ -460,12 +460,12 @@
 <li>对于子任务3，则是借助一个判别网络 , 它可以判断输入fe( x , s’) 的风格 s。 对于这个判别网络的训练，作者采用了两个loss， 一个是条件判别的loss，这个类似于GAN ，其实就是对于原始输入x ，和基于原风格生成的fe( x , s) 输出正标签，而对于其他风格的生成fe( x , s’)输出负。 另一种多标签判别的训练，则是输出语句的风格标签，共K+1个（伪生成语句的标签是0）。</li>
 </ol>
 <p>#####Hierarchical Transformer: Hierarchical transformers for multi-document summarization<a href="https://www.aclweb.org/anthology/P19-1601.pdf" target="_blank" rel="noopener">[ACL2019, 110]</a>)<br>针对多文本摘要问题，有由于输入是多个文档，因此对于端到端模型而言，输入太过庞大。本文通过先用无监督评估标题和文本段落匹配度评分（LSTM编码标题和段落并各自pooling压缩后计算匹配得分）选出top K的段落。然后输入改进的Transformer模型，对于Transformer模型作者Encoding加入了层次Encoding方法，即现对段落内部进行MH-Attention得到表示，再使用Multi-head Pooling（类似muti-head attention，投影到不同空间后计算attention，将一整段词汇融合成多头段落表示）得到段落多头表示，再利用attention计算融合多个段落，得到新的段落表达，并将段落表达融合进段落的每一个词中（同一段内融合的段落表达是相同的），其余部分和普通attention一样。作者利用这种分层的attention，即解决了多个文档输入过长的问题，同时也是每一个词都融合了各自段落或各自文档的信息。</p>
-<h5 id="HighWay-Recurrent-Transformer：Learning-multi-level-information-for-dialogue-response-selection-by-highway-recurrent-transformer-2019-111"><a href="#HighWay-Recurrent-Transformer：Learning-multi-level-information-for-dialogue-response-selection-by-highway-recurrent-transformer-2019-111" class="headerlink" title="HighWay Recurrent Transformer：Learning multi-level information for dialogue response selection by highway recurrent transformer[2019, 111])"></a>HighWay Recurrent Transformer：Learning multi-level information for dialogue response selection by highway recurrent transformer<a href="https://arxiv.org/pdf/1903.08953.pdf" target="_blank" rel="noopener">[2019, 111]</a>)</h5><p>面向对话系统场景，对于对话系统而言，一个问题的答案和前文应答与前问问题可能都有关联，因此输入是多个句子序列，由于是句子序列，一方面使用传统Transformer输入可能会非常长，另一方面，完整的意思表达往往是以句子为一个粒度，因此仅使用之前的位置编码可能很难完全编码这种位置和句子粒度的空间信息，因此作者设计了 HighWay Recurrent Transformer网络，来优化这一问题。其具体框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/HighWay_Recurrent_Transformer.png" alt="bubble">  </p>
+<h5 id="HighWay-Recurrent-Transformer：Learning-multi-level-information-for-dialogue-response-selection-by-highway-recurrent-transformer-2019-111"><a href="#HighWay-Recurrent-Transformer：Learning-multi-level-information-for-dialogue-response-selection-by-highway-recurrent-transformer-2019-111" class="headerlink" title="HighWay Recurrent Transformer：Learning multi-level information for dialogue response selection by highway recurrent transformer[2019, 111])"></a>HighWay Recurrent Transformer：Learning multi-level information for dialogue response selection by highway recurrent transformer<a href="https://arxiv.org/pdf/1903.08953.pdf" target="_blank" rel="noopener">[2019, 111]</a>)</h5><p>面向对话系统场景，对于对话系统而言，一个问题的答案和前文应答与前问问题可能都有关联，因此输入是多个句子序列，由于是句子序列，一方面使用传统Transformer输入可能会非常长，另一方面，完整的意思表达往往是以句子为一个粒度，因此仅使用之前的位置编码可能很难完全编码这种位置和句子粒度的空间信息，因此作者设计了 HighWay Recurrent Transformer网络，来优化这一问题。其具体框架如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/HighWay_Recurrent_Transformer.png" alt="bubble">  </p>
 <p>首先从整体来讲，作者对Transformer Encoder进行了改进，对每一个问答段落，作者使用了一个Transformer Encoder Blocker进行句内编码，然后将encoder输出送入Highway Attention。Highway Attention类似于RNN的一个cell，由于结构类似RNN所以RNN具有的问题（如梯度爆炸，长期记忆消失等问题）Highway Attention可能也具有，因此模仿LSTM这里也加入了门的概念（参考了Highway Network，对输入和上一步状态加权），这里Highway Attention由两部分attention构成，一个是以上一轮输出作为KV，本轮输入作为Q计算状态的co-attention，另一部分是本轮输入的self-Attention，这里作者将权重计算融入了co&amp;self-attention权重计算中。具体公式可以参考链接中的原文。</p>
 <h5 id="Lattice-Based-Transformer-：Lattice-based-transformer-encoder-for-neural-machine-translation-2019-111"><a href="#Lattice-Based-Transformer-：Lattice-based-transformer-encoder-for-neural-machine-translation-2019-111" class="headerlink" title="Lattice-Based Transformer ：Lattice-based transformer encoder for neural machine translation [2019, 111])"></a>Lattice-Based Transformer ：Lattice-based transformer encoder for neural machine translation <a href="https://www.aclweb.org/anthology/P19-1298.pdf" target="_blank" rel="noopener">[2019, 111]</a>)</h5><p>针对机器翻译，重构了输入与attention部分attention，将同一句不同分词利用Lattices，构成词的网络结构，并引入Lattice Positional Encoding编码位置，同时将所有可能的序列输入Transformer，进行attention 时同时考虑词间边的关系。</p>
-<h5 id="Transformer-TTS-Network-：Neural-speech-synthesis-with-transformer-network-AAAI2019-113"><a href="#Transformer-TTS-Network-：Neural-speech-synthesis-with-transformer-network-AAAI2019-113" class="headerlink" title="Transformer TTS Network ：Neural speech synthesis with transformer network[AAAI2019, 113])"></a>Transformer TTS Network ：Neural speech synthesis with transformer network<a href="https://arxiv.org/pdf/1809.08895v3.pdf" target="_blank" rel="noopener">[AAAI2019, 113]</a>)</h5><p>Transformer 在Text to speech上的应用，借鉴了Tacotron2 ，decoder输入为音素。其框架如下，声音部分使用cnn进行编码。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/TTS_Transformer.png" alt="bubble">  </p>
+<h5 id="Transformer-TTS-Network-：Neural-speech-synthesis-with-transformer-network-AAAI2019-113"><a href="#Transformer-TTS-Network-：Neural-speech-synthesis-with-transformer-network-AAAI2019-113" class="headerlink" title="Transformer TTS Network ：Neural speech synthesis with transformer network[AAAI2019, 113])"></a>Transformer TTS Network ：Neural speech synthesis with transformer network<a href="https://arxiv.org/pdf/1809.08895v3.pdf" target="_blank" rel="noopener">[AAAI2019, 113]</a>)</h5><p>Transformer 在Text to speech上的应用，借鉴了Tacotron2 ，decoder输入为音素。其框架如下，声音部分使用cnn进行编码。<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/TTS_Transformer.png" alt="bubble">  </p>
 <h5 id="Phrase-Based-Attention-ICLR2019-114"><a href="#Phrase-Based-Attention-ICLR2019-114" class="headerlink" title="Phrase-Based Attention[ICLR2019, 114])"></a>Phrase-Based Attention<a href="https://arxiv.org/pdf/1810.03444.pdf" target="_blank" rel="noopener">[ICLR2019, 114]</a>)</h5><p>之前的模型只从单个词角度进行学习，本文引入了通过Ngram引入词组，不同的n构成一系列词组向量然后使用MutiHead attention融合所有n的信息。其中对于Key的表示，作者没有直接使用投影矩阵相乘，而是使用卷积的，是query查询卷积核学出的特征，对于不同的n，作者分布使用各自的卷积核，然后得到的key拼接到一起（使用卷积时因为要设置窗口，所以可以更关注相邻的特征）。</p>
-<h5 id="BERT-：Bert-Pre-training-of-deep-bidirectional-transformers-for-language-understanding-2019-115"><a href="#BERT-：Bert-Pre-training-of-deep-bidirectional-transformers-for-language-understanding-2019-115" class="headerlink" title="BERT ：Bert: Pre-training of deep bidirectional transformers for language understanding[2019, 115])"></a>BERT ：Bert: Pre-training of deep bidirectional transformers for language understanding<a href="https://www.aclweb.org/anthology/P19-1298.pdf" target="_blank" rel="noopener">[2019, 115]</a>)</h5><p>BERT在Transformer基础上，使用迁移学习方法提升效果，与其说是改进不如说是对Transformer encoder在不同场景的应用。其框架如下图，其中Trm是Transformer Blocker，可以看到BERT和GPT与ELMo对比。ELMo使用了双向LSTM，GPT则使用单向+Transformer做cell，这两种方法都暗含了状态转移与访问顺序，而BERT将Transformer扩展到了双向。<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/BERT1.png" alt="bubble"><br>对于单纯将扩展为双向Transformer的架构（就如下图BERT描述的框架）实际上就是将Transformer全链接，然而这就产生了问题，在预训练时，无法正常预测下一个位置的值，因为是全联接，所以模型会看到要预测的值。因此作者引入了Mask Language Model(MLM)和Next sentence order(NSP)两种方法，具体做法是对词序列，可以给其中词汇随机替换成mask（类似完形填空），对于句子预测两个句子是不是下一句的关系，从文档生成连续句和非连续句。<br>在Fine-Tuning，可以根据不同任务设计输入序列，以及输出的应用。</p>
+<h5 id="BERT-：Bert-Pre-training-of-deep-bidirectional-transformers-for-language-understanding-2019-115"><a href="#BERT-：Bert-Pre-training-of-deep-bidirectional-transformers-for-language-understanding-2019-115" class="headerlink" title="BERT ：Bert: Pre-training of deep bidirectional transformers for language understanding[2019, 115])"></a>BERT ：Bert: Pre-training of deep bidirectional transformers for language understanding<a href="https://www.aclweb.org/anthology/P19-1298.pdf" target="_blank" rel="noopener">[2019, 115]</a>)</h5><p>BERT在Transformer基础上，使用迁移学习方法提升效果，与其说是改进不如说是对Transformer encoder在不同场景的应用。其框架如下图，其中Trm是Transformer Blocker，可以看到BERT和GPT与ELMo对比。ELMo使用了双向LSTM，GPT则使用单向+Transformer做cell，这两种方法都暗含了状态转移与访问顺序，而BERT将Transformer扩展到了双向。<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/BERT1.png" alt="bubble"><br>对于单纯将扩展为双向Transformer的架构（就如下图BERT描述的框架）实际上就是将Transformer全链接，然而这就产生了问题，在预训练时，无法正常预测下一个位置的值，因为是全联接，所以模型会看到要预测的值。因此作者引入了Mask Language Model(MLM)和Next sentence order(NSP)两种方法，具体做法是对词序列，可以给其中词汇随机替换成mask（类似完形填空），对于句子预测两个句子是不是下一句的关系，从文档生成连续句和非连续句。<br>在Fine-Tuning，可以根据不同任务设计输入序列，以及输出的应用。</p>
 <h5 id="GPT-：Improving-language-understanding-by-generative-pre-training-2019-120"><a href="#GPT-：Improving-language-understanding-by-generative-pre-training-2019-120" class="headerlink" title="GPT ：Improving language understanding by generative pre-training [2019, 120])"></a>GPT ：Improving language understanding by generative pre-training <a href="https://cdn.openai.com/papers/Generative_Pretraining_from_Pixels_V2.pdf" target="_blank" rel="noopener">[2019, 120]</a>)</h5><p>GPT模型在BERT框架中有提及，其也是对transformers的改进与应用，和bert一样只是用了encoder部分做网络cell，但因为整体模型仍采用自回归模式，即新位置的学习只使用当前位置之前的输入，所以encoder部分要加入mask（又或者说，使用了去掉encoder attention sublayer的decoder）</p>
 <h5 id="GPT-2-：-Language-models-are-unsupervised-multitask-learners-OpenAI2019-116"><a href="#GPT-2-：-Language-models-are-unsupervised-multitask-learners-OpenAI2019-116" class="headerlink" title="GPT-2 ： Language models are unsupervised multitask learners[OpenAI2019, 116])"></a>GPT-2 ： Language models are unsupervised multitask learners<a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf" target="_blank" rel="noopener">[OpenAI2019, 116]</a>)</h5><p>GPT-2依然沿用GPT单向transformer的模式，只不过做了一些改进与改变。首先 GPT-2去掉了fine-tuning层，不再针对不同任务分别进行微调建模。而因为去掉了fine-tuning层，为了能识别特定问题的目的，其做了如下改动：</p>
 <ol>
@@ -478,13 +478,13 @@
 <h5 id="Image-Transformer-ICML2018-118"><a href="#Image-Transformer-ICML2018-118" class="headerlink" title="Image Transformer[ICML2018, 118])"></a>Image Transformer<a href="https://arxiv.org/pdf/1802.05751.pdf" target="_blank" rel="noopener">[ICML2018, 118]</a>)</h5><p>将语言模型迁移到了图像补全的问题，其场景非常相似，文章中图像补全问题每个像素是根据之前其他像素和状态生成的，这和语言模型生成新词场景类似，因此作者将Transformer推广到了该场景。对于图像而言，输入像素很多，因此作者使用局部自注意力，限制了attention关注范围。</p>
 <h3 id="2-4-2-Graph-Attention-Networks"><a href="#2-4-2-Graph-Attention-Networks" class="headerlink" title="2.4.2 Graph Attention Networks"></a>2.4.2 Graph Attention Networks</h3><h2 id="2-4-Attention-today"><a href="#2-4-Attention-today" class="headerlink" title="2.4 Attention today"></a>2.4 Attention today</h2><p>现如今使用混合模型逐渐成为深度学习领域使用Attention的主要的发展方向。基于Transformer，GATs，MemNet的工作被不断翻新并使用在各个应用中。<br>双曲空间：Hyperbolic Attention Networks (HAN) ，Hyperbolic Graph Attention Networks (GHN) 通过将研究空间从欧式空间转换到双曲空间，从而解决了数据与embedding空间指数扩张的问题。同时双去空间用于深度学习的研究从2019年开始也逐渐成为一个新的热点领域。<br>Graph Attention：从2019年，GATs在图上应用attention受到了广泛的关注，应用attention，模型可以学习到更加复杂的关系。同时其他的研究如MGNs 和 TGNs 使用了memory模块做结合也有不错的效果。</p>
 <p>对RNN结构的探索：到2020年底，仍有两个工作在关注RNN结构的探索，其中一个是通过计算得到RNN的cell长度，即ACT（adaptive computation time ），ACT最开始出现于2016年，由DeepMind提出，其将RNN一个时刻的单个Cell该进成同时刻多cell迭代\(h _t ^l =Cell(h _t ^{l-1}, x _t ^l ) \)，和多层RNN不同，每层输入都为x，为了加入迭代轮数信息，没多增加一次迭代，输入x会叠加一个delta值（这里使用10标记位），再通过每轮输出+1层网络计算权重，当大于某个权重时，停止计算。而最新的DACT在ACT基础上做了改进，提出了全程可微分的E2E模型。另一个则为关注top-down 和 bottom-up在RNN传递中的作用其文章如下：</p>
-<h5 id="Learning-to-combine-top-down-and-bottom-up-signals-in-recurrent-neural-networks-with-attention-over-modules-ICML2020-125"><a href="#Learning-to-combine-top-down-and-bottom-up-signals-in-recurrent-neural-networks-with-attention-over-modules-ICML2020-125" class="headerlink" title="Learning to combine top-down and bottom-up signals in recurrent neural networks with attention over modules[ICML2020, 125])"></a>Learning to combine top-down and bottom-up signals in recurrent neural networks with attention over modules<a href="https://arxiv.org/pdf/2006.16981.pdf" target="_blank" rel="noopener">[ICML2020, 125]</a>)</h5><p>Bottom-up指直接从句子中观测到的信息，top-down则指基于过往经验和short-term memory得到的预测。针对这两种情况作者设计了如下框架：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/top-down_bottom-up.png" alt="bubble"><br>从整体来看，其框架是对RNN进行了改进，特征除了从底层传递到上层，从t-1时刻传递到t时刻外，还加入了从t-1时刻到上层传递到t时刻下层的边（即引入了作者所谓的TopDown的考量）。<br>对于一层而言，作者使用了Recurrent Independent Mechanisms，和传统rnn不同，一个rnn层是多个独立的cell共同组成。<br>对于这些cell，一方面做着设计了Selective Activation，将t-1的多个cell输出做query，零向量和cell的输入[Zero,xt] 做KV，进行attention，这样可以得到输入和零向量的attention评分，从而得到该层与输入的关系，利用评分选出m个关系最大的cell，参与状态更新，其余的保持t-1状态。<br>另一方面，作者还设计了cell间的Communication，这主要用当前时刻cell的输出做self-attention，融合彼此间特征，然后将融合后的结果叠加到当前输出（只有Selective Activation激活的cell需要更新）。<br>对于层间传递而言，和LSTM这一类不同，作者没有仅将上一层做输入，而是使用了当前层t-1时刻状态 \(h _{t-1} ^l\) 做Query，\([ \emptyset, h _t ^{l-1}, h _{t-1} ^{l+1}]\)做KV，从而融合上一层与下一层的状态，这里同样引入了0向量，可以很好的减轻当 \( h _t ^{l-1}\)  与\( h _{t-1} ^{l+1}\) 和当前层上一时刻状态无关时，多余的特征引入。</p>
+<h5 id="Learning-to-combine-top-down-and-bottom-up-signals-in-recurrent-neural-networks-with-attention-over-modules-ICML2020-125"><a href="#Learning-to-combine-top-down-and-bottom-up-signals-in-recurrent-neural-networks-with-attention-over-modules-ICML2020-125" class="headerlink" title="Learning to combine top-down and bottom-up signals in recurrent neural networks with attention over modules[ICML2020, 125])"></a>Learning to combine top-down and bottom-up signals in recurrent neural networks with attention over modules<a href="https://arxiv.org/pdf/2006.16981.pdf" target="_blank" rel="noopener">[ICML2020, 125]</a>)</h5><p>Bottom-up指直接从句子中观测到的信息，top-down则指基于过往经验和short-term memory得到的预测。针对这两种情况作者设计了如下框架：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/top-down_bottom-up.png" alt="bubble"><br>从整体来看，其框架是对RNN进行了改进，特征除了从底层传递到上层，从t-1时刻传递到t时刻外，还加入了从t-1时刻到上层传递到t时刻下层的边（即引入了作者所谓的TopDown的考量）。<br>对于一层而言，作者使用了Recurrent Independent Mechanisms，和传统rnn不同，一个rnn层是多个独立的cell共同组成。<br>对于这些cell，一方面做着设计了Selective Activation，将t-1的多个cell输出做query，零向量和cell的输入[Zero,xt] 做KV，进行attention，这样可以得到输入和零向量的attention评分，从而得到该层与输入的关系，利用评分选出m个关系最大的cell，参与状态更新，其余的保持t-1状态。<br>另一方面，作者还设计了cell间的Communication，这主要用当前时刻cell的输出做self-attention，融合彼此间特征，然后将融合后的结果叠加到当前输出（只有Selective Activation激活的cell需要更新）。<br>对于层间传递而言，和LSTM这一类不同，作者没有仅将上一层做输入，而是使用了当前层t-1时刻状态 \(h _{t-1} ^l\) 做Query，\([ \emptyset, h _t ^{l-1}, h _{t-1} ^{l+1}]\)做KV，从而融合上一层与下一层的状态，这里同样引入了0向量，可以很好的减轻当 \( h _t ^{l-1}\)  与\( h _{t-1} ^{l+1}\) 和当前层上一时刻状态无关时，多余的特征引入。</p>
 <h1 id="3-Attention-Mechanisms"><a href="#3-Attention-Mechanisms" class="headerlink" title="3 Attention Mechanisms"></a>3 Attention Mechanisms</h1><p>总体来说，Attention可以分为3种，即： soft attention (global attention), hard attention (local attention), 和 self-attention (intra-attention)。   </p>
 <p><strong>Soft Attention</strong>： 是在每一个输入上做加权求和，其权重为0到1之间，通过权重控制在每一个input上给予多少关注，权重通常来自于深度学习中输入与目标的相关性。一般使用softmax作为Attention层权重计算函数，从而使模型更加确定并且可微分。soft attention可以于作空域和频域，对于空域，其主要用于提取特征或为最相关的特征施加更大权重。对于空域，用来对每一个时间窗口内特征进行加权，计算不同窗口内特征贡献度。虽然softmax是确定可微的，但当输入很大时，softmax计算量也很高。</p>
 <p><strong>Hard Attention</strong> ：Hard Attention决定了模型中的一部分输入是非要被考虑到，对于权重的分配为1/0二值，其过程是不可微分的。其过程主要是对一系列输入决定那一部分是需要被考虑的，对于频域，举例而言，模型需要决定下一步是否要考虑当前输入信息的某一部分。显然对于这种区域选择，是没有一个正确与否的确定性评判的，因此，Hard Attention往往是基于统计过程。也正是因为模型是不可微的，因此强化学习技术通常会需要使用Hard Attention来寻李娜模型。对于算法时间复杂度而言，Hard Attention要低于Soft Attention。</p>
 <p><strong>Self Attention</strong> ：Self-Attention严格来说并不是一种新的分类，只是对Attention而言QKV这这里是相同的，也正因为此，Self-Attention一般可以用矩阵方法高度并行。</p>
 <h1 id="4-Attention-based-Classic-Deep-Learning-Architectures"><a href="#4-Attention-based-Classic-Deep-Learning-Architectures" class="headerlink" title="4 Attention-based Classic Deep Learning Architectures"></a>4 Attention-based Classic Deep Learning Architectures</h1><h2 id="4-1-Attention-based-Convolutional-Neural-Networks-CNNs"><a href="#4-1-Attention-based-Convolutional-Neural-Networks-CNNs" class="headerlink" title="4.1 Attention-based Convolutional Neural Networks (CNNs)"></a>4.1 Attention-based Convolutional Neural Networks (CNNs)</h2><h2 id="4-2-Attention-based-Recurrent-Neural-Networks-RNNs"><a href="#4-2-Attention-based-Recurrent-Neural-Networks-RNNs" class="headerlink" title="4.2 Attention-based Recurrent Neural Networks (RNNs)"></a>4.2 Attention-based Recurrent Neural Networks (RNNs)</h2><h2 id="4-3-Attention-based-Generative-Models"><a href="#4-3-Attention-based-Generative-Models" class="headerlink" title="4.3 Attention-based Generative Models"></a>4.3 Attention-based Generative Models</h2><h1 id="5-Applications"><a href="#5-Applications" class="headerlink" title="5 Applications"></a>5 Applications</h1><h2 id="5-1-Natural-Language-Processing-NLP"><a href="#5-1-Natural-Language-Processing-NLP" class="headerlink" title="5.1 Natural Language Processing (NLP)"></a>5.1 Natural Language Processing (NLP)</h2><h2 id="5-2-Computer-Vision-CV"><a href="#5-2-Computer-Vision-CV" class="headerlink" title="5.2 Computer Vision (CV)"></a>5.2 Computer Vision (CV)</h2><h2 id="5-3-Multimodal-Tasks-CV-NLP"><a href="#5-3-Multimodal-Tasks-CV-NLP" class="headerlink" title="5.3 Multimodal Tasks (CV/NLP)"></a>5.3 Multimodal Tasks (CV/NLP)</h2><h2 id="5-4-Recommender-Systems-RS"><a href="#5-4-Recommender-Systems-RS" class="headerlink" title="5.4 Recommender Systems (RS)"></a>5.4 Recommender Systems (RS)</h2><h2 id="5-5-Reinforcement-Learning-RL"><a href="#5-5-Reinforcement-Learning-RL" class="headerlink" title="5.5 Reinforcement Learning (RL)"></a>5.5 Reinforcement Learning (RL)</h2><h2 id="5-6-Robotics"><a href="#5-6-Robotics" class="headerlink" title="5.6 Robotics"></a>5.6 Robotics</h2><h2 id="5-7-Interpretability"><a href="#5-7-Interpretability" class="headerlink" title="5.7 Interpretability"></a>5.7 Interpretability</h2><h1 id="6-Trends-and-Opportunities"><a href="#6-Trends-and-Opportunities" class="headerlink" title="6 Trends and Opportunities"></a>6 Trends and Opportunities</h1><h2 id="6-1-End-To-End-Attention-models"><a href="#6-1-End-To-End-Attention-models" class="headerlink" title="6.1 End-To-End Attention models"></a>6.1 End-To-End Attention models</h2><h2 id="6-2-Learning-Multimodality"><a href="#6-2-Learning-Multimodality" class="headerlink" title="6.2 Learning Multimodality"></a>6.2 Learning Multimodality</h2><h2 id="6-3-Cognitive-Elements"><a href="#6-3-Cognitive-Elements" class="headerlink" title="6.3 Cognitive Elements"></a>6.3 Cognitive Elements</h2><h2 id="6-4-Computer-Vision"><a href="#6-4-Computer-Vision" class="headerlink" title="6.4 Computer Vision"></a>6.4 Computer Vision</h2><h2 id="6-5-Capsule-Neural-Network"><a href="#6-5-Capsule-Neural-Network" class="headerlink" title="6.5 Capsule Neural Network"></a>6.5 Capsule Neural Network</h2><h2 id="6-6-Neural-Symbolic-Learning-and-Reasoning"><a href="#6-6-Neural-Symbolic-Learning-and-Reasoning" class="headerlink" title="6.6 Neural-Symbolic Learning and Reasoning"></a>6.6 Neural-Symbolic Learning and Reasoning</h2><h2 id="6-7-Incremental-Learning"><a href="#6-7-Incremental-Learning" class="headerlink" title="6.7 Incremental Learning"></a>6.7 Incremental Learning</h2><h2 id="6-8-Credit-Assignment-Problem-CAP"><a href="#6-8-Credit-Assignment-Problem-CAP" class="headerlink" title="6.8 Credit Assignment Problem (CAP)"></a>6.8 Credit Assignment Problem (CAP)</h2><h2 id="6-9-Attention-and-Interpretability"><a href="#6-9-Attention-and-Interpretability" class="headerlink" title="6.9 Attention and Interpretability"></a>6.9 Attention and Interpretability</h2><h2 id="6-10-Unsupervised-Learning"><a href="#6-10-Unsupervised-Learning" class="headerlink" title="6.10 Unsupervised Learning"></a>6.10 Unsupervised Learning</h2><h2 id="6-11-New-Tasks-and-Robotics"><a href="#6-11-New-Tasks-and-Robotics" class="headerlink" title="6.11 New Tasks and Robotics"></a>6.11 New Tasks and Robotics</h2><h2 id="7-Conclusions"><a href="#7-Conclusions" class="headerlink" title="7 Conclusions"></a>7 Conclusions</h2><hr>
-<h2 id="Mentioned-But-Not-Discribe"><a href="#Mentioned-But-Not-Discribe" class="headerlink" title="Mentioned But Not Discribe"></a>Mentioned But Not Discribe</h2><p><a name="mattnet"> </a><br>**MAttNet: Modular Attention Network for Referring Expression Comprehension<a href="https://https//arxiv.org/pdf/1801.08186.pdf" target="_blank" rel="noopener">[CVPR2018, 462]</a>**：<br>Expression Comprehension 问题，作者使用Faster RCNN做目标检测，对检测出的目标别从Subject、location、relationship三方面进行评分，最终汇总。其具体过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/04/02/ATTENTION-PLEASE/mattnet.jpeg" alt="bubble"><br>作者使用LSTM对文本进行embedding，引入attention机制，学出Subject、location、relationship三种不同的embedding向量。得到向量后，分别利用不同方式与图片object进行match得到分数，最终加权求和。</p>
+<h2 id="Mentioned-But-Not-Discribe"><a href="#Mentioned-But-Not-Discribe" class="headerlink" title="Mentioned But Not Discribe"></a>Mentioned But Not Discribe</h2><p><a name="mattnet"> </a><br>**MAttNet: Modular Attention Network for Referring Expression Comprehension<a href="https://https//arxiv.org/pdf/1801.08186.pdf" target="_blank" rel="noopener">[CVPR2018, 462]</a>**：<br>Expression Comprehension 问题，作者使用Faster RCNN做目标检测，对检测出的目标别从Subject、location、relationship三方面进行评分，最终汇总。其具体过程如下：<br><img src="//liuzhiqi.github.io/blog/2021/05/02/ATTENTION-PLEASE/mattnet.jpeg" alt="bubble"><br>作者使用LSTM对文本进行embedding，引入attention机制，学出Subject、location、relationship三种不同的embedding向量。得到向量后，分别利用不同方式与图片object进行match得到分数，最终加权求和。</p>
 <hr>
 <h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p><a name="BLEU"> </a></p>
 <h3 id="BLEU（bilingual-evaluation-understudy）："><a href="#BLEU（bilingual-evaluation-understudy）：" class="headerlink" title="BLEU（bilingual evaluation understudy）："></a>BLEU（bilingual evaluation understudy）：</h3><p>对翻译句和参考句作N-gram切分，计算不同N下每一个N-gram的匹配度。<br>$$<br>BP = 1\ if\ lc &gt;ls\ else\ e ^{1-ls/lc}\\<br>BLEU = BP * exp(\sum _n W _n P _n)<br>$$<br>其中BP为长度惩罚因子，译文长度小于参考长度时叠加计算惩罚因子，防止只翻译出了部分句子且翻译的比较准确时，匹配度依然会很高的问题。P为N-gram的匹配度，分母为参考答案所有N-gram词汇的出现频率和，分子为翻译的N-gram可能词汇的出现频率和（翻译相同词汇频率&gt;答案相同词汇，取答案的词汇频率，以保证p&lt;=1），W为当前N下权重，一般为1/N。BLEU一般取N&lt;=4.</p>
@@ -534,12 +534,12 @@
   
   
 
-  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-Articles" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/11/12/A-Survey-on-Network-Embedding/">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/05/22/Time-Series1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiqi Liu">
@@ -558,7 +558,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2020/11/12/A-Survey-on-Network-Embedding/" itemprop="url">【Paper Reading】A Survey on Network Embedding</a></h1>
+                <a class="post-title-link" href="/blog/2020/05/22/Time-Series1/" itemprop="url">时间序列分析（一）单变量时间序列分析</a></h1>
         
 
         <div class="post-meta">
@@ -570,8 +570,275 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-12T22:13:11+08:00">
-                2020-11-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-22T10:12:39+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Articles/" itemprop="url" rel="index">
+                    <span itemprop="name">Articles</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。<!-- arima、谱分析还是alphabet相关方法，都存在类似的假设，--><br>我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩就可以确定整个模型），这些模型往往较为简单，但是十分实用。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-1基本统计量"><a href="#1-1基本统计量" class="headerlink" title="1.1基本统计量"></a>1.1基本统计量</h3><h4 id="均值、方差、协方差"><a href="#均值、方差、协方差" class="headerlink" title="均值、方差、协方差"></a>均值、方差、协方差</h4><p>基础统计量在实际单变量时间序列分析中非常有用，它们不仅可以对时间序列的周期性、平稳性等方面进行分析，甚至还可以辅助确定一些时间序列模型的参数。</p>
+<h4 id="均值"><a href="#均值" class="headerlink" title="均值"></a>均值</h4><p>对随机过程 \(Y_t\) ，均值定义如下：<br>$$\mu _t = E(Y _t), t = 0, \pm 1,  \pm 2,  \pm 3, \cdots  $$</p>
+<h4 id="自协方差"><a href="#自协方差" class="headerlink" title="自协方差"></a>自协方差</h4><p>$$ \gamma _{t,s} = Cov(Y _t, Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots$$<br>其中 \(Cov(Y _t, Y _s) = E[(Y _t - \mu _t)(Y _s - \mu _s)] = E(Y _tY _s) - \mu _t\mu _s\)（根据均值定义消去均值乘积）。</p>
+<h4 id="自相关函数"><a href="#自相关函数" class="headerlink" title="自相关函数"></a>自相关函数</h4><p>$$ \rho _{t,s} = Corr(Y _t,Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots  $$<br>$$ Corr(Y _t,Y _s) = \frac{Cov(Y _t, Y _s)}{\sqrt{Var(Y _t)Var(Y _s)}} = \frac{\gamma _{t,s}}{\sqrt{\gamma _{t,t}\gamma _{s,s}}}$$</p>
+<!--
+##### 时间间隔下的自相关函数
+对与时间间隔k，-->
+
+<h3 id="1-2-平稳性"><a href="#1-2-平稳性" class="headerlink" title="1.2 平稳性"></a>1.2 平稳性</h3><p>对于一切时间间隔k，如果在时间点 \(t_1 , t_2, t_3, \cdots , t_n\)下均有，\(Y_{t_1}, Y_{t_2}, Y_{t_3}, \cdots , Y_{t_n}\)与\(Y_{t_1 -k}, Y_{t_2 -k}, Y_{t_3 -k}, \cdots , Y_{t_n -k}\) 的联合分布相同，则过程\(\{Y_{t}\}\)称为<strong>严平稳的</strong>。<br>而若序列是平稳性的，则：<br>当 n=1 时，\(Y_{t}\) 与\(Y_{t-k}\) 的分布相同，所以Y序列的每一点具有相同的分布，因此序列均值与方差恒为常数。<br>进而任意时间点t来说，由于序列的每一点均值方差均相同，所以我们可以化简自相关函数，即<br>$$ \rho _{k} = Corr(Y _t,Y _{t-k}),   \gamma _{k} = Cov(Y _t, Y _{t-k})$$<br>严平稳性是一个非常强的假设，因此我们引出了弱（二阶矩）平稳性：  </p>
+<ol>
+<li>均值函数在所有时间上恒为常数。   </li>
+<li>对于所有时间点t和时间间隔k，有\(\gamma_{t,t-k}=\gamma_{0,k}\)。<br>在实际应用中，\(\gamma_{k}\)是一个非常有用的工具，它可以帮助我们判断时间序列的周期性，在某些时间序列模型中，我们使用\(\gamma_{k}\)来帮我们判断模型参数，这些应用即使在非平稳的状态下也有一定借鉴意义。</li>
+</ol>
+<h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><p>在进行单变量时间序列分析时，我们往往需要对时间序列模型作出一些假设。最常见的假设为线性叠加模型，即模型中各个组成部分是以线性叠加的方式组合到一起的。对于能预测的单变量模型来说，我们往往认为其具有平稳周期性，和非平稳部分。而非平稳部又可以分为趋势部分与局部异常部分。</p>
+<h3 id="周期性"><a href="#周期性" class="headerlink" title="周期性"></a>周期性</h3><p>在单变量时间序列模型中，我们往往假设模型是具有周期性的，在对用户数据建模时，这一点往往是成立的（比如：分析用户PV、UV等，往往具有明显的7天周期与一年周期，在这不同周期中，用户数据整体波动出现明显相似的变化）。<br>对于这一部分的建模，有很多方式，如：简单季节性模型根据周期性的经验估计直接建立模型，ARIMA中利用假设过去周期性的时间节点对当前时间点存在残留影响来建立模型，谱分析对时间序列进行傅立叶变换从而拟合周期部分等等。<br>不论是使用什么方式，在进行周期性估计时，我们往往不考虑序列的整体趋势，也就是说我们认为周期性部分是平稳的（往往只需要弱平稳即可）。</p>
+<h3 id="非平稳部分"><a href="#非平稳部分" class="headerlink" title="非平稳部分"></a>非平稳部分</h3><h4 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h4><p>对于时间序列模型，我们往往可以将其拆分为两部分，一部分是趋势拟合部分，另一部分是周期性拟合部分。对于趋势部分，一些模型是进行单独拟合的，例如：使用线性模型，或根据经验，使用相应的非线性模型，也有一些模型使用了差分的方式，消除趋势对周期性判断对影响（例如：ARIMA）。<br>当然也有一些模型不需要对趋势进行单独拟合，模型可以自动学习出整体趋势与周期特征（例如：使用深度学习方法对序列进行拟合）。</p>
+<h4 id="干预与异常"><a href="#干预与异常" class="headerlink" title="干预与异常"></a>干预与异常</h4><p>干预分析（Intervention Analysis）是指在时间序列中，因为在某一时刻发生了自然产生或人为施加的影响，导致整体序列产生了一定时间内均值或趋势发生了相应的变化，例如：外部广告投放导致一定时间内某应用UV突然增长，一段时间后稳定用户有一个明显的数量提升、商家在某一天投放广告导致商品购买量提升，广告停止投放，几天内购买量下降，但仍高于投放前，直至平稳、双十一大促，大促时购买量激增，但大促后用户消费明显疲软，一段时间后恢复正常等。在实际数据中，不同的干预可能有不同的特征，下文将介绍几种简单常见的干预拟合方式。</p>
+<p>产生干预时，我们的干预部分用\(S_t ^{(T)}\)表示，其中T为干预产生的时间点。则我们可以定义脉冲函数即：<br>$$P _t ^{(T)}=S _t ^{(T)}-S _{t-1} ^{(T)}$$</p>
+<h5 id="阶梯干预"><a href="#阶梯干预" class="headerlink" title="阶梯干预"></a>阶梯干预</h5><p>我们可以将阶梯干预用如下阶梯函数表示：<br>$$<br>S _t=\begin{cases}<br>1,\quad x\geq T \\<br>0,\quad x&lt;T<br>\end{cases}<br>$$<br>对应的脉冲函数\(P_t ^{(T)}\)，当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。<br>此时我们干预对*时间序列均值的叠加部分\(m_t\)*为：<br>$$m _t = \omega S _t ^{(T)} \tag{1.1}$$<br>也就是说在T时刻激增并保持不变，这种干预往往可以看作是一种可加异常，也就是说当前时刻的异常并不影响之后的序列。</p>
+<h5 id="逐渐平稳的阶梯干预"><a href="#逐渐平稳的阶梯干预" class="headerlink" title="逐渐平稳的阶梯干预"></a>逐渐平稳的阶梯干预</h5><p>阶梯干预的形式非常理想，但实际应用中，全部影响作用其实会持续很长一段时间最终趋于稳定。我们可以对\(m_t\)建立一个AR(1)模型（后续会对其进行介绍）：<br>$$<br>m _t=\begin{cases}<br>\omega\frac{1-\delta ^{t-T}}{1-\delta},\quad x\geq T \\<br>0,\quad other<br>\end{cases}<br>$$<br>其中0&lt;\(\delta\)&lt;1。此时<br>均值增量在会在一段时间内激增最终收敛到\(\frac{\delta}{1-\delta}\)，其中达到极限的一半所用时间\(log(0.5)/log(\delta)\)被称为干预的<strong>半衰期</strong></p>
+<h5 id="逐渐消失的干预"><a href="#逐渐消失的干预" class="headerlink" title="逐渐消失的干预"></a>逐渐消失的干预</h5><p>对于一些干预，在干预瞬间，序列均值会激增，但随着时间推移这种干预影响会逐渐消失。令T时刻干预产生，这时当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。我们可以将这种干预混入我们的模型例如，混入AR(1)模型中：<br>$$m _t=\delta m _{t-1} + \omega P^{(T)} _{t-1}$$</p>
+<p>此时T时刻产生的干预成指数级衰减。</p>
+<h5 id="判断与检验"><a href="#判断与检验" class="headerlink" title="判断与检验"></a>判断与检验</h5><p>受到干预或异常的数据，有很多表示方法，针对不容模型，可能表示形式也不尽相同，而上述方法对于ARIMA模型是适用的，对于其他模型则要因模型而异。面对可能的异常，我们需要进行判断和检验，常用的方法可以使用先猜测异常，然后修正模型，进行假设检验，通过反复修正，最终直至不再发现异常为止。<br>在进行检验时，常用多重检验，可以使用保守的Bonferroni矫正（如果在同一数据集上同时检验n个独立的假设，那么用于每一假设的统计显著水平，应为仅检验一个假设时的显著水平的1/n。）控制多重检验的总体误差率。</p>
+<h1 id="ARIMA（自回归差分滑动平滑方法）"><a href="#ARIMA（自回归差分滑动平滑方法）" class="headerlink" title="ARIMA（自回归差分滑动平滑方法）"></a>ARIMA（自回归差分滑动平滑方法）</h1><p>对于时间序列\(\{Y _t\}\)，若我们令\(\{e _t\}\)代表一系列未观测到的白噪声序列数据，若我们将其看作一系列独立同分布的均值为0的随机变量。则对于一个序列而言，我们可以将其转化为过去时间点序列值残留的影响与当前时间点白噪声的叠加。<br>因此，对于我们可以将上述过程，简化成一个简单的线性过程：<br>$$Y _t=e _t + \psi _1 e _{t-1} + \psi _2 e _{t-2} + \cdots \tag{2.1}$$<br>也就是说当前时间点是过去时间点的残留影响加上当前时间点点白噪声。对于这一模型，若表达式右边是一个无穷级数项，则要求：<br>$$\sum _ {i=1} ^ \infty {\psi _i ^2} &lt; \infty$$<br>也就是说我们希望整体序列整体是收敛的。显然，我们希望考虑到过去的影响，但又不希望过去对当前的影响是发散的。 </p>
+<p>##MA<br>对于公式2.1，若\(\psi \)的数量有限且不为0个，则我们称：<br>$$Y _t=e _t - \theta _1 e _{t-1} - \cdots - \theta _n e _{t-q} $$</p>
+<p>为q阶滑动平均过程，简记MA(q)，其中为方便后续公式表达，我们用\(-\theta\)。<br>对于MA(q)过程我们有：<br>$$\gamma _0 = (1 + \theta _1 ^2 + \theta _2 ^2 + \cdots + \theta _n ^2)\delta _e ^2 $$<br>$$<br>\rho _k=\begin{cases}<br>\frac{-\theta _k + \theta _1 \theta _{k+1} + \theta _2 \theta _{k+2} + \theta _{q-k} \theta _{q}}{1+\theta _1 ^2+\theta _2 ^2 + \cdots + \theta _q ^2},\quad k=1,2,\cdot,q \\<br>0,\quad k&gt;q<br>\end{cases}<br>$$</p>
+<h2 id="AR"><a href="#AR" class="headerlink" title="AR"></a>AR</h2><p>对于时间序列\(\{Y _t\}\)若满足方程：<br>$$Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t $$<br>则，我们称其为p阶自回归过程。从方程我们可以看出，自回归过程是用自身序列做回归变量。对于t时刻的\(Y _t\)来说其值等于过去p个时间点与当前时间点噪声\(e _t\)的加权叠加，其中\(e _t\)要求与t时刻前的Y独立。从等式2.2我们可以看出，通过将右侧Y展开，我们可以还原出等式2.1的形式，但参数的表达可能十分复杂，同时该序列项数可能趋于无穷大。<br>对于MA模型来说，我们较容易保证其平稳，而对于AR模型，平稳显然需要满足条件。令，<br>$$\phi(x)=1 - \phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p  $$<br>$$0=1-\phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p $$<br>为AR模型的特征多项式和特征方程。若特征方程存在平稳解，当且仅当AR特征方程每一个根的绝对值都大于1。因此有如下必要不充分的条件：<br>$$\phi _1 + \phi _2 + \cdots + \phi _p &lt; 1 $$<br>$$| \phi _p |&lt; 1$$<br>假定序列平稳且均值为0。则，我们可以在AR模型方程两边同时乘以\(Y _{t-k}\)并求期望，再除以\(\gamma _0\)可以获得以下重要递推关系：</p>
+<p>$$\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}  $$<br>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho _k\)。<br>对于AR模型而言，若序列平稳，通过对自回归进行逐层展开，我们可以将其还原为式2.1形式。<br>而对于MA模型，我们可以通过\(Y _{t-k}\) 迭代消去序列中的第k项\(e _{t-k}\),从而将MA模型转化为AR模型。若原时间序列是无穷的，那么我们最终可能转化为一个无穷阶的AR模型。这种MA可逆的转化是有条件的，需要MA特征方程：<br>$$0=1-\theta _1 x - \theta _2 x^2 - \cdots - \theta _p x ^ p $$<br>的根的模大于1（类似AR模型平稳性条件）。</p>
+<h2 id="ARMA-p-q-模型"><a href="#ARMA-p-q-模型" class="headerlink" title="ARMA(p,q)模型"></a>ARMA(p,q)模型</h2><p>若序列心中一部分是自回归，一部分是滑动平均的，那么我们可以得到一个相当普遍的时间序列模型。如下：<br>$$Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>对于该模型而言，MA部分我们可以保证解的平稳，因此对于模型整体平稳性，我们只需要保证AR部分过程平稳，即保证模型中AR特征方程根的模大于1。<br>此时模型可以由下式决定：</p>
+<p>$$<br>\begin{cases}<br>\psi _0 = 1\\<br>\psi _1 = -\theta _1 + \phi _1\\<br>\psi _2 = -\theta _2 + \phi _2 + \phi _1\theta _1\\<br>\cdots\\<br>\psi _j = -\theta _j + \phi _p\theta _{j-p} + \phi _{p-1}\theta _{j-p+1} + \cdots + \phi _1\theta _{j-1} \\<br>\end{cases}<br>$$</p>
+<p>这里我们将模型中AR部分展开得到公式2.1的形式，其中参数\(\psi\)为2.1中系数。<br>对于ARMA模型，我们通常要求AR和MA分别满足平稳和可逆两个条件（上文提到，各自特征方程根模大于一）</p>
+<h2 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h2><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y _t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y _{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
+<p><img src="//liuzhiqi.github.io/blog/2020/05/22/Time-Series1/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png" alt="avatar"></p>
+<p>如果一个时间序列 \(\{Y _t\}\)的d次差分 \(W _t = \Delta ^d Y _t\)是一个平稳的ARMA(p,q)过程，则称\(\{Y _t\}\)为自回归滑动平均求和模型ARIMA(p,d,q)。通常取d=1或最多2。<br>考虑ARIMA(p,1,q)，令\(W _t = \Delta ^d Y _t\)，我们有：<br>$$W _t=\phi _1 W _{t-1} + \phi _2 W _{t-2} + \cdots + \phi _n W _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>通过将W用Y替换并合并，可得：</p>
+<p>$$Y _t=(1 + \phi _1)W _{t-1} + (\phi _2 -\phi _1)W _{t-2} + \cdots +  (\phi _{t-p} -\phi _{t-p-1}) W _{t-p} - \phi _p W _{t-p-1} \\+ e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>我们称上述形式为模型的差分方程形式。我们分析其AR特征方程：<br>$$1-(1+\phi _1)x-(\phi _2 - \phi _1)x ^2-\cdots-(\phi _{t-p} -\phi _{t-p-1})x ^p + \phi _p x ^{p+1}=(1-\phi _1 -\phi _2x ^2-/cdots-\phi _px ^p)(1-x)$$<br>此时 x=1是一个根，因此这个过程非平稳，但其余的根是平稳过程\( \Delta ^d Y _t\)的特征多项式的根。这也说明了为什么当原序列非平稳，我们使用一阶差分来得到平稳序列的原因。</p>
+<p>差分是实现平稳较好的方式，出了差分外，我们还可以根据序列特征对序列进行其他的变换。例如：如果发现序列散度随着时间增加，可以尝试使用对数方法对序列进行变换等。</p>
+<h2 id="季节性ARIMA"><a href="#季节性ARIMA" class="headerlink" title="季节性ARIMA"></a>季节性ARIMA</h2><p>对于普通的ARIMA模型，我们考虑的是当前相近的时间节点对现在的影响，然而实际上数据的周期可能会更长。例如：对于用户数据而言，往往存在以周和年为周期的pattern。对于这种较长跨度的周期性影响，ARIMA模型不能进行很好的表达，这时我们可以引入季节性ARIMA模型。<br><strong>简单的季节性ARIMA模型</strong>我们可以通过经验知识，选出相应周期，考虑序列影响时，只考虑倍数于周期的相应时间节点。例如以s（s大于P和Q）为周期，则我们的AR(P)和MA(Q)以及差分I(D)模型如下：</p>
+<p>$$<br>Y _t = Y _t - \Phi _1Y _{t-s}  - \Phi _2Y _{t-2s} - \cdots - \Phi _PY _{t-Ps}<br>$$</p>
+<p>$$<br>Y _t = e _t - \Theta _1e _{t-s}  - \Theta _2e _{t-2s} - \cdots - \Theta _Qe _{t-Qs}<br>$$</p>
+<p>$$<br>\Delta _s Y _t = Y _t + Y _{t-s}<br>$$<br>可以看到AR、MA、以及差分，我们都只考虑不同周期s上相同位置的时间节点（只考虑最近P和Q个周期内的时刻）。注意这里我们使用参数：\(P,Q,\Phi,\Theta\)均为大写以表示季节模型。<br>简单季节性ARIMA加入引入一个周期s，整体模型可以看作是对时间序列间隔s时刻，从而抽出s个子序列，并使用普通ARIMA模型进行拟合。然而这种方法只考虑了一个固定周期的影响，实际上真实序列相近时刻可能也会对当前时刻造成影响（基本的ARIMA模型的假设），因此我们需要同时考虑季节性影响和临近影响。因此引入了人<strong>乘法季节ARIMA模型</strong>。<br>乘法季节ARIMA模型结合了季节和非季节ARIMA，利用类似卷积的思路，将二者结合。例如：我们考虑结合\(MA(1)\) 与 \(MA(1) _s\)两个模型，得到如下特征多项式：<br>$$<br>(1 -\theta x)(1-\Theta x ^{12}) = 1 - \theta x - \Theta x ^{12} - \theta\Theta x^{13}<br>$$<br>通过特征多项式我们可以写出相应的时间序列表达式：<br>$$<br>Y _t = e _t - \theta e _{t-1} - \Theta e _{t-12} - \theta\Theta e _{t-13}<br>$$</p>
+<p>因此我们定义周期为s的乘法季节\(ARMA(p,q)\times(P,Q) _s\)模型，通过分别求AR特征多项式\(\phi\Phi(x)\)和MA特征多项式\(\theta(x)\Theta(x)\)得到相应AR与MA模型序列通过相加合并两个子模型。<br>对于差分模型而言我们可以定义混合差分操作：<br>$$<br>W _t = \Delta ^d \Delta _s ^D Y _t<br>$$<br>因此我们可以得到新的季节ARIMA模型：\(ARMA(p,d,q)\times(P,D,Q) _s\)</p>
+<h2 id="模型识别"><a href="#模型识别" class="headerlink" title="模型识别"></a>模型识别</h2><h3 id="k阶滞后自相关函数（ACF）"><a href="#k阶滞后自相关函数（ACF）" class="headerlink" title="k阶滞后自相关函数（ACF）"></a>k阶滞后自相关函数（ACF）</h3><p>回顾第一节，我们有k阶滞后的自相关函数:<br>$$<br>\rho _{k} = Corr(Y _t,Y _{t-k}) = \frac{Cov(Y _t, Y _{t-k})}{\sqrt{Var(Y _t)Var(Y _{t-k})}} = \frac{\gamma _{k}}{\gamma _{0}}<br>$$</p>
+<p>$$<br>\gamma _{k} = Cov(Y _t, Y _{t-k}) = \frac{\sum _{t=k+1} ^{n} {(Y _t - \overline{Y})(Y _{t-k} - \overline{Y})} }{\sum _{t=1} ^n {(Y _t - \overline{Y}) ^2}}  k=1,2,\cdots<br>$$<br>对于MA(q)模型而言当k&gt;q时，\(\rho _k = 0\)，这里r为\(\rho \)的估计量。因此对于MA模型而言我们可以使用K阶之后自相关函数确定起q的取值。</p>
+<h3 id="k阶滞后偏自相关函数（PACF）"><a href="#k阶滞后偏自相关函数（PACF）" class="headerlink" title="k阶滞后偏自相关函数（PACF）"></a>k阶滞后偏自相关函数（PACF）</h3><p>对于AR模型而言，由于模型往往可以展开成无穷阶MA模型，因此k阶滞后自相关函数不适用。从另一方面考虑，若我们希望计算\(Y _{t-k} \)对\(Y _t \)的影响程度从而判断模型是否含有第k阶，直接计算\(Y _{t-k} \)与\(Y _t \)的相关性是不合理的，这是因为对于\(Y _t \)而言其自身还包含了<br>\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)项。因此我们考虑消除\(Y _t \)中的<br>\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)影响后，再计算消除影响后的\(Y _t \)与\(Y _{t-k} \)的相关系数，我们称这个系数为<strong>k阶滞后偏自相关系数</strong>。<br>由于AR模型为回归方法，为了达到消除影响的目的，因此我们可以考虑先对序列进行拟合，然后为了计算得到样本的k阶滞后偏自相关函数。对\(Y _t \)我们使用\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)项进行预测： </p>
+<p>$$<br>Y _t=<br>$$<br>对\(\beta \)我们可以使用均方误差最小化，利用最小二乘法估计。<br>对于\(Y _{t-k} \)，我们可以利用t-k之后的k-1个项来进行向前预测，由序列平稳可得（？？？）：<br>$$<br>Y _k=\beta _1 Y _{t-K+1} + \beta _2 Y _{t-K+2} + \cdots + \beta _{k-1} Y _{t-1}<br>$$<br>因此我们定义<strong>K阶偏子相关系数</strong>为预测误差之间的相关系数：<br>$$<br>\phi _{kk}=Corr(Y _t - \beta _1 Y _{t-1} - \beta _2 Y _{t-2} - \cdots - \beta _{k-1} Y _{t-k+1},  \\<br>Y _{t-k} - \beta _1 Y _{t-K+1} - \beta _2 Y _{t-K+2} - \cdots - \beta _{k-1} Y _{t-1}  )<br>$$</p>
+<p>对于若序列服从AR(p)模型，显然当预测的模型为p项时，对模型的预测将最准确，此时k阶之后偏子相关系数有：<br>$$<br>\phi _{kk} = 0, k&gt;p<br>$$<br>而对于MA模型来说，其偏自相关函数从不为0，但随着滞后的增加，会指数级快速衰减到0。这一点与AR(1)过程的子相关函数类似。<br>对于K阶偏自相关系数，我们可以用最小二乘法分别求不同阶的预测模型，然后再求其相关系数。同时我们也可以使用Yule-Walker方程来进行求解。<br>具有自相关函数\(\rho _k\)的任意平稳过程，对于k阶滞后，我们有：<br>$$<br>\rho _j = \phi _{k1} \rho _{j-1} +\phi _{k2} \rho _{j-2} +\phi _{k3} \rho _{j-3} + \cdots+\phi _{kk} \rho _{j-k} , j=1,2,\cdots,k<br>$$<br>我们可以先算出各阶\(\rho\)然后带入方程组从而求解出\(\phi _{k1},\phi _{k2},\cdots,\phi _{kk} \)，这里我们只需要最后一项。对于不同阶k，反复求解方程组从而得到\(\phi _{kk}\)，我们有\(\phi _{kk}\)递归方程：<br>$$<br>\phi _{kk} = \frac{\phi _{k} - \sum _{j=1} ^{k-1}{\phi _{k-1,j}\rho _{k-j}}}{1 - \sum _{j=1} ^{k-1}{\phi _{k-1,j} \rho _{j}}}<br>$$<br>对于大于p时样本偏自相关函数近似服从均值为0，方差为1/n的正态分布. 因此，当 k&gt;p 时，我们可以用\(\pm 2/\sqrt{n}\)作为\(\hat \phi _{kk}\)的临界极值来检验AR(p)模型的正确0假设。</p>
+<h2 id="非平稳性"><a href="#非平稳性" class="headerlink" title="非平稳性"></a>非平稳性</h2><p>在实际使用ARIMA模型时，我们往往仅使用1～2阶差分，过度的差分，会导致差分后的序列产生不必要的相关性，从而使模型变得复杂，最终导致过拟合。同时过度差分还可能导致差分后序列模型不可逆。<br>在对差分阶数进行判断时，ACF仍然是一个非常好用的工具。如果ACF的图像呈现明显近似线性的衰减，说明非平稳性影响了序列的自相关性。此时序列需要进行差分。更具体的方法还有Dickey-Fuller单位根检验（检验AR方程是否存在单位根）等。</p>
+<h3 id="ARIMA模型的判别"><a href="#ARIMA模型的判别" class="headerlink" title="ARIMA模型的判别"></a>ARIMA模型的判别</h3><p>对于ARMA模型来说，由于ACF和PACF都只能针对AR或MA其中一个模型进行判别，若二者混合，不能很好判别。因此我们引入了一些扩展的方法来识别。</p>
+<h4 id="EACF（扩展自相关法）："><a href="#EACF（扩展自相关法）：" class="headerlink" title="EACF（扩展自相关法）："></a>EACF（扩展自相关法）：</h4><p>如果AR模型是已知的，则可以从ARMA模型中去掉自回归部分从而得到一个纯MA过程。</p>
+<h4 id="AIC（Akaike’s-Information-Criterion-赤池信息准则）："><a href="#AIC（Akaike’s-Information-Criterion-赤池信息准则）：" class="headerlink" title="AIC（Akaike’s Information Criterion,赤池信息准则）："></a>AIC（Akaike’s Information Criterion,赤池信息准则）：</h4><p>AIC要求模型最小化：<br>$$<br>AIC = -2\log {(D(p,q _\theta))+2k}<br>$$<br>如果模型包含常数项或者截距项，则k=p+q+1，否则k=p+q。<br>AIC是估计模型与真实模型等平均KL偏离度的估计量。另\(p(y _1,y _2,\cdots,y _n)\)是\(Y _1,Y _2,\cdots,Y _n\)的真实pdf，\(q _\theta(y _1,y _2,\cdots,y _n)\) 是参数为 \(\theta\)的模型相应的pdf。则q和p的KL偏离由下面公式定义：<br>$$<br>D(p,q _\theta) = \int _{-\infty} ^{\infty} \int _{-\infty} ^{\infty} \cdots\int _{-\infty} ^{\infty}{p(y _1,y _2,\cdots,y _n) \log{[\frac{p(y _1,y _2,\cdots,y _n)}{q _\theta(y _1,y _2,\cdots,y _n)}]}}dy _1dy _2\cdots dy _n<br>$$<br>AIC估计了\(E(D(p,q _\hat \theta))\)，这里\(\hat \theta\)是参数\(\theta\)的极大似然估计。但是AIC是有偏估计量，若参数数量和数据容量的比率较大，则偏差会很大。因此引入\(AIC _c\)方法对AIC进行修正：<br>$$<br>AIC _c = AIC + \frac{2(k+1)(k+2)}{n-k-2}<br>$$<br>其中n是样本容量，k是出去噪声方差后的总参数量，当k/n&gt;0.1时，\(AIC _c\)表现优于其他模型选择准则（包括AIC、BIC）</p>
+<h4 id="BIC（Bayesian-Information-Criterion-贝叶斯信息准则）："><a href="#BIC（Bayesian-Information-Criterion-贝叶斯信息准则）：" class="headerlink" title="BIC（Bayesian Information Criterion,贝叶斯信息准则）："></a>BIC（Bayesian Information Criterion,贝叶斯信息准则）：</h4><p>$$<br>BIC =  -2\log {(D(p,q _\theta))+k\log{(n)}}<br>$$</p>
+<h2 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h2><p>当确定相应的ARIMA阶数后，我们既可以进行参数估计。常用的参数估计有最小二乘法与极大似然函数。</p>
+<h3 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h3><p><span id="e——"></span><br>对于AR模型而言，其满足标准最小二乘法形式，因此用最小二乘法估计十分简单。但对MA模型，由于其中存在e的噪声项，因此无法直接求的，所以我们需要对其进行转换：</p>
+<p>$$<br>e _t = Y _t + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}<br>$$<br>其中\(e _0 = e _{-1}=\cdots=e _{-q} = 0\)，因此：</p>
+<p>$$<br>e _1 = Y _1<br>$$</p>
+<p>$$<br>e _2 = Y _2 + \theta _1 e _{t-1}<br>$$</p>
+<p>$$<br>e _3 = Y _3 + \theta _1 e _{2}+  \theta _2 e _{1}<br>$$</p>
+<p>$$<br>\cdots<br>$$<br>此时，我们最小化目标函数：</p>
+<p>$$<br>S _c (\theta) = \sum{(e _t)^2}<br>$$</p>
+<p>通过递推的计算\(e _1 , e _{2} , \cdots , e _{q}\)，带入方程组，利用多元数值算法，可以就\(\theta _1 ,\theta _{2} , \cdots , \theta _{q}\)联合的求取平方和最小值。<br>对于ARMA(p,q)模型，通过对模型公式进行整理，我们也可以使用同样方法：<br>$$<br>e _t = Y _t - \phi _1 Y _{t-1} - \phi _2 Y _{t-2} - \cdots - \phi _p Y _{t-p}  + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}<br>$$<br>注意对于大样本而言，初始值\(e _{p} , e _{p-1},\cdots,e _{p-q+1}\)对于可逆模型影响甚。因此这里\(e _{p} = e _{p-1}=\cdots=e _{p-q+1} = 0\),序列从p+1开始递推。<br>####自回归逼近法<br>自回归逼近法，先将数据看做纯\(AR(\hat p)\)模型，利用AIC定阶确定\(\hat p\)，利用最小二乘法估计出相应的参数。用得到的\(AR(\hat p)\)模型对序列进行一步预测得到预测变量\(\hat Y _t\)，从而进一步估计出\(\hat e _t = Y _t - \hat Y _t\)。将得到的\(\hat e _t \)与真实数据\( Y _t\) 带入ARMA模型，于是就可以使用最小二乘法直接对AR与MA的参数进行估计。</p>
+<h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p>对于最小二乘法，我们利用了分布的一阶矩和二阶矩，而对于最大似然法，我们使用了数据的全部信息。<br>模型定阶完成后，对于ARIMA(p,d,q)实际需要估计的参数有\(\phi,\theta,\mu,\sigma _e\)，对于序列中的\(e _t\)服从于\( Normal(0,\sigma ^2)\)，且彼此独立。因此我们可以得到\(e _2,e _3,\cdots,e _n\)联合概率密度：<br>$$<br>(2\pi\sigma _e ^2) ^{-(n-1)/2}exp(-e _t ^2 /2\sigma _e ^2\sum _{t=2} ^{n} e _t ^2)<br>$$<br>ARIMA的极大似然估计法通过逐步递推预测公式导出，极大似然函数，具体过程较为复杂，可以参考PKU李东风老师的备课笔记CH21[^PKUTimeSerious]</p>
+<h2 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h2><p><span id="e_estimation"></span></p>
+<p>在获得模型之后，既可以用模型对未来数据进行预测，对于预测结果，我们同时还可以估计预测的精度。<br>我们令：\(\hat Y _t(l)\)为序列前t项已知状态下对t之后第l项进行预测的预测值。</p>
+<h3 id="AR模型的预测"><a href="#AR模型的预测" class="headerlink" title="AR模型的预测"></a>AR模型的预测</h3><p>则对于AR模型而言，有：<br>$$<br>\hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i Y _{t+l-i}}\\<br>Y _{t+l-i} = \hat Y _t(l-i) \qquad  when:\quad l-i&gt;0<br>$$<br>可以采用一步预测的方式，从预测\(\hat Y _t(1)\)开始逐步递推到l项。<br>可以看到与AR模型相比，预测缺少了\(e _{t+l}\) 项。对于一步预测\(\hat Y _t(1)\)而言,预测误差\(e _t(1) = Y _{t+l} - \hat Y _t(l) = e _{t+1}\)。<br>对于<br>$$<br>\hat e _t(l) =\sum _{i=1} ^{\infty} {\psi _i e _{t+l-i}}\\<br>e _{t+l-i} = 0 \qquad  when:\quad l-i&lt;=0<br>$$<br>其中，\(\psi\)是由AR模型进行MA展开得到的相应参数。<br>因此，\(E(e _t(l)) = 0\)，相应预测估计是无偏估计。对于误差方差：<br>$$<br>Var(e _t(l)) = \delta _e ^ 2 (1 + \psi _{1} ^2 + \psi _{2} ^2 + \cdots + \psi _{l-1} ^2 )<br>$$<br>由于我们假设序列平稳，因此这里：<br>$$<br>Var(e _t(l)) \approx Var(Y _t) = \gamma _0 , 当l较大时<br>$$<br>证明略，感兴趣的同学，可以尝试使用AR(1)模型进行验证。<br>同时，对于arima模型，若序列非平稳则方差随预测时间窗口l的增大而无限增大。</p>
+<h3 id="MA模型的预测"><a href="#MA模型的预测" class="headerlink" title="MA模型的预测"></a>MA模型的预测</h3><p>对于MA模型而言，由于预测模型与e相关，因此需要先对e进行求解。<br>我们使用模型估计时用到的<a href="#e_estimation">递推估计方法</a>，求得\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)。因此，可以得到：</p>
+<p>$$<br>\hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)}\\<br>E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)  = \begin{cases}<br>0, \qquad when\quad  l-i&gt;0\\<br>e _{t+l-i},\qquad  when \quad l-i&lt;=0<br>\end{cases}<br>$$</p>
+<p>其中对于l-i&gt;0的情况，由于相应的Y值是我们预测得到，因此我们无法通过递推关系求得相应残差的期望，另一方面，我们希望我们的预测尽可能准确，因此另残差期望为零也是合理的。<br>这里值得注意的一点，我们使用递推估计的方法逼近残差，需要满足模型可逆的前提。<br>同时，在对\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)进行估计的时候，因为我们将e序列转化成了无穷序列的Y只和，因此，我们可以考虑，当逼近项数j&gt;t-q时，对应Y的参数项\(\pi _j\)可以忽略。</p>
+<h3 id="ARIMA模型的预测"><a href="#ARIMA模型的预测" class="headerlink" title="ARIMA模型的预测"></a>ARIMA模型的预测</h3><p>对arima模型的预测可分为AR部分与MA部分，值得注意的是，若MA的截断j值选取t-q时，当l&gt;q时，ARIMA模型中MA部分将不起作用，因此此时模型只包含AR部分。<br>对ARMA模型，以\(\{e _t\}\)为基进行展开，得到相应参数\(\{\psi _t\}\)，则此时预测对应残差为：<br>$$<br>e _t(l) = Y _{t+1} - \hat Y(l) \\<br>= e _{t+l} + \psi _{1} e _{t+l-1} + \psi _{2} e _{t+l-2} + \cdots + \psi _{l-1} e _{t+1}<br>$$<br>也就是说对于真实的\(Y _{t+l}\)，对l周期内的误差对l点的预测具有累计效应。当序列平稳时，l趋于无穷，序列误差对方差趋于\(\gamma _0 \)。<br>这里由于我们误差服从正态分布，因此通过计算置信区间，利用误差的方差，我们可以对预测结果的范围进行估计。</p>
+<h2 id="模型诊断"><a href="#模型诊断" class="headerlink" title="模型诊断"></a>模型诊断</h2><p>为判断学习出的ARIMA模型是否有效，我们需要对得到的模型进行诊断。</p>
+<h3 id="残差分析"><a href="#残差分析" class="headerlink" title="残差分析"></a>残差分析</h3><p>对于ARIMA模型，我们假设我们的数据满足模型:<br>$$Y _t=\pi _1 Y _{t-1} + \pi _2 Y _{t-2} + \cdots + e _{t-q}$$<br>这里假设模型平稳可逆，\(\pi\)是模型差分和MA部分展开并与AR部分合并后得到的合并参数。<br>在模型建立好后，对每一个\(\pi\)，我们有一个估计量\(\hat \pi\)，因此使用过去序列对现在时间点t进行预测后，我们可以得到残差（实际值-预测值）：<br>$$\hat e _{t-q} = Y _t - \hat \pi _1 Y _{t-1} - \hat \pi _2 Y _{t-2} + \cdots $$<br>如果我们的ARIMA模型预测无误，则\(\hat e _{t} = e _{t}\)，也就是说我们的残差应：1. 服从正态分布 2. 每一时刻的残差与前序时刻不相关。通过判断残差这两点特性，我们可以分析出ARIMA模型对数据的拟合程度。<br>在实际判别中，我们主要判断方法有：残差图，QQ图，残差自相关性判定，统计量检验等方法。</p>
+<h4 id="残差图"><a href="#残差图" class="headerlink" title="残差图"></a>残差图</h4><p>由于残差应近似服从正态分布，因此我们绘制出残差的时间序列散点图（即残差图，X轴为时间，Y轴为残差值），通过比较散点图的随机性，与正态分布的特点来判断其正态性。这里我们可以关注：      </p>
+<ol>
+<li>在相邻时刻残差是否产生了明显的相关特点. </li>
+<li>不同时间段内，残差的变化幅度是否相近. </li>
+<li>残差值超过\( 1\sigma, 2\sigma, 3\sigma \)的数量.   </li>
+</ol>
+<p>如图：<br>$$此处应有图+解释$$</p>
+<h5 id="残差正态性与QQ图（分位数-分位数图）"><a href="#残差正态性与QQ图（分位数-分位数图）" class="headerlink" title="残差正态性与QQ图（分位数-分位数图）"></a>残差正态性与QQ图（分位数-分位数图）</h5><p>使用残差图我们可以很好的看出残差在不同时间段是否有特殊的特征，但其对正态分布的实际分布情况并不能完全的刻画，因此我们引入了QQ图（分位数-分位数图）。<br>QQ图横坐标是理论分位数，纵坐标是实际分位数，我们通过算出每一个时刻t，残差在实际残差序列中的分位数位置作为Y轴，其在模型中残差的理论上的高斯分布应处于的分位数位置作为X轴，从而绘制出散点图。如果残差满足正态分布，则其应满足：</p>
+<ol>
+<li>其散点应该分布在y=x这一条直线上</li>
+<li>散点越靠近原点(0,0)点越密集，越远离原点越稀疏。</li>
+<li>稀疏变化程度应该与正态分布的分布一致</li>
+</ol>
+<p>如图：<br>$$此处应有图+解释$$</p>
+<h4 id="残差自相关性"><a href="#残差自相关性" class="headerlink" title="残差自相关性"></a>残差自相关性</h4><p>除了残差的正态性，我们还可以从残差相关性入手。通过计算残差序列不同阶的相关性，我们可以画出残差的ACF图。若无相关性，则各阶滞后均应该处于一个较低的水平。通过对相关性显著性分析，我们可以定量的判断模型是否有异常。<br>$$ACF显著性判断$$<br>如图：<br>$$此处应有图+解释$$</p>
+<p>通过观察ACF图，我们可以找到是否有单个的滞后相关性具有异常。而另一方面，我们还可以对各个滞后进行综合考虑，可能单个相关系数没有异常，但是整体来看，具有异常。因此我们引入<strong>Ljung-Box检验</strong>，其统计量为：<br>$$Q=n(\hat r _1 ^2 + \hat r _2 ^2 + \cdots +\hat r _k ^2 )$$<br>若我们估计的模型正确，则Q应该近似服从自由度为k-p-q的卡方分布，若假设检验不能通过，则可以判断模型拟合有误。5t t</p>
+<h3 id="过拟合和参数冗余"><a href="#过拟合和参数冗余" class="headerlink" title="过拟合和参数冗余"></a>过拟合和参数冗余</h3><p>数据缺失<a href="http://rpubs.com/englianhu/handle-missing-value" target="_blank" rel="noopener">http://rpubs.com/englianhu/handle-missing-value</a></p>
+<h1 id="谱表示与谱分析"><a href="#谱表示与谱分析" class="headerlink" title="谱表示与谱分析"></a>谱表示与谱分析</h1><p>ARIMA模型主要从滑动窗口和序列自相关性两方面对序列的周期性进行拟合。而考虑到对周期性问题进行拟合，我们很容易想到信号处理中的谱表示，即通过使用不同频率的正弦余弦函数，拟合出我们希望得到的周期变化。同时，我们还引入了傅立叶变换，将序列从空域变换到频域，通过分析频域图像，从而对周期性，相关性等进行更好的分析，这是谱分析的基本思想。</p>
+<h2 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="基本公式与概念"><a href="#基本公式与概念" class="headerlink" title="基本公式与概念"></a>基本公式与概念</h3><p>一下为一些简单常用的公式：<br>$$<br>R\  cos(2\pi ft + \Phi)=A\ cos(2\pi ft )+B\ sin(2\pi ft)<br>$$<br>$$<br>R = \sqrt{(A^2 + B^2)},\ \Phi = artan(-B/A)<br>$$<br>$$<br>B = R * cos(\Phi),\    A = -R * sin(\Phi)<br>$$</p>
+<p>对于谱表示来说，我们可以将通项公式写成如下形式：<br>$$<br>Y  _t  = A _0 + \sum _{j=1} ^m {[A _j cos(2 \pi f _j t) + B _jsin(2 \pi f _j t)]}<br>\tag{谱1.1}<br>$$</p>
+<p>这是一种利用正弦余弦对，对时间序列的拟合，对于其中的各项A与B我们可以用最小二乘法进行回归，对于其中频率f 如果我们取特殊形式，则回归将会变得特别简单，例如：<br>1）n=2k+1：<br>则频率为依次为：1/n,2/n,…,k/n (k/n=1/2-1/(2n))。这种频率我们称之为傅立叶频率，在这些频率下，正弦和余弦的预测变量是正交的。<br>因此，最小二乘估计可得：</p>
+<p>$$<br>\hat A _0 = \overline Y<br>$$</p>
+<p>$$<br>\hat A _j = \frac{2}{n} \sum _{t=1} ^n {Y _t cos(2 \pi t j/n)},\ \hat B _j = \frac{2}{n} \sum _{t=1} ^n {Y _t sin(2 \pi t j/n)}<br>$$</p>
+<p>2）n=2k：<br>则：<br>$$<br>\hat A _k = \frac{1}{n} \sum _{t=1} ^n (-1) ^t Y _t,\ \hat B _j = 0<br>$$</p>
+<p>对于任意长度的序列，无论其是确定性的还是随机的，都可以用通项公式进行完美拟合。<br>同时，对于长序列，通常来说可以使用快速傅立叶变换进行快速求解。</p>
+<h3 id="周期图"><a href="#周期图" class="headerlink" title="周期图"></a>周期图</h3><p>通过上述通项公式，我们可以对时间序列进行拟合。但实际拟合中，我们需要确定实际需要拟合哪一些周期。这时周期图是一个较好的工具。<br>周期图定义为:<br>$$<br>I(j/n) = \frac{n}{2} (\hat A _j ^2 + \hat B _j ^2 )<br>$$<br>对于样本量为偶数时，即 \(n=2k)\)时，在极端频率\(f=k/b=1/2)\)时，有：</p>
+<p>$$<br>I(1/2) = n(\hat A_k)^2<br>$$</p>
+<p>周期图的高峰显示了序列整体行为中不同频率上余弦-正弦对的相对强度。我们可以选取周期图中峰值较高的周期进行建模。<br>实际上对于一般的时间序列而言，周期图是时间序列从空域向频域变换后频域的图像。<br>对于较长序列，我们可以使用快速傅立叶变换的方式（FFT）进行快速有效的数值计算。</p>
+<h2 id="谱表分析"><a href="#谱表分析" class="headerlink" title="谱表分析"></a>谱表分析</h2><h3 id="谱表示"><a href="#谱表示" class="headerlink" title="谱表示"></a>谱表示</h3><p>对于谱分析的通项公式（谱1.1）来说，我们先考虑\(A_0=0\)的情况，又或者说，我们可以移除样本均值，令\(Y _t\)为样本到样本均值的偏差。此时，我们仅考虑\(0&lt;f&lt;1/2\)的情况（ 对于f在(0,1/2)和(1/2,1)区间，图像实际上是重叠的 ）。<br>我们令：<br>$$<br>a(f)=\sum _{\{j|f _j&lt;f\}} A _j, b(f)=\sum _{\{j|f _j&lt;f\}} B _j<br>$$<br>从而构造出两个阶梯函数。从而我们可以对通项公式进行改写,得到谱表示：<br>$$<br>Y _t = \int _0 ^{1/2} cos(2\pi ft) \rm{d}a(f) + \int _0 ^{1/2} sin(2\pi ft)<br> \rm{d}b(f) \tag{谱1.2}<br>$$<br><strong>事实上，任何零均值平稳的过程都能表示成上述方程的形式。即，平稳过程可以用连续频带上无穷多个余弦正弦对的线形组合表示。</strong></p>
+<h3 id="周期图与谱密度"><a href="#周期图与谱密度" class="headerlink" title="周期图与谱密度"></a>周期图与谱密度</h3><p>正如上文提到的，要分析时间序列，周期图是一个很好的工具。实际上周期图是对谱表示的时间序列过程进行傅立叶变换的频域图像。这里我们引入谱密度（功率谱）概念，一个信号的功率谱密度就是该信号自相关函数的傅里叶变换。谱密度是过程经过傅立叶变换后在频域的密度函数。</p>
+<p>平稳随机过程的功率谱是一个确定函数。通过计算我们可以得到其公式为：</p>
+<p>$$<br>S(f)=\gamma_0 + 2\sum _{k=1} ^\infty \gamma _k cos(2\pi fk)<br>$$</p>
+<p>其中，\(\gamma _k\)为函数的k阶滞后样本协方差。根据傅立叶理论（QA：Planchere定理？是否需要过程满足先决条件，例如函数属于L2空间?），必存在一个相反关系，即：<br>$$<br>\gamma _k = \int _{-1/2} ^{1/2} S(f) cos(2\pi kf) \rm{d}f<br>$$<br>从数学上来讲，S(f)是序列 \(\{\gamma _k\}\)的离散时间傅立叶变换，而 \(\{\gamma _k\}\)是谱密度的傅立叶逆变换。<br>同时还有：<br>$$<br>F(f) = \int _{0} ^{f} S(x) \rm{d}x ,0&lt;= f &lt;=1/2<br>$$<br>可以看出，谱密度下方区域面积的两倍是过程方差对应频率区间上构成该过程的余弦正弦对的那部分。<br>对于周期图I(f)，我们有：<br>$$<br>\hat{S}(f)=1/2I(f),\hat{S}(1/2)=I(1/2),<br>$$</p>
+<p>###附：<br>傅立叶变换公式：<br>$$<br>F(\omega) = \int _{-\infty} ^{\infty} f(t)e^{-i\omega t} \rm{d}t<br>$$</p>
+<h1 id="综合方法"><a href="#综合方法" class="headerlink" title="综合方法"></a>综合方法</h1><h2 id="Prophet"><a href="#Prophet" class="headerlink" title="Prophet"></a>Prophet</h2><p>prophet是facebook开源的python预测库，该库的api设计与sklearn很像，也是分为fit方法和predict方法。prophet将时间序列分解为三个不同的成分：趋势成分，周期性成分与特殊点（如节假日），并采用加法模型，将三个成分相结合：<br>$$<br>y(t)=g(t)+s(t)+h(t)+\epsilon_t<br>$$<br>其中g(t)为趋势函数，代表序列中非周期性的改变，s(t)为周期性成分，h(t)为节假日等特殊点。\(\epsilon _t\) 为随机成分，我们一般令其为正态分布。<br>我们知道对于ARIMA模型而言我们可以利用差分方法来拟合趋势，而利用这种加性模型，对于趋势我们可以更加自由的进行拟合。</p>
+<h3 id="趋势拟合"><a href="#趋势拟合" class="headerlink" title="趋势拟合"></a>趋势拟合</h3><p>prophet主要使用了两种趋势拟合模型，增长模型与线性模型</p>
+<h4 id="增长模型"><a href="#增长模型" class="headerlink" title="增长模型"></a>增长模型</h4><p>增长模型常被用于生态系统模型中（被广为熟知的增长s曲线）如下：</p>
+<p>$$<br>g(t)=\frac{C}{1+exp(-k(t-m))}<br>$$</p>
+<p><img src="//liuzhiqi.github.io/blog/2020/05/22/Time-Series1/prophet_growth_curve.png" alt="avatar"></p>
+<p>然而在实际使用过程中，这种完美的曲线是不存在的，以用户数据为例：当新功能发布，用户增长率（k）与曲线容量（C）可能发生变化，而实际情况中，这种变化是经常发生的。因此，我们需要对模型进行适应。<br>对于曲线容量（C）而言，我们可以使用一个随时间变化的动态容量C(t)。<br>而对变化率（k）来说，我们可以假定，变化率是在某些时刻发生突然变化的（这也符合我们上述例子中的实际情况）。我们将这些变化的点用序列\(\boldsymbol{S}=\{s _j\}\)表示，\(\boldsymbol{\delta}=\{\delta _j\}\)表示第\(s _j\)时间点上的变化率增量，令k为基础增长率，令向量\(\boldsymbol{a}(t)=\{0,1\} ^{|S|}\)，有</p>
+<p>$$<br>a _j (t)=\begin{cases}<br>1,\quad t \geq s _j \\<br>0,\quad other<br>\end{cases}<br>$$</p>
+<p>则对增长率，我们有\(k + a _j(t)^T\delta\)，而当增长率发生变化的时候，我们的偏移参数m也需要发生变化，举发生一次变化的图像为例：<br><img src="//liuzhiqi.github.io/blog/2020/05/22/Time-Series1/prophet_growth_curve2.png" alt="avatar"></p>
+<p>f曲线是变化前曲线，在s点处，增长率发生变化，变化后曲线为f‘。则我们有：</p>
+<p>$$<br>f(t)=\frac{C}{1+exp(-k(t-m))}<br>$$</p>
+<p>$$<br>f(t)=\frac{C}{1+exp(-(k+\delta)(t-(m + \gamma)))}<br>$$<br>其中\(\delta,\gamma\)分别为k和m的增量，又由于曲线在t=s点相交，我们有f(s)=f’(s)。通过整理等式我们可得：</p>
+<p>$$<br>\gamma=\frac{\delta(s-m)}{k+\delta}<br>$$</p>
+<p>推广到多点的情况，则我们的得到：</p>
+<p>$$<br>\gamma _j=\frac{(s _j -m -\sum _{l&lt;j}\gamma _l)\delta _j}{k+\sum _{l \leq j}\gamma _l}<br>$$</p>
+<p>令\(\boldsymbol{\gamma}=\{\gamma _j\}\)，则，我们得到最终模型：</p>
+<p>$$<br>g(t)=\frac{C(t)}{1+exp(-(k+\boldsymbol{a}(t)^T\delta)(t-(m+\boldsymbol{a}(t)^t\boldsymbol{\gamma})))}<br>$$</p>
+<!--
+<p>–&gt;</p>
+<p>[^PKUTimeSerious]: [应用时间序列分析备课笔记](<a href="http://www.math.pku.edu.cn/teachers/lidf/course/atsa/atsanotes/html/_atsanotes/atsa-estarma.html#estarma-mlearma/">http://www.math.pku.edu.cn/teachers/lidf/course/atsa/atsanotes/html/_atsanotes/atsa-estarma.html#estarma-mlearma/</a>, 2016/2018-8.19)</p>
+-->
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/01/12/A-Survey-on-Network-Embedding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiqi Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhiqi Liu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2020/01/12/A-Survey-on-Network-Embedding/" itemprop="url">【Paper Reading】A Survey on Network Embedding</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-12T22:13:11+08:00">
+                2020-01-12
               </time>
             
 
@@ -679,7 +946,7 @@
 <p>利用KL散度对最终结果进行优化（比较概率分布与边权重变化后得到的实际关系重要度）。得到一二阶特征后，可以通过特征拼接的方式组合简单组合在一起。  </p>
 <h4 id="GraRep-【-Need-dive-deep-】："><a href="#GraRep-【-Need-dive-deep-】：" class="headerlink" title="GraRep 【## Need dive deep ##】："></a>GraRep 【## Need dive deep ##】：</h4><p>LINE只考虑一阶和二阶，GrapRep考虑K阶（K&gt;2）相似性。给定一个邻接矩阵A，k步概率转移矩阵可通过矩阵相乘计算得到。</p>
 <h4 id="M-NMF"><a href="#M-NMF" class="headerlink" title="M-NMF:"></a>M-NMF:</h4><p>之前的NE主要从保留相近节点的关系来做Embedding。M-NMF则从社群划分的角度进行切入。<br>这里M-NMF优化目标可以分为两部分，矩阵相似度特征部分和社群部分。<br>矩阵相似度部分主要衡量了点和点的相似度。M-NMF主要使用了一阶相似度和二阶相似度。其中一阶相似度使用了邻接矩阵，作为相似度矩阵。二阶相似度矩阵则由两点的邻接向量的余弦距离定义。最终相似度矩阵由一阶二阶相似度矩阵加权拼接得到：\(  S = S ^{(1)} + \eta S ^{(2)}  \)    </p>
-<p>社群部分主要使用了Q-Modularity来衡量社群划分水平（见：<a href="/blog/2020/05/12/基础社群分析方法/" title="基础社群分析方法">基础社群分析方法</a> ）。通过优化：\( Tr(H ^TBH) \)来优化社群。<br>为了得到Embedding向量，M-NMF使用了矩阵分解，目标函数如下：</p>
+<p>社群部分主要使用了Q-Modularity来衡量社群划分水平（见：<a href="/blog/2019/05/12/基础社群分析方法/" title="基础社群分析方法">基础社群分析方法</a> ）。通过优化：\( Tr(H ^TBH) \)来优化社群。<br>为了得到Embedding向量，M-NMF使用了矩阵分解，目标函数如下：</p>
 <p>$$<br>argmin(M,U,H,C)||S - MU ^T|| ^2 _F + \alpha||H - UC ^T|| ^2 _F -\beta Tr(H ^TBH)<br>$$</p>
 <p>其中U为节点表示矩阵，M为节点-节点偏好矩阵，C为社区特征矩阵。铜鼓轮流更新M、U、H、C来优化方程。</p>
 <p>从公式中我们可以看到，作者通过引入一个新的“社区表达矩阵”C，结合“节点表达矩阵”U，通过矩阵分解的方法来结合模块度公式中原有的“社区矩阵”H，这样一来，embedding的过程中使用模块度公式来约束社区结构。但是这种方法引入的假设变量有点多，虽然实验效果不错，但解释起来始终有些牵强。同时，矩阵分解方法需要开的内存太高，难以针对大规模数据。</p>
@@ -701,7 +968,7 @@
 <h5 id="Adamic-Adar-AA）"><a href="#Adamic-Adar-AA）" class="headerlink" title="Adamic-Adar (AA）"></a>Adamic-Adar (AA）</h5><p>$$<br>M _g = I  \\<br>M _l = ADA<br>$$<br>因此s的svd变成了：<br>$$<br>M _g ^{-1}M _l = V ^s \Sigma{V ^t} ^T \\<br> = ADA<br>$$</p>
 <p>将原始SVD转变为通用的SVD问题，也就是可以不求s直接进行SVD。</p>
 <h4 id="SiNE（2017）"><a href="#SiNE（2017）" class="headerlink" title="SiNE（2017）"></a>SiNE（2017）</h4><p>SiNE主要针对符号网络来进行embedding，考虑正边和负边。SiNE主要参考了结构平衡理论，即符号网络中的用户与朋友的距离比敌人更近（相似度更高）。SiNE假设每一个顶点都存在一个正负边三元组，\((v _i,v _j,v _k)\)，其中ij边为+1，ik边为-1。实际社交网络中，负边样本往往是少数，甚至不存在的，若某一顶点不存在，则为该边添加一个虚拟节点\(v _0 \)，令\( v _k = v _0\)，则由结构平衡理论，我们希望有：</p>
-<p>$$<br>f(x _i,x _j) \ge f(x _i,x _k) + \sigma<br>$$<br>其中\( \sigma\)为负边控制参数，\( \sigma\)越大，互斥的变离得越远。SiNE根据三元组设计了一种双路深度神经网络，下图为其为2层时的结构：<br><img src="//liuzhiqi.github.io/blog/2020/11/12/A-Survey-on-Network-Embedding/SiNE_architecture.png" alt="这是代替图片的文字，随便写"></p>
+<p>$$<br>f(x _i,x _j) \ge f(x _i,x _k) + \sigma<br>$$<br>其中\( \sigma\)为负边控制参数，\( \sigma\)越大，互斥的变离得越远。SiNE根据三元组设计了一种双路深度神经网络，下图为其为2层时的结构：<br><img src="//liuzhiqi.github.io/blog/2020/01/12/A-Survey-on-Network-Embedding/SiNE_architecture.png" alt="这是代替图片的文字，随便写"></p>
 <h2 id="5-Network-Embedding-with-Side-Information"><a href="#5-Network-Embedding-with-Side-Information" class="headerlink" title="5 Network Embedding with Side Information"></a>5 Network Embedding with Side Information</h2><p>除了网络的结构信息之外，网络的侧信息也是NE的另一个重要数据源。在NE中，网络的侧信息可以被分为两种：节点信息和节点与边的类型。</p>
 <h3 id="5-1-Network-Embedding-with-Node-Content"><a href="#5-1-Network-Embedding-with-Node-Content" class="headerlink" title="5.1 Network Embedding with Node Content"></a>5.1 Network Embedding with Node Content</h3><h4 id="MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）"><a href="#MMDW（Max-Margin-DeepWalk-Discriminative-Learning-of-Network-Representation）" class="headerlink" title="MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）"></a>MMDW（Max-Margin DeepWalk Discriminative Learning of Network Representation）</h4><p>传统的DeepWalk是一种无监督的方法，如果能够引入label数据，生成的向量对于分类任务会有更好的作用，因此MMDW在此基础上对DeepWalk进行了改进，在embedding的过程中加入了label信息，使用SVM的软间隔思想，使embedding结果更有效的服务于分类算法。<br>Network representation learning with rich text information 一文认为，DeepWalk 等价于对一个矩阵M进行矩阵分解，矩阵中的每一个元素为：<br>$$<br>M _{ij} = \log \frac {[e _i(A + A ^2 + \cdots + A ^t)] _j} {t}<br>$$<br>其中A为邻接矩阵，\(e _i\)为第i个位置为1其余为0的向量。我们随机游走t步，M矩阵每一个元素可以理解为表示i游走到j的可能性。我们用DeepWalk得到一个表示，实际上可以理解为对M进行类似传统主题模型矩阵分解的操作，即：</p>
 <p>$$<br> min _{W,H} L _{DW} = min _{W,H} \sum _{i,j} (M _{ij} - (W ^T H) _{ij}) ^2 + \lambda/2(||W|| _2 ^2 +||H|| _2 ^2)<br>$$</p>
@@ -728,7 +995,7 @@
 <h4 id="Learning-social-network-embeddings-for-predicting-information-diffusion-Simon-et-al-63"><a href="#Learning-social-network-embeddings-for-predicting-information-diffusion-Simon-et-al-63" class="headerlink" title="Learning social network embeddings for predicting information diffusion [Simon et al. [63]]"></a>Learning social network embeddings for predicting information diffusion [Simon et al. [63]]</h4><p>Simon et al. (Bourigault et al. 2014)的社会网络嵌入算法来预测information diffusion。将传播过程映射到热传播过程，学习节点的表示，使得扩散核可以解释训练集， 其模型如下：</p>
 <p>$$<br>K _Z (t,s ^c,u _i)=(4\pi t)^ {-n/2} e ^{\frac {||z _s c -z _{u _i}|| ^2}{4 t}}<br>$$<br>其中t为时刻，s为热度源头，u为用户，z为对应表示空间向量。则K为热源s在t时刻对用户u的影响。则优化函数：</p>
 <p>$$<br>L(Z)=\sum _{c \in C _l} \Delta(K _Z(.,s ^c,.),c)<br>$$<br>其中c为实际观察到的传播值，所以最小化目标为找到最合适的向量使传播值增加最小。其中增量算子可以使用hinge-loss函数</p>
-<h4 id="Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18"><a href="#Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18" class="headerlink" title="Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]"></a>Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]</h4><p>Deepcas提出了一种E2E的深度学习模型，其整体流程为：首先使用类似DeepWalk模型的随机游走方法，得到路径序列，然后使用GRU进行路径的embedding，由于预测时需要较多网络信息，因此想要进行预测需要多条序列，所以Deepcas接着使用Attention机制，来对多条序列进行整合，最终使用MLP来对结果进行预测。其流程图如下：<br><img src="//liuzhiqi.github.io/blog/2020/11/12/A-Survey-on-Network-Embedding/Deepcas.png" alt="Deepcas"> </p>
+<h4 id="Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18"><a href="#Deepcas-an-end-to-end-predictor-of-information-cascades-Li-et-al-18" class="headerlink" title="Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]"></a>Deepcas: an end-to-end predictor of information cascades [Li et al. [18]]</h4><p>Deepcas提出了一种E2E的深度学习模型，其整体流程为：首先使用类似DeepWalk模型的随机游走方法，得到路径序列，然后使用GRU进行路径的embedding，由于预测时需要较多网络信息，因此想要进行预测需要多条序列，所以Deepcas接着使用Attention机制，来对多条序列进行整合，最终使用MLP来对结果进行预测。其流程图如下：<br><img src="//liuzhiqi.github.io/blog/2020/01/12/A-Survey-on-Network-Embedding/Deepcas.png" alt="Deepcas"> </p>
 <h3 id="6-2-Anomaly-Detection"><a href="#6-2-Anomaly-Detection" class="headerlink" title="6.2 Anomaly Detection"></a>6.2 Anomaly Detection</h3><p>本文中提到的异常检测主要用来检测结构的异常（不一致），比如异常节点连接到各种不同有影响力的社区。如图中的红色节点。</p>
 <p>![Anomaly_Detection](./A_Survey_on_Network_Embedding/Anomaly_Detection .png) </p>
 <h4 id="An-embedding-approach-to-anomaly-detection-Hu-et-al-2016"><a href="#An-embedding-approach-to-anomaly-detection-Hu-et-al-2016" class="headerlink" title="An embedding approach to anomaly detection [Hu et al. 2016]"></a>An embedding approach to anomaly detection [Hu et al. 2016]</h4><p>Hu对网络节点进行embedding，并将embedding向量的每一项看作节点对每一个community的相关度，来对异常点进行检测。其Embedding过程如下：<br>$$<br>S(\overline X _i,\overline X _j) = \begin{cases}<br>||\overline X _i - \overline X _j|| ^2 \quad (i,j) \in E \\<br>(||\overline X _i - \overline X _j||-1) ^2 \quad (i,j) \in E \\<br>\end{cases}<br>$$</p>
@@ -813,12 +1080,12 @@
   
   
 
-  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-articles" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/06/17/社交网络距节点离度量方法/">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2019/06/17/社交网络距节点离度量方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiqi Liu">
@@ -837,7 +1104,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2020/06/17/社交网络距节点离度量方法/" itemprop="url">社交网络距节点离度量方法</a></h1>
+                <a class="post-title-link" href="/blog/2019/06/17/社交网络距节点离度量方法/" itemprop="url">社交网络距节点离度量方法</a></h1>
         
 
         <div class="post-meta">
@@ -849,8 +1116,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-17T00:21:12+08:00">
-                2020-06-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-17T00:21:12+08:00">
+                2019-06-17
               </time>
             
 
@@ -977,7 +1244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2020/05/12/基础社群分析方法/">
+    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2019/05/12/基础社群分析方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiqi Liu">
@@ -996,7 +1263,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2020/05/12/基础社群分析方法/" itemprop="url">基础社群分析方法</a></h1>
+                <a class="post-title-link" href="/blog/2019/05/12/基础社群分析方法/" itemprop="url">基础社群分析方法</a></h1>
         
 
         <div class="post-meta">
@@ -1008,8 +1275,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-12T22:13:11+08:00">
-                2020-05-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-12T22:13:11+08:00">
+                2019-05-12
               </time>
             
 
@@ -1031,8 +1298,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Notes</span>
+                  <a href="/categories/Articles/" itemprop="url" rel="index">
+                    <span itemprop="name">Articles</span>
                   </a>
                 </span>
 
@@ -1128,405 +1395,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-notes" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2019/10/22/Time-Series1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiqi Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhiqi Liu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/10/22/Time-Series1/" itemprop="url">时间序列分析（一）单变量时间序列分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-22T10:12:39+08:00">
-                2019-10-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-<h1 id="一、Background"><a href="#一、Background" class="headerlink" title="一、Background"></a>一、Background</h1><p>在我们对单变量时间序列进行分析时，为了简化模型，我们往往需要预先作出一些假设。<!-- arima、谱分析还是alphabet相关方法，都存在类似的假设，--><br>我们令随机变量序列 \(\{Y_t: t=0,\pm1, \pm2, \pm3,···\}\)为一个随机过程，并将其作为我们所观测的时间序列，整个序列可以看作是 Y 的联合分布。对于一般的时间序列模型，我们可以采用一些相应的统计量来描述整个时间序列（如，Y的联合分布为多元正态的，则一阶和二阶矩就可以确定整个模型），这些模型往往较为简单，但是十分实用。</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-1基本统计量"><a href="#1-1基本统计量" class="headerlink" title="1.1基本统计量"></a>1.1基本统计量</h3><h4 id="均值、方差、协方差"><a href="#均值、方差、协方差" class="headerlink" title="均值、方差、协方差"></a>均值、方差、协方差</h4><p>基础统计量在实际单变量时间序列分析中非常有用，它们不仅可以对时间序列的周期性、平稳性等方面进行分析，甚至还可以辅助确定一些时间序列模型的参数。</p>
-<h4 id="均值"><a href="#均值" class="headerlink" title="均值"></a>均值</h4><p>对随机过程 \(Y_t\) ，均值定义如下：<br>$$\mu _t = E(Y _t), t = 0, \pm 1,  \pm 2,  \pm 3, \cdots  $$</p>
-<h4 id="自协方差"><a href="#自协方差" class="headerlink" title="自协方差"></a>自协方差</h4><p>$$ \gamma _{t,s} = Cov(Y _t, Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots$$<br>其中 \(Cov(Y _t, Y _s) = E[(Y _t - \mu _t)(Y _s - \mu _s)] = E(Y _tY _s) - \mu _t\mu _s\)（根据均值定义消去均值乘积）。</p>
-<h4 id="自相关函数"><a href="#自相关函数" class="headerlink" title="自相关函数"></a>自相关函数</h4><p>$$ \rho _{t,s} = Corr(Y _t,Y _s), t,s = 0, \pm 1,  \pm 2,  \pm 3, \cdots  $$<br>$$ Corr(Y _t,Y _s) = \frac{Cov(Y _t, Y _s)}{\sqrt{Var(Y _t)Var(Y _s)}} = \frac{\gamma _{t,s}}{\sqrt{\gamma _{t,t}\gamma _{s,s}}}$$</p>
-<!--
-##### 时间间隔下的自相关函数
-对与时间间隔k，-->
-
-<h3 id="1-2-平稳性"><a href="#1-2-平稳性" class="headerlink" title="1.2 平稳性"></a>1.2 平稳性</h3><p>对于一切时间间隔k，如果在时间点 \(t_1 , t_2, t_3, \cdots , t_n\)下均有，\(Y_{t_1}, Y_{t_2}, Y_{t_3}, \cdots , Y_{t_n}\)与\(Y_{t_1 -k}, Y_{t_2 -k}, Y_{t_3 -k}, \cdots , Y_{t_n -k}\) 的联合分布相同，则过程\(\{Y_{t}\}\)称为<strong>严平稳的</strong>。<br>而若序列是平稳性的，则：<br>当 n=1 时，\(Y_{t}\) 与\(Y_{t-k}\) 的分布相同，所以Y序列的每一点具有相同的分布，因此序列均值与方差恒为常数。<br>进而任意时间点t来说，由于序列的每一点均值方差均相同，所以我们可以化简自相关函数，即<br>$$ \rho _{k} = Corr(Y _t,Y _{t-k}),   \gamma _{k} = Cov(Y _t, Y _{t-k})$$<br>严平稳性是一个非常强的假设，因此我们引出了弱（二阶矩）平稳性：  </p>
-<ol>
-<li>均值函数在所有时间上恒为常数。   </li>
-<li>对于所有时间点t和时间间隔k，有\(\gamma_{t,t-k}=\gamma_{0,k}\)。<br>在实际应用中，\(\gamma_{k}\)是一个非常有用的工具，它可以帮助我们判断时间序列的周期性，在某些时间序列模型中，我们使用\(\gamma_{k}\)来帮我们判断模型参数，这些应用即使在非平稳的状态下也有一定借鉴意义。</li>
-</ol>
-<h2 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h2><p>在进行单变量时间序列分析时，我们往往需要对时间序列模型作出一些假设。最常见的假设为线性叠加模型，即模型中各个组成部分是以线性叠加的方式组合到一起的。对于能预测的单变量模型来说，我们往往认为其具有平稳周期性，和非平稳部分。而非平稳部又可以分为趋势部分与局部异常部分。</p>
-<h3 id="周期性"><a href="#周期性" class="headerlink" title="周期性"></a>周期性</h3><p>在单变量时间序列模型中，我们往往假设模型是具有周期性的，在对用户数据建模时，这一点往往是成立的（比如：分析用户PV、UV等，往往具有明显的7天周期与一年周期，在这不同周期中，用户数据整体波动出现明显相似的变化）。<br>对于这一部分的建模，有很多方式，如：简单季节性模型根据周期性的经验估计直接建立模型，ARIMA中利用假设过去周期性的时间节点对当前时间点存在残留影响来建立模型，谱分析对时间序列进行傅立叶变换从而拟合周期部分等等。<br>不论是使用什么方式，在进行周期性估计时，我们往往不考虑序列的整体趋势，也就是说我们认为周期性部分是平稳的（往往只需要弱平稳即可）。</p>
-<h3 id="非平稳部分"><a href="#非平稳部分" class="headerlink" title="非平稳部分"></a>非平稳部分</h3><h4 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h4><p>对于时间序列模型，我们往往可以将其拆分为两部分，一部分是趋势拟合部分，另一部分是周期性拟合部分。对于趋势部分，一些模型是进行单独拟合的，例如：使用线性模型，或根据经验，使用相应的非线性模型，也有一些模型使用了差分的方式，消除趋势对周期性判断对影响（例如：ARIMA）。<br>当然也有一些模型不需要对趋势进行单独拟合，模型可以自动学习出整体趋势与周期特征（例如：使用深度学习方法对序列进行拟合）。</p>
-<h4 id="干预与异常"><a href="#干预与异常" class="headerlink" title="干预与异常"></a>干预与异常</h4><p>干预分析（Intervention Analysis）是指在时间序列中，因为在某一时刻发生了自然产生或人为施加的影响，导致整体序列产生了一定时间内均值或趋势发生了相应的变化，例如：外部广告投放导致一定时间内某应用UV突然增长，一段时间后稳定用户有一个明显的数量提升、商家在某一天投放广告导致商品购买量提升，广告停止投放，几天内购买量下降，但仍高于投放前，直至平稳、双十一大促，大促时购买量激增，但大促后用户消费明显疲软，一段时间后恢复正常等。在实际数据中，不同的干预可能有不同的特征，下文将介绍几种简单常见的干预拟合方式。</p>
-<p>产生干预时，我们的干预部分用\(S_t ^{(T)}\)表示，其中T为干预产生的时间点。则我们可以定义脉冲函数即：<br>$$P _t ^{(T)}=S _t ^{(T)}-S _{t-1} ^{(T)}$$</p>
-<h5 id="阶梯干预"><a href="#阶梯干预" class="headerlink" title="阶梯干预"></a>阶梯干预</h5><p>我们可以将阶梯干预用如下阶梯函数表示：<br>$$<br>S _t=\begin{cases}<br>1,\quad x\geq T \\<br>0,\quad x&lt;T<br>\end{cases}<br>$$<br>对应的脉冲函数\(P_t ^{(T)}\)，当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。<br>此时我们干预对*时间序列均值的叠加部分\(m_t\)*为：<br>$$m _t = \omega S _t ^{(T)} \tag{1.1}$$<br>也就是说在T时刻激增并保持不变，这种干预往往可以看作是一种可加异常，也就是说当前时刻的异常并不影响之后的序列。</p>
-<h5 id="逐渐平稳的阶梯干预"><a href="#逐渐平稳的阶梯干预" class="headerlink" title="逐渐平稳的阶梯干预"></a>逐渐平稳的阶梯干预</h5><p>阶梯干预的形式非常理想，但实际应用中，全部影响作用其实会持续很长一段时间最终趋于稳定。我们可以对\(m_t\)建立一个AR(1)模型（后续会对其进行介绍）：<br>$$<br>m _t=\begin{cases}<br>\omega\frac{1-\delta ^{t-T}}{1-\delta},\quad x\geq T \\<br>0,\quad other<br>\end{cases}<br>$$<br>其中0&lt;\(\delta\)&lt;1。此时<br>均值增量在会在一段时间内激增最终收敛到\(\frac{\delta}{1-\delta}\)，其中达到极限的一半所用时间\(log(0.5)/log(\delta)\)被称为干预的<strong>半衰期</strong></p>
-<h5 id="逐渐消失的干预"><a href="#逐渐消失的干预" class="headerlink" title="逐渐消失的干预"></a>逐渐消失的干预</h5><p>对于一些干预，在干预瞬间，序列均值会激增，但随着时间推移这种干预影响会逐渐消失。令T时刻干预产生，这时当t=T时\(P_t ^{(T)}\)等于1，其他时间为0。我们可以将这种干预混入我们的模型例如，混入AR(1)模型中：<br>$$m _t=\delta m _{t-1} + \omega P^{(T)} _{t-1}$$</p>
-<p>此时T时刻产生的干预成指数级衰减。</p>
-<h5 id="判断与检验"><a href="#判断与检验" class="headerlink" title="判断与检验"></a>判断与检验</h5><p>受到干预或异常的数据，有很多表示方法，针对不容模型，可能表示形式也不尽相同，而上述方法对于ARIMA模型是适用的，对于其他模型则要因模型而异。面对可能的异常，我们需要进行判断和检验，常用的方法可以使用先猜测异常，然后修正模型，进行假设检验，通过反复修正，最终直至不再发现异常为止。<br>在进行检验时，常用多重检验，可以使用保守的Bonferroni矫正（如果在同一数据集上同时检验n个独立的假设，那么用于每一假设的统计显著水平，应为仅检验一个假设时的显著水平的1/n。）控制多重检验的总体误差率。</p>
-<h1 id="ARIMA（自回归差分滑动平滑方法）"><a href="#ARIMA（自回归差分滑动平滑方法）" class="headerlink" title="ARIMA（自回归差分滑动平滑方法）"></a>ARIMA（自回归差分滑动平滑方法）</h1><p>对于时间序列\(\{Y _t\}\)，若我们令\(\{e _t\}\)代表一系列未观测到的白噪声序列数据，若我们将其看作一系列独立同分布的均值为0的随机变量。则对于一个序列而言，我们可以将其转化为过去时间点序列值残留的影响与当前时间点白噪声的叠加。<br>因此，对于我们可以将上述过程，简化成一个简单的线性过程：<br>$$Y _t=e _t + \psi _1 e _{t-1} + \psi _2 e _{t-2} + \cdots \tag{2.1}$$<br>也就是说当前时间点是过去时间点的残留影响加上当前时间点点白噪声。对于这一模型，若表达式右边是一个无穷级数项，则要求：<br>$$\sum _ {i=1} ^ \infty {\psi _i ^2} &lt; \infty$$<br>也就是说我们希望整体序列整体是收敛的。显然，我们希望考虑到过去的影响，但又不希望过去对当前的影响是发散的。 </p>
-<p>##MA<br>对于公式2.1，若\(\psi \)的数量有限且不为0个，则我们称：<br>$$Y _t=e _t - \theta _1 e _{t-1} - \cdots - \theta _n e _{t-q} $$</p>
-<p>为q阶滑动平均过程，简记MA(q)，其中为方便后续公式表达，我们用\(-\theta\)。<br>对于MA(q)过程我们有：<br>$$\gamma _0 = (1 + \theta _1 ^2 + \theta _2 ^2 + \cdots + \theta _n ^2)\delta _e ^2 $$<br>$$<br>\rho _k=\begin{cases}<br>\frac{-\theta _k + \theta _1 \theta _{k+1} + \theta _2 \theta _{k+2} + \theta _{q-k} \theta _{q}}{1+\theta _1 ^2+\theta _2 ^2 + \cdots + \theta _q ^2},\quad k=1,2,\cdot,q \\<br>0,\quad k&gt;q<br>\end{cases}<br>$$</p>
-<h2 id="AR"><a href="#AR" class="headerlink" title="AR"></a>AR</h2><p>对于时间序列\(\{Y _t\}\)若满足方程：<br>$$Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t $$<br>则，我们称其为p阶自回归过程。从方程我们可以看出，自回归过程是用自身序列做回归变量。对于t时刻的\(Y _t\)来说其值等于过去p个时间点与当前时间点噪声\(e _t\)的加权叠加，其中\(e _t\)要求与t时刻前的Y独立。从等式2.2我们可以看出，通过将右侧Y展开，我们可以还原出等式2.1的形式，但参数的表达可能十分复杂，同时该序列项数可能趋于无穷大。<br>对于MA模型来说，我们较容易保证其平稳，而对于AR模型，平稳显然需要满足条件。令，<br>$$\phi(x)=1 - \phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p  $$<br>$$0=1-\phi _1 x - \phi _2 x^2 - \cdots - \phi _p x ^ p $$<br>为AR模型的特征多项式和特征方程。若特征方程存在平稳解，当且仅当AR特征方程每一个根的绝对值都大于1。因此有如下必要不充分的条件：<br>$$\phi _1 + \phi _2 + \cdots + \phi _p &lt; 1 $$<br>$$| \phi _p |&lt; 1$$<br>假定序列平稳且均值为0。则，我们可以在AR模型方程两边同时乘以\(Y _{t-k}\)并求期望，再除以\(\gamma _0\)可以获得以下重要递推关系：</p>
-<p>$$\rho _k=1 - \phi _1 \rho _{k-1} - \phi _2  \rho _{k-2} - \cdots - \phi _p  \rho _{k-p}  $$<br>分别将\(k = 1,2,\cdots,p\)带入上述方程，则可以得到方程组（Yule-Walker方程组）通过求解相应方程，我们可以求的任意自相关系数\(\rho _k\)。<br>对于AR模型而言，若序列平稳，通过对自回归进行逐层展开，我们可以将其还原为式2.1形式。<br>而对于MA模型，我们可以通过\(Y _{t-k}\) 迭代消去序列中的第k项\(e _{t-k}\),从而将MA模型转化为AR模型。若原时间序列是无穷的，那么我们最终可能转化为一个无穷阶的AR模型。这种MA可逆的转化是有条件的，需要MA特征方程：<br>$$0=1-\theta _1 x - \theta _2 x^2 - \cdots - \theta _p x ^ p $$<br>的根的模大于1（类似AR模型平稳性条件）。</p>
-<h2 id="ARMA-p-q-模型"><a href="#ARMA-p-q-模型" class="headerlink" title="ARMA(p,q)模型"></a>ARMA(p,q)模型</h2><p>若序列心中一部分是自回归，一部分是滑动平均的，那么我们可以得到一个相当普遍的时间序列模型。如下：<br>$$Y _t=\phi _1 Y _{t-1} + \phi _2 Y _{t-2} + \cdots + \phi _n Y _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>对于该模型而言，MA部分我们可以保证解的平稳，因此对于模型整体平稳性，我们只需要保证AR部分过程平稳，即保证模型中AR特征方程根的模大于1。<br>此时模型可以由下式决定：</p>
-<p>$$<br>\begin{cases}<br>\psi _0 = 1\\<br>\psi _1 = -\theta _1 + \phi _1\\<br>\psi _2 = -\theta _2 + \phi _2 + \phi _1\theta _1\\<br>\cdots\\<br>\psi _j = -\theta _j + \phi _p\theta _{j-p} + \phi _{p-1}\theta _{j-p+1} + \cdots + \phi _1\theta _{j-1} \\<br>\end{cases}<br>$$</p>
-<p>这里我们将模型中AR部分展开得到公式2.1的形式，其中参数\(\psi\)为2.1中系数。<br>对于ARMA模型，我们通常要求AR和MA分别满足平稳和可逆两个条件（上文提到，各自特征方程根模大于一）</p>
-<h2 id="非平稳模型"><a href="#非平稳模型" class="headerlink" title="非平稳模型"></a>非平稳模型</h2><p>上述描述的AR与MA模型都存在平稳的前提，而实际上，我们的时间序列往往具有趋势。这时我们可以不再使用的时间序列\(\{Y _t\}\)本身来进行预测，而使用查分的方式用变化率作为序列来进行预测。如：\( \Delta Y _t = Y _t - Y _{t-1} \)为序列 \(\{Y _t\}\)的一阶差分。</p>
-<p><img src="//liuzhiqi.github.io/blog/2019/10/22/Time-Series1/%E4%B8%8D%E5%90%8C%E9%98%B6%E5%B7%AE%E5%88%86.png" alt="avatar"></p>
-<p>如果一个时间序列 \(\{Y _t\}\)的d次差分 \(W _t = \Delta ^d Y _t\)是一个平稳的ARMA(p,q)过程，则称\(\{Y _t\}\)为自回归滑动平均求和模型ARIMA(p,d,q)。通常取d=1或最多2。<br>考虑ARIMA(p,1,q)，令\(W _t = \Delta ^d Y _t\)，我们有：<br>$$W _t=\phi _1 W _{t-1} + \phi _2 W _{t-2} + \cdots + \phi _n W _{t-p} + e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>通过将W用Y替换并合并，可得：</p>
-<p>$$Y _t=(1 + \phi _1)W _{t-1} + (\phi _2 -\phi _1)W _{t-2} + \cdots +  (\phi _{t-p} -\phi _{t-p-1}) W _{t-p} - \phi _p W _{t-p-1} \\+ e _t - \theta _1 e _{t-1} - \theta _2 e _{t-2} - \cdots - \theta _q e _{t-q}$$<br>我们称上述形式为模型的差分方程形式。我们分析其AR特征方程：<br>$$1-(1+\phi _1)x-(\phi _2 - \phi _1)x ^2-\cdots-(\phi _{t-p} -\phi _{t-p-1})x ^p + \phi _p x ^{p+1}=(1-\phi _1 -\phi _2x ^2-/cdots-\phi _px ^p)(1-x)$$<br>此时 x=1是一个根，因此这个过程非平稳，但其余的根是平稳过程\( \Delta ^d Y _t\)的特征多项式的根。这也说明了为什么当原序列非平稳，我们使用一阶差分来得到平稳序列的原因。</p>
-<p>差分是实现平稳较好的方式，出了差分外，我们还可以根据序列特征对序列进行其他的变换。例如：如果发现序列散度随着时间增加，可以尝试使用对数方法对序列进行变换等。</p>
-<h2 id="季节性ARIMA"><a href="#季节性ARIMA" class="headerlink" title="季节性ARIMA"></a>季节性ARIMA</h2><p>对于普通的ARIMA模型，我们考虑的是当前相近的时间节点对现在的影响，然而实际上数据的周期可能会更长。例如：对于用户数据而言，往往存在以周和年为周期的pattern。对于这种较长跨度的周期性影响，ARIMA模型不能进行很好的表达，这时我们可以引入季节性ARIMA模型。<br><strong>简单的季节性ARIMA模型</strong>我们可以通过经验知识，选出相应周期，考虑序列影响时，只考虑倍数于周期的相应时间节点。例如以s（s大于P和Q）为周期，则我们的AR(P)和MA(Q)以及差分I(D)模型如下：</p>
-<p>$$<br>Y _t = Y _t - \Phi _1Y _{t-s}  - \Phi _2Y _{t-2s} - \cdots - \Phi _PY _{t-Ps}<br>$$</p>
-<p>$$<br>Y _t = e _t - \Theta _1e _{t-s}  - \Theta _2e _{t-2s} - \cdots - \Theta _Qe _{t-Qs}<br>$$</p>
-<p>$$<br>\Delta _s Y _t = Y _t + Y _{t-s}<br>$$<br>可以看到AR、MA、以及差分，我们都只考虑不同周期s上相同位置的时间节点（只考虑最近P和Q个周期内的时刻）。注意这里我们使用参数：\(P,Q,\Phi,\Theta\)均为大写以表示季节模型。<br>简单季节性ARIMA加入引入一个周期s，整体模型可以看作是对时间序列间隔s时刻，从而抽出s个子序列，并使用普通ARIMA模型进行拟合。然而这种方法只考虑了一个固定周期的影响，实际上真实序列相近时刻可能也会对当前时刻造成影响（基本的ARIMA模型的假设），因此我们需要同时考虑季节性影响和临近影响。因此引入了人<strong>乘法季节ARIMA模型</strong>。<br>乘法季节ARIMA模型结合了季节和非季节ARIMA，利用类似卷积的思路，将二者结合。例如：我们考虑结合\(MA(1)\) 与 \(MA(1) _s\)两个模型，得到如下特征多项式：<br>$$<br>(1 -\theta x)(1-\Theta x ^{12}) = 1 - \theta x - \Theta x ^{12} - \theta\Theta x^{13}<br>$$<br>通过特征多项式我们可以写出相应的时间序列表达式：<br>$$<br>Y _t = e _t - \theta e _{t-1} - \Theta e _{t-12} - \theta\Theta e _{t-13}<br>$$</p>
-<p>因此我们定义周期为s的乘法季节\(ARMA(p,q)\times(P,Q) _s\)模型，通过分别求AR特征多项式\(\phi\Phi(x)\)和MA特征多项式\(\theta(x)\Theta(x)\)得到相应AR与MA模型序列通过相加合并两个子模型。<br>对于差分模型而言我们可以定义混合差分操作：<br>$$<br>W _t = \Delta ^d \Delta _s ^D Y _t<br>$$<br>因此我们可以得到新的季节ARIMA模型：\(ARMA(p,d,q)\times(P,D,Q) _s\)</p>
-<h2 id="模型识别"><a href="#模型识别" class="headerlink" title="模型识别"></a>模型识别</h2><h3 id="k阶滞后自相关函数（ACF）"><a href="#k阶滞后自相关函数（ACF）" class="headerlink" title="k阶滞后自相关函数（ACF）"></a>k阶滞后自相关函数（ACF）</h3><p>回顾第一节，我们有k阶滞后的自相关函数:<br>$$<br>\rho _{k} = Corr(Y _t,Y _{t-k}) = \frac{Cov(Y _t, Y _{t-k})}{\sqrt{Var(Y _t)Var(Y _{t-k})}} = \frac{\gamma _{k}}{\gamma _{0}}<br>$$</p>
-<p>$$<br>\gamma _{k} = Cov(Y _t, Y _{t-k}) = \frac{\sum _{t=k+1} ^{n} {(Y _t - \overline{Y})(Y _{t-k} - \overline{Y})} }{\sum _{t=1} ^n {(Y _t - \overline{Y}) ^2}}  k=1,2,\cdots<br>$$<br>对于MA(q)模型而言当k&gt;q时，\(\rho _k = 0\)，这里r为\(\rho \)的估计量。因此对于MA模型而言我们可以使用K阶之后自相关函数确定起q的取值。</p>
-<h3 id="k阶滞后偏自相关函数（PACF）"><a href="#k阶滞后偏自相关函数（PACF）" class="headerlink" title="k阶滞后偏自相关函数（PACF）"></a>k阶滞后偏自相关函数（PACF）</h3><p>对于AR模型而言，由于模型往往可以展开成无穷阶MA模型，因此k阶滞后自相关函数不适用。从另一方面考虑，若我们希望计算\(Y _{t-k} \)对\(Y _t \)的影响程度从而判断模型是否含有第k阶，直接计算\(Y _{t-k} \)与\(Y _t \)的相关性是不合理的，这是因为对于\(Y _t \)而言其自身还包含了<br>\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)项。因此我们考虑消除\(Y _t \)中的<br>\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)影响后，再计算消除影响后的\(Y _t \)与\(Y _{t-k} \)的相关系数，我们称这个系数为<strong>k阶滞后偏自相关系数</strong>。<br>由于AR模型为回归方法，为了达到消除影响的目的，因此我们可以考虑先对序列进行拟合，然后为了计算得到样本的k阶滞后偏自相关函数。对\(Y _t \)我们使用\(Y  _{t-1},Y _{t-2}, \cdots ,Y _{t-k+1} \)项进行预测： </p>
-<p>$$<br>Y _t=<br>$$<br>对\(\beta \)我们可以使用均方误差最小化，利用最小二乘法估计。<br>对于\(Y _{t-k} \)，我们可以利用t-k之后的k-1个项来进行向前预测，由序列平稳可得（？？？）：<br>$$<br>Y _k=\beta _1 Y _{t-K+1} + \beta _2 Y _{t-K+2} + \cdots + \beta _{k-1} Y _{t-1}<br>$$<br>因此我们定义<strong>K阶偏子相关系数</strong>为预测误差之间的相关系数：<br>$$<br>\phi _{kk}=Corr(Y _t - \beta _1 Y _{t-1} - \beta _2 Y _{t-2} - \cdots - \beta _{k-1} Y _{t-k+1},  \\<br>Y _{t-k} - \beta _1 Y _{t-K+1} - \beta _2 Y _{t-K+2} - \cdots - \beta _{k-1} Y _{t-1}  )<br>$$</p>
-<p>对于若序列服从AR(p)模型，显然当预测的模型为p项时，对模型的预测将最准确，此时k阶之后偏子相关系数有：<br>$$<br>\phi _{kk} = 0, k&gt;p<br>$$<br>而对于MA模型来说，其偏自相关函数从不为0，但随着滞后的增加，会指数级快速衰减到0。这一点与AR(1)过程的子相关函数类似。<br>对于K阶偏自相关系数，我们可以用最小二乘法分别求不同阶的预测模型，然后再求其相关系数。同时我们也可以使用Yule-Walker方程来进行求解。<br>具有自相关函数\(\rho _k\)的任意平稳过程，对于k阶滞后，我们有：<br>$$<br>\rho _j = \phi _{k1} \rho _{j-1} +\phi _{k2} \rho _{j-2} +\phi _{k3} \rho _{j-3} + \cdots+\phi _{kk} \rho _{j-k} , j=1,2,\cdots,k<br>$$<br>我们可以先算出各阶\(\rho\)然后带入方程组从而求解出\(\phi _{k1},\phi _{k2},\cdots,\phi _{kk} \)，这里我们只需要最后一项。对于不同阶k，反复求解方程组从而得到\(\phi _{kk}\)，我们有\(\phi _{kk}\)递归方程：<br>$$<br>\phi _{kk} = \frac{\phi _{k} - \sum _{j=1} ^{k-1}{\phi _{k-1,j}\rho _{k-j}}}{1 - \sum _{j=1} ^{k-1}{\phi _{k-1,j} \rho _{j}}}<br>$$<br>对于大于p时样本偏自相关函数近似服从均值为0，方差为1/n的正态分布. 因此，当 k&gt;p 时，我们可以用\(\pm 2/\sqrt{n}\)作为\(\hat \phi _{kk}\)的临界极值来检验AR(p)模型的正确0假设。</p>
-<h2 id="非平稳性"><a href="#非平稳性" class="headerlink" title="非平稳性"></a>非平稳性</h2><p>在实际使用ARIMA模型时，我们往往仅使用1～2阶差分，过度的差分，会导致差分后的序列产生不必要的相关性，从而使模型变得复杂，最终导致过拟合。同时过度差分还可能导致差分后序列模型不可逆。<br>在对差分阶数进行判断时，ACF仍然是一个非常好用的工具。如果ACF的图像呈现明显近似线性的衰减，说明非平稳性影响了序列的自相关性。此时序列需要进行差分。更具体的方法还有Dickey-Fuller单位根检验（检验AR方程是否存在单位根）等。</p>
-<h3 id="ARIMA模型的判别"><a href="#ARIMA模型的判别" class="headerlink" title="ARIMA模型的判别"></a>ARIMA模型的判别</h3><p>对于ARMA模型来说，由于ACF和PACF都只能针对AR或MA其中一个模型进行判别，若二者混合，不能很好判别。因此我们引入了一些扩展的方法来识别。</p>
-<h4 id="EACF（扩展自相关法）："><a href="#EACF（扩展自相关法）：" class="headerlink" title="EACF（扩展自相关法）："></a>EACF（扩展自相关法）：</h4><p>如果AR模型是已知的，则可以从ARMA模型中去掉自回归部分从而得到一个纯MA过程。</p>
-<h4 id="AIC（Akaike’s-Information-Criterion-赤池信息准则）："><a href="#AIC（Akaike’s-Information-Criterion-赤池信息准则）：" class="headerlink" title="AIC（Akaike’s Information Criterion,赤池信息准则）："></a>AIC（Akaike’s Information Criterion,赤池信息准则）：</h4><p>AIC要求模型最小化：<br>$$<br>AIC = -2\log {(D(p,q _\theta))+2k}<br>$$<br>如果模型包含常数项或者截距项，则k=p+q+1，否则k=p+q。<br>AIC是估计模型与真实模型等平均KL偏离度的估计量。另\(p(y _1,y _2,\cdots,y _n)\)是\(Y _1,Y _2,\cdots,Y _n\)的真实pdf，\(q _\theta(y _1,y _2,\cdots,y _n)\) 是参数为 \(\theta\)的模型相应的pdf。则q和p的KL偏离由下面公式定义：<br>$$<br>D(p,q _\theta) = \int _{-\infty} ^{\infty} \int _{-\infty} ^{\infty} \cdots\int _{-\infty} ^{\infty}{p(y _1,y _2,\cdots,y _n) \log{[\frac{p(y _1,y _2,\cdots,y _n)}{q _\theta(y _1,y _2,\cdots,y _n)}]}}dy _1dy _2\cdots dy _n<br>$$<br>AIC估计了\(E(D(p,q _\hat \theta))\)，这里\(\hat \theta\)是参数\(\theta\)的极大似然估计。但是AIC是有偏估计量，若参数数量和数据容量的比率较大，则偏差会很大。因此引入\(AIC _c\)方法对AIC进行修正：<br>$$<br>AIC _c = AIC + \frac{2(k+1)(k+2)}{n-k-2}<br>$$<br>其中n是样本容量，k是出去噪声方差后的总参数量，当k/n&gt;0.1时，\(AIC _c\)表现优于其他模型选择准则（包括AIC、BIC）</p>
-<h4 id="BIC（Bayesian-Information-Criterion-贝叶斯信息准则）："><a href="#BIC（Bayesian-Information-Criterion-贝叶斯信息准则）：" class="headerlink" title="BIC（Bayesian Information Criterion,贝叶斯信息准则）："></a>BIC（Bayesian Information Criterion,贝叶斯信息准则）：</h4><p>$$<br>BIC =  -2\log {(D(p,q _\theta))+k\log{(n)}}<br>$$</p>
-<h2 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h2><p>当确定相应的ARIMA阶数后，我们既可以进行参数估计。常用的参数估计有最小二乘法与极大似然函数。</p>
-<h3 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h3><p><span id="e——"></span><br>对于AR模型而言，其满足标准最小二乘法形式，因此用最小二乘法估计十分简单。但对MA模型，由于其中存在e的噪声项，因此无法直接求的，所以我们需要对其进行转换：</p>
-<p>$$<br>e _t = Y _t + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}<br>$$<br>其中\(e _0 = e _{-1}=\cdots=e _{-q} = 0\)，因此：</p>
-<p>$$<br>e _1 = Y _1<br>$$</p>
-<p>$$<br>e _2 = Y _2 + \theta _1 e _{t-1}<br>$$</p>
-<p>$$<br>e _3 = Y _3 + \theta _1 e _{2}+  \theta _2 e _{1}<br>$$</p>
-<p>$$<br>\cdots<br>$$<br>此时，我们最小化目标函数：</p>
-<p>$$<br>S _c (\theta) = \sum{(e _t)^2}<br>$$</p>
-<p>通过递推的计算\(e _1 , e _{2} , \cdots , e _{q}\)，带入方程组，利用多元数值算法，可以就\(\theta _1 ,\theta _{2} , \cdots , \theta _{q}\)联合的求取平方和最小值。<br>对于ARMA(p,q)模型，通过对模型公式进行整理，我们也可以使用同样方法：<br>$$<br>e _t = Y _t - \phi _1 Y _{t-1} - \phi _2 Y _{t-2} - \cdots - \phi _p Y _{t-p}  + \theta _1 e _{t-1}+  \theta _2 e _{t-2} + \cdots +  \theta _{q} e _{t-q}<br>$$<br>注意对于大样本而言，初始值\(e _{p} , e _{p-1},\cdots,e _{p-q+1}\)对于可逆模型影响甚。因此这里\(e _{p} = e _{p-1}=\cdots=e _{p-q+1} = 0\),序列从p+1开始递推。<br>####自回归逼近法<br>自回归逼近法，先将数据看做纯\(AR(\hat p)\)模型，利用AIC定阶确定\(\hat p\)，利用最小二乘法估计出相应的参数。用得到的\(AR(\hat p)\)模型对序列进行一步预测得到预测变量\(\hat Y _t\)，从而进一步估计出\(\hat e _t = Y _t - \hat Y _t\)。将得到的\(\hat e _t \)与真实数据\( Y _t\) 带入ARMA模型，于是就可以使用最小二乘法直接对AR与MA的参数进行估计。</p>
-<h3 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h3><p>对于最小二乘法，我们利用了分布的一阶矩和二阶矩，而对于最大似然法，我们使用了数据的全部信息。<br>模型定阶完成后，对于ARIMA(p,d,q)实际需要估计的参数有\(\phi,\theta,\mu,\sigma _e\)，对于序列中的\(e _t\)服从于\( Normal(0,\sigma ^2)\)，且彼此独立。因此我们可以得到\(e _2,e _3,\cdots,e _n\)联合概率密度：<br>$$<br>(2\pi\sigma _e ^2) ^{-(n-1)/2}exp(-e _t ^2 /2\sigma _e ^2\sum _{t=2} ^{n} e _t ^2)<br>$$<br>ARIMA的极大似然估计法通过逐步递推预测公式导出，极大似然函数，具体过程较为复杂，可以参考PKU李东风老师的备课笔记CH21[^PKUTimeSerious]</p>
-<h2 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h2><p><span id="e_estimation"></span></p>
-<p>在获得模型之后，既可以用模型对未来数据进行预测，对于预测结果，我们同时还可以估计预测的精度。<br>我们令：\(\hat Y _t(l)\)为序列前t项已知状态下对t之后第l项进行预测的预测值。</p>
-<h3 id="AR模型的预测"><a href="#AR模型的预测" class="headerlink" title="AR模型的预测"></a>AR模型的预测</h3><p>则对于AR模型而言，有：<br>$$<br>\hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i Y _{t+l-i}}\\<br>Y _{t+l-i} = \hat Y _t(l-i) \qquad  when:\quad l-i&gt;0<br>$$<br>可以采用一步预测的方式，从预测\(\hat Y _t(1)\)开始逐步递推到l项。<br>可以看到与AR模型相比，预测缺少了\(e _{t+l}\) 项。对于一步预测\(\hat Y _t(1)\)而言,预测误差\(e _t(1) = Y _{t+l} - \hat Y _t(l) = e _{t+1}\)。<br>对于<br>$$<br>\hat e _t(l) =\sum _{i=1} ^{\infty} {\psi _i e _{t+l-i}}\\<br>e _{t+l-i} = 0 \qquad  when:\quad l-i&lt;=0<br>$$<br>其中，\(\psi\)是由AR模型进行MA展开得到的相应参数。<br>因此，\(E(e _t(l)) = 0\)，相应预测估计是无偏估计。对于误差方差：<br>$$<br>Var(e _t(l)) = \delta _e ^ 2 (1 + \psi _{1} ^2 + \psi _{2} ^2 + \cdots + \psi _{l-1} ^2 )<br>$$<br>由于我们假设序列平稳，因此这里：<br>$$<br>Var(e _t(l)) \approx Var(Y _t) = \gamma _0 , 当l较大时<br>$$<br>证明略，感兴趣的同学，可以尝试使用AR(1)模型进行验证。<br>同时，对于arima模型，若序列非平稳则方差随预测时间窗口l的增大而无限增大。</p>
-<h3 id="MA模型的预测"><a href="#MA模型的预测" class="headerlink" title="MA模型的预测"></a>MA模型的预测</h3><p>对于MA模型而言，由于预测模型与e相关，因此需要先对e进行求解。<br>我们使用模型估计时用到的<a href="#e_estimation">递推估计方法</a>，求得\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)。因此，可以得到：</p>
-<p>$$<br>\hat Y _t(l) =\sum _{i=1} ^{p} {\phi _i E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)}\\<br>E(e _{t+l-i} | Y _1,Y _2, \cdots, Y _t)  = \begin{cases}<br>0, \qquad when\quad  l-i&gt;0\\<br>e _{t+l-i},\qquad  when \quad l-i&lt;=0<br>\end{cases}<br>$$</p>
-<p>其中对于l-i&gt;0的情况，由于相应的Y值是我们预测得到，因此我们无法通过递推关系求得相应残差的期望，另一方面，我们希望我们的预测尽可能准确，因此另残差期望为零也是合理的。<br>这里值得注意的一点，我们使用递推估计的方法逼近残差，需要满足模型可逆的前提。<br>同时，在对\(E(e _{t+l-1}|Y _1,Y _2, \cdots, Y _t)\)进行估计的时候，因为我们将e序列转化成了无穷序列的Y只和，因此，我们可以考虑，当逼近项数j&gt;t-q时，对应Y的参数项\(\pi _j\)可以忽略。</p>
-<h3 id="ARIMA模型的预测"><a href="#ARIMA模型的预测" class="headerlink" title="ARIMA模型的预测"></a>ARIMA模型的预测</h3><p>对arima模型的预测可分为AR部分与MA部分，值得注意的是，若MA的截断j值选取t-q时，当l&gt;q时，ARIMA模型中MA部分将不起作用，因此此时模型只包含AR部分。<br>对ARMA模型，以\(\{e _t\}\)为基进行展开，得到相应参数\(\{\psi _t\}\)，则此时预测对应残差为：<br>$$<br>e _t(l) = Y _{t+1} - \hat Y(l) \\<br>= e _{t+l} + \psi _{1} e _{t+l-1} + \psi _{2} e _{t+l-2} + \cdots + \psi _{l-1} e _{t+1}<br>$$<br>也就是说对于真实的\(Y _{t+l}\)，对l周期内的误差对l点的预测具有累计效应。当序列平稳时，l趋于无穷，序列误差对方差趋于\(\gamma _0 \)。<br>这里由于我们误差服从正态分布，因此通过计算置信区间，利用误差的方差，我们可以对预测结果的范围进行估计。</p>
-<h2 id="模型诊断"><a href="#模型诊断" class="headerlink" title="模型诊断"></a>模型诊断</h2><p>为判断学习出的ARIMA模型是否有效，我们需要对得到的模型进行诊断。</p>
-<h3 id="残差分析"><a href="#残差分析" class="headerlink" title="残差分析"></a>残差分析</h3><p>对于ARIMA模型，我们假设我们的数据满足模型:<br>$$Y _t=\pi _1 Y _{t-1} + \pi _2 Y _{t-2} + \cdots + e _{t-q}$$<br>这里假设模型平稳可逆，\(\pi\)是模型差分和MA部分展开并与AR部分合并后得到的合并参数。<br>在模型建立好后，对每一个\(\pi\)，我们有一个估计量\(\hat \pi\)，因此使用过去序列对现在时间点t进行预测后，我们可以得到残差（实际值-预测值）：<br>$$\hat e _{t-q} = Y _t - \hat \pi _1 Y _{t-1} - \hat \pi _2 Y _{t-2} + \cdots $$<br>如果我们的ARIMA模型预测无误，则\(\hat e _{t} = e _{t}\)，也就是说我们的残差应：1. 服从正态分布 2. 每一时刻的残差与前序时刻不相关。通过判断残差这两点特性，我们可以分析出ARIMA模型对数据的拟合程度。<br>在实际判别中，我们主要判断方法有：残差图，QQ图，残差自相关性判定，统计量检验等方法。</p>
-<h4 id="残差图"><a href="#残差图" class="headerlink" title="残差图"></a>残差图</h4><p>由于残差应近似服从正态分布，因此我们绘制出残差的时间序列散点图（即残差图，X轴为时间，Y轴为残差值），通过比较散点图的随机性，与正态分布的特点来判断其正态性。这里我们可以关注：      </p>
-<ol>
-<li>在相邻时刻残差是否产生了明显的相关特点. </li>
-<li>不同时间段内，残差的变化幅度是否相近. </li>
-<li>残差值超过\( 1\sigma, 2\sigma, 3\sigma \)的数量.   </li>
-</ol>
-<p>如图：<br>$$此处应有图+解释$$</p>
-<h5 id="残差正态性与QQ图（分位数-分位数图）"><a href="#残差正态性与QQ图（分位数-分位数图）" class="headerlink" title="残差正态性与QQ图（分位数-分位数图）"></a>残差正态性与QQ图（分位数-分位数图）</h5><p>使用残差图我们可以很好的看出残差在不同时间段是否有特殊的特征，但其对正态分布的实际分布情况并不能完全的刻画，因此我们引入了QQ图（分位数-分位数图）。<br>QQ图横坐标是理论分位数，纵坐标是实际分位数，我们通过算出每一个时刻t，残差在实际残差序列中的分位数位置作为Y轴，其在模型中残差的理论上的高斯分布应处于的分位数位置作为X轴，从而绘制出散点图。如果残差满足正态分布，则其应满足：</p>
-<ol>
-<li>其散点应该分布在y=x这一条直线上</li>
-<li>散点越靠近原点(0,0)点越密集，越远离原点越稀疏。</li>
-<li>稀疏变化程度应该与正态分布的分布一致</li>
-</ol>
-<p>如图：<br>$$此处应有图+解释$$</p>
-<h4 id="残差自相关性"><a href="#残差自相关性" class="headerlink" title="残差自相关性"></a>残差自相关性</h4><p>除了残差的正态性，我们还可以从残差相关性入手。通过计算残差序列不同阶的相关性，我们可以画出残差的ACF图。若无相关性，则各阶滞后均应该处于一个较低的水平。通过对相关性显著性分析，我们可以定量的判断模型是否有异常。<br>$$ACF显著性判断$$<br>如图：<br>$$此处应有图+解释$$</p>
-<p>通过观察ACF图，我们可以找到是否有单个的滞后相关性具有异常。而另一方面，我们还可以对各个滞后进行综合考虑，可能单个相关系数没有异常，但是整体来看，具有异常。因此我们引入<strong>Ljung-Box检验</strong>，其统计量为：<br>$$Q=n(\hat r _1 ^2 + \hat r _2 ^2 + \cdots +\hat r _k ^2 )$$<br>若我们估计的模型正确，则Q应该近似服从自由度为k-p-q的卡方分布，若假设检验不能通过，则可以判断模型拟合有误。5t t</p>
-<h3 id="过拟合和参数冗余"><a href="#过拟合和参数冗余" class="headerlink" title="过拟合和参数冗余"></a>过拟合和参数冗余</h3><p>数据缺失<a href="http://rpubs.com/englianhu/handle-missing-value" target="_blank" rel="noopener">http://rpubs.com/englianhu/handle-missing-value</a></p>
-<h1 id="谱表示与谱分析"><a href="#谱表示与谱分析" class="headerlink" title="谱表示与谱分析"></a>谱表示与谱分析</h1><p>ARIMA模型主要从滑动窗口和序列自相关性两方面对序列的周期性进行拟合。而考虑到对周期性问题进行拟合，我们很容易想到信号处理中的谱表示，即通过使用不同频率的正弦余弦函数，拟合出我们希望得到的周期变化。同时，我们还引入了傅立叶变换，将序列从空域变换到频域，通过分析频域图像，从而对周期性，相关性等进行更好的分析，这是谱分析的基本思想。</p>
-<h2 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="基本公式与概念"><a href="#基本公式与概念" class="headerlink" title="基本公式与概念"></a>基本公式与概念</h3><p>一下为一些简单常用的公式：<br>$$<br>R\  cos(2\pi ft + \Phi)=A\ cos(2\pi ft )+B\ sin(2\pi ft)<br>$$<br>$$<br>R = \sqrt{(A^2 + B^2)},\ \Phi = artan(-B/A)<br>$$<br>$$<br>B = R * cos(\Phi),\    A = -R * sin(\Phi)<br>$$</p>
-<p>对于谱表示来说，我们可以将通项公式写成如下形式：<br>$$<br>Y  _t  = A _0 + \sum _{j=1} ^m {[A _j cos(2 \pi f _j t) + B _jsin(2 \pi f _j t)]}<br>\tag{谱1.1}<br>$$</p>
-<p>这是一种利用正弦余弦对，对时间序列的拟合，对于其中的各项A与B我们可以用最小二乘法进行回归，对于其中频率f 如果我们取特殊形式，则回归将会变得特别简单，例如：<br>1）n=2k+1：<br>则频率为依次为：1/n,2/n,…,k/n (k/n=1/2-1/(2n))。这种频率我们称之为傅立叶频率，在这些频率下，正弦和余弦的预测变量是正交的。<br>因此，最小二乘估计可得：</p>
-<p>$$<br>\hat A _0 = \overline Y<br>$$</p>
-<p>$$<br>\hat A _j = \frac{2}{n} \sum _{t=1} ^n {Y _t cos(2 \pi t j/n)},\ \hat B _j = \frac{2}{n} \sum _{t=1} ^n {Y _t sin(2 \pi t j/n)}<br>$$</p>
-<p>2）n=2k：<br>则：<br>$$<br>\hat A _k = \frac{1}{n} \sum _{t=1} ^n (-1) ^t Y _t,\ \hat B _j = 0<br>$$</p>
-<p>对于任意长度的序列，无论其是确定性的还是随机的，都可以用通项公式进行完美拟合。<br>同时，对于长序列，通常来说可以使用快速傅立叶变换进行快速求解。</p>
-<h3 id="周期图"><a href="#周期图" class="headerlink" title="周期图"></a>周期图</h3><p>通过上述通项公式，我们可以对时间序列进行拟合。但实际拟合中，我们需要确定实际需要拟合哪一些周期。这时周期图是一个较好的工具。<br>周期图定义为:<br>$$<br>I(j/n) = \frac{n}{2} (\hat A _j ^2 + \hat B _j ^2 )<br>$$<br>对于样本量为偶数时，即 \(n=2k)\)时，在极端频率\(f=k/b=1/2)\)时，有：</p>
-<p>$$<br>I(1/2) = n(\hat A_k)^2<br>$$</p>
-<p>周期图的高峰显示了序列整体行为中不同频率上余弦-正弦对的相对强度。我们可以选取周期图中峰值较高的周期进行建模。<br>实际上对于一般的时间序列而言，周期图是时间序列从空域向频域变换后频域的图像。<br>对于较长序列，我们可以使用快速傅立叶变换的方式（FFT）进行快速有效的数值计算。</p>
-<h2 id="谱表分析"><a href="#谱表分析" class="headerlink" title="谱表分析"></a>谱表分析</h2><h3 id="谱表示"><a href="#谱表示" class="headerlink" title="谱表示"></a>谱表示</h3><p>对于谱分析的通项公式（谱1.1）来说，我们先考虑\(A_0=0\)的情况，又或者说，我们可以移除样本均值，令\(Y _t\)为样本到样本均值的偏差。此时，我们仅考虑\(0&lt;f&lt;1/2\)的情况（ 对于f在(0,1/2)和(1/2,1)区间，图像实际上是重叠的 ）。<br>我们令：<br>$$<br>a(f)=\sum _{\{j|f _j&lt;f\}} A _j, b(f)=\sum _{\{j|f _j&lt;f\}} B _j<br>$$<br>从而构造出两个阶梯函数。从而我们可以对通项公式进行改写,得到谱表示：<br>$$<br>Y _t = \int _0 ^{1/2} cos(2\pi ft) \rm{d}a(f) + \int _0 ^{1/2} sin(2\pi ft)<br> \rm{d}b(f) \tag{谱1.2}<br>$$<br><strong>事实上，任何零均值平稳的过程都能表示成上述方程的形式。即，平稳过程可以用连续频带上无穷多个余弦正弦对的线形组合表示。</strong></p>
-<h3 id="周期图与谱密度"><a href="#周期图与谱密度" class="headerlink" title="周期图与谱密度"></a>周期图与谱密度</h3><p>正如上文提到的，要分析时间序列，周期图是一个很好的工具。实际上周期图是对谱表示的时间序列过程进行傅立叶变换的频域图像。这里我们引入谱密度（功率谱）概念，一个信号的功率谱密度就是该信号自相关函数的傅里叶变换。谱密度是过程经过傅立叶变换后在频域的密度函数。</p>
-<p>平稳随机过程的功率谱是一个确定函数。通过计算我们可以得到其公式为：</p>
-<p>$$<br>S(f)=\gamma_0 + 2\sum _{k=1} ^\infty \gamma _k cos(2\pi fk)<br>$$</p>
-<p>其中，\(\gamma _k\)为函数的k阶滞后样本协方差。根据傅立叶理论（QA：Planchere定理？是否需要过程满足先决条件，例如函数属于L2空间?），必存在一个相反关系，即：<br>$$<br>\gamma _k = \int _{-1/2} ^{1/2} S(f) cos(2\pi kf) \rm{d}f<br>$$<br>从数学上来讲，S(f)是序列 \(\{\gamma _k\}\)的离散时间傅立叶变换，而 \(\{\gamma _k\}\)是谱密度的傅立叶逆变换。<br>同时还有：<br>$$<br>F(f) = \int _{0} ^{f} S(x) \rm{d}x ,0&lt;= f &lt;=1/2<br>$$<br>可以看出，谱密度下方区域面积的两倍是过程方差对应频率区间上构成该过程的余弦正弦对的那部分。<br>对于周期图I(f)，我们有：<br>$$<br>\hat{S}(f)=1/2I(f),\hat{S}(1/2)=I(1/2),<br>$$</p>
-<p>###附：<br>傅立叶变换公式：<br>$$<br>F(\omega) = \int _{-\infty} ^{\infty} f(t)e^{-i\omega t} \rm{d}t<br>$$</p>
-<h1 id="综合方法"><a href="#综合方法" class="headerlink" title="综合方法"></a>综合方法</h1><h2 id="Prophet"><a href="#Prophet" class="headerlink" title="Prophet"></a>Prophet</h2><p>prophet是facebook开源的python预测库，该库的api设计与sklearn很像，也是分为fit方法和predict方法。prophet将时间序列分解为三个不同的成分：趋势成分，周期性成分与特殊点（如节假日），并采用加法模型，将三个成分相结合：<br>$$<br>y(t)=g(t)+s(t)+h(t)+\epsilon_t<br>$$<br>其中g(t)为趋势函数，代表序列中非周期性的改变，s(t)为周期性成分，h(t)为节假日等特殊点。\(\epsilon _t\) 为随机成分，我们一般令其为正态分布。<br>我们知道对于ARIMA模型而言我们可以利用差分方法来拟合趋势，而利用这种加性模型，对于趋势我们可以更加自由的进行拟合。</p>
-<h3 id="趋势拟合"><a href="#趋势拟合" class="headerlink" title="趋势拟合"></a>趋势拟合</h3><p>prophet主要使用了两种趋势拟合模型，增长模型与线性模型</p>
-<h4 id="增长模型"><a href="#增长模型" class="headerlink" title="增长模型"></a>增长模型</h4><p>增长模型常被用于生态系统模型中（被广为熟知的增长s曲线）如下：</p>
-<p>$$<br>g(t)=\frac{C}{1+exp(-k(t-m))}<br>$$</p>
-<p><img src="//liuzhiqi.github.io/blog/2019/10/22/Time-Series1/prophet_growth_curve.png" alt="avatar"></p>
-<p>然而在实际使用过程中，这种完美的曲线是不存在的，以用户数据为例：当新功能发布，用户增长率（k）与曲线容量（C）可能发生变化，而实际情况中，这种变化是经常发生的。因此，我们需要对模型进行适应。<br>对于曲线容量（C）而言，我们可以使用一个随时间变化的动态容量C(t)。<br>而对变化率（k）来说，我们可以假定，变化率是在某些时刻发生突然变化的（这也符合我们上述例子中的实际情况）。我们将这些变化的点用序列\(\boldsymbol{S}=\{s _j\}\)表示，\(\boldsymbol{\delta}=\{\delta _j\}\)表示第\(s _j\)时间点上的变化率增量，令k为基础增长率，令向量\(\boldsymbol{a}(t)=\{0,1\} ^{|S|}\)，有</p>
-<p>$$<br>a _j (t)=\begin{cases}<br>1,\quad t \geq s _j \\<br>0,\quad other<br>\end{cases}<br>$$</p>
-<p>则对增长率，我们有\(k + a _j(t)^T\delta\)，而当增长率发生变化的时候，我们的偏移参数m也需要发生变化，举发生一次变化的图像为例：<br><img src="//liuzhiqi.github.io/blog/2019/10/22/Time-Series1/prophet_growth_curve2.png" alt="avatar"></p>
-<p>f曲线是变化前曲线，在s点处，增长率发生变化，变化后曲线为f‘。则我们有：</p>
-<p>$$<br>f(t)=\frac{C}{1+exp(-k(t-m))}<br>$$</p>
-<p>$$<br>f(t)=\frac{C}{1+exp(-(k+\delta)(t-(m + \gamma)))}<br>$$<br>其中\(\delta,\gamma\)分别为k和m的增量，又由于曲线在t=s点相交，我们有f(s)=f’(s)。通过整理等式我们可得：</p>
-<p>$$<br>\gamma=\frac{\delta(s-m)}{k+\delta}<br>$$</p>
-<p>推广到多点的情况，则我们的得到：</p>
-<p>$$<br>\gamma _j=\frac{(s _j -m -\sum _{l&lt;j}\gamma _l)\delta _j}{k+\sum _{l \leq j}\gamma _l}<br>$$</p>
-<p>令\(\boldsymbol{\gamma}=\{\gamma _j\}\)，则，我们得到最终模型：</p>
-<p>$$<br>g(t)=\frac{C(t)}{1+exp(-(k+\boldsymbol{a}(t)^T\delta)(t-(m+\boldsymbol{a}(t)^t\boldsymbol{\gamma})))}<br>$$</p>
-<!--
-<p>–&gt;</p>
-<p>[^PKUTimeSerious]: [应用时间序列分析备课笔记](<a href="http://www.math.pku.edu.cn/teachers/lidf/course/atsa/atsanotes/html/_atsanotes/atsa-estarma.html#estarma-mlearma/">http://www.math.pku.edu.cn/teachers/lidf/course/atsa/atsanotes/html/_atsanotes/atsa-estarma.html#estarma-mlearma/</a>, 2016/2018-8.19)</p>
--->
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liuzhiqi.github.io/blog/2019/09/30/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiqi Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhiqi Liu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2019/09/30/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-30T17:46:05+08:00">
-                2019-09-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1573,9 +1441,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives">
+                <a href="/articles">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1586,7 +1454,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
